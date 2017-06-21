@@ -12,19 +12,27 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<version.lyo.core>2.1.2</version.lyo.core>
+		<version.lyo.core>2.2.0-SNAPSHOT</version.lyo.core>
 		<version.lyo.server>2.1.0</version.lyo.server>
 	</properties>
 	<repositories>
 		<repository>
 			<id>lyo-releases</id>
-			<name>lyo-releases repository</name>
+			<name>Eclipse Lyo Releases</name>
 			<url>https://repo.eclipse.org/content/repositories/lyo-releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>lyo-snapshots</id>
+			<name>Eclipse Lyo Snapshots</name>
+			<url>https://repo.eclipse.org/content/repositories/lyo-snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
 		</repository>
 	</repositories>
-
-
-
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
