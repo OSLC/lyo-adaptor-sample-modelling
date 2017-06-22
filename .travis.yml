@@ -6,3 +6,4 @@ jdk:
 script:
   - (cd adaptor-rm-webapp && mvn clean verify -B)
   - (cd adaptor-testing-webapp && mvn clean verify -B)
+
