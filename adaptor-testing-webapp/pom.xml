@@ -18,7 +18,7 @@
 	<repositories>
 		<repository>
 			<id>lyo-releases</id>
-      <name>Eclipse Lyo Releases</name>
+      			<name>Eclipse Lyo Releases</name>
 			<url>https://repo.eclipse.org/content/repositories/lyo-releases/</url>
       <snapshots>
         <enabled>false</enabled>
