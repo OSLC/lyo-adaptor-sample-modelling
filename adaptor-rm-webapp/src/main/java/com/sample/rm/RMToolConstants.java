@@ -42,9 +42,10 @@ public interface RMToolConstants
 
     public static String REQUIREMENT = "Requirement";
     public static String PATH_REQUIREMENT = "requirement";
-    public static String TYPE_REQUIREMENT = REQUIREMENTS_MANAGEMENT_NAMSPACE + "Requirement";
+    public static String TYPE_REQUIREMENT = REQUIREMENTS_MANAGEMENT_NAMSPACE + "requirement";
 
     public static final String HDR_OSLC_VERSION = "OSLC-Core-Version";
+    public static final String OSLC_VERSION_V2 = "2.0";
 
 }
 

@@ -48,18 +48,19 @@ public interface TestingToolConstants
 
     public static String PERSON = "Person";
     public static String PATH_PERSON = "person";
-    public static String TYPE_PERSON = FOAF_NAMSPACE + "Person";
+    public static String TYPE_PERSON = FOAF_NAMSPACE + "person";
     public static String REQUIREMENT = "Requirement";
     public static String PATH_REQUIREMENT = "requirement";
-    public static String TYPE_REQUIREMENT = REQUIREMENTS_MANAGEMENT_NAMSPACE + "Requirement";
+    public static String TYPE_REQUIREMENT = REQUIREMENTS_MANAGEMENT_NAMSPACE + "requirement";
     public static String TESTCASE = "TestCase";
     public static String PATH_TESTCASE = "testCase";
-    public static String TYPE_TESTCASE = QUALITY_MANAGEMENT_NAMSPACE + "TestCase";
+    public static String TYPE_TESTCASE = QUALITY_MANAGEMENT_NAMSPACE + "testCase";
     public static String TESTSCRIPT = "TestScript";
     public static String PATH_TESTSCRIPT = "testScript";
-    public static String TYPE_TESTSCRIPT = QUALITY_MANAGEMENT_NAMSPACE + "TestScript";
+    public static String TYPE_TESTSCRIPT = QUALITY_MANAGEMENT_NAMSPACE + "testScript";
 
     public static final String HDR_OSLC_VERSION = "OSLC-Core-Version";
+    public static final String OSLC_VERSION_V2 = "2.0";
 
 }
 

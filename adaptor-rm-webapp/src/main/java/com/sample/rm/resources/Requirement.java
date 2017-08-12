@@ -44,6 +44,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import javax.ws.rs.core.UriBuilder;
 
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
+import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcAllowedValue;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcDescription;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcMemberProperty;
@@ -63,8 +65,9 @@ import org.eclipse.lyo.oslc4j.core.model.Occurs;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
+import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
+import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
-import com.sample.rm.servlet.ServletListener;
 import com.sample.rm.RMToolConstants;
 
 // Start of user code imports
@@ -118,7 +121,7 @@ public class Requirement
     
     public static URI constructURI(final String serviceProviderId, final String requirementId)
     {
-        String basePath = ServletListener.getServicesBase();
+        String basePath = OSLC4JUtils.getServletURI();
         Map<String, Object> pathParameters = new HashMap<String, Object>();
         pathParameters.put("serviceProviderId", serviceProviderId);
         pathParameters.put("requirementId", requirementId);
@@ -137,6 +140,14 @@ public class Requirement
     {
         return new Link(constructURI(serviceProviderId, requirementId));
     }
+    
+    public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
+        return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
+        OslcConstants.PATH_RESOURCE_SHAPES,
+        RMToolConstants.PATH_REQUIREMENT,  
+        Requirement.class);
+    }
+    
     
     public String toString()
     {

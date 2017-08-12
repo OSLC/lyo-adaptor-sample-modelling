@@ -44,6 +44,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import javax.ws.rs.core.UriBuilder;
 
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
+import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcAllowedValue;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcDescription;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcMemberProperty;
@@ -63,8 +65,9 @@ import org.eclipse.lyo.oslc4j.core.model.Occurs;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
+import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
+import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
-import com.sample.testing.servlet.ServletListener;
 import com.sample.testing.TestingToolConstants;
 
 // Start of user code imports
@@ -112,6 +115,14 @@ public class Person
     
         // Start of user code constructor2
         // End of user code
+    }
+    
+    
+    public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
+        return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
+        OslcConstants.PATH_RESOURCE_SHAPES,
+        TestingToolConstants.PATH_PERSON,  
+        Person.class);
     }
     
     

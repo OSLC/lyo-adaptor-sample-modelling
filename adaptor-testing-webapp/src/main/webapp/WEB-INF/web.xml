@@ -7,7 +7,7 @@
   <context-param>
     <description>Base URI for the adaptor.</description>
     <param-name>com.sample.testing.servlet.baseurl</param-name>
-    <param-value>http://localhost:8080</param-value>
+    <param-value>http://localhost:8082</param-value>
   </context-param>
   <listener>
     <description>Listener for ServletContext lifecycle changes</description>

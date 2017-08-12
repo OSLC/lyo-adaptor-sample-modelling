@@ -52,12 +52,16 @@ import org.eclipse.lyo.oslc4j.provider.json4j.Json4JProvidersRegistry;
 
 import com.sample.rm.services.ServiceProviderCatalogService;
 import com.sample.rm.services.ServiceProviderService;
+import com.sample.rm.services.ResourceShapeService;
 
 import com.sample.rm.resources.Requirement;
 import com.sample.rm.RMToolConstants;
-import com.sample.rm.services.RequirementService;
+import com.sample.rm.services.ServiceProviderService1;
 
 // Start of user code imports
+// End of user code
+
+// Start of user code pre_class_code
 // End of user code
 
 public class Application extends OslcWinkApplication {
@@ -65,13 +69,19 @@ public class Application extends OslcWinkApplication {
     private static final Set<Class<?>>         RESOURCE_CLASSES                          = new HashSet<Class<?>>();
     private static final Map<String, Class<?>> RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP = new HashMap<String, Class<?>>();
 
+    // Start of user code class_attributes
+    // End of user code
+
+    // Start of user code class_methods
+    // End of user code
+
     static
     {
         try
         {
             RESOURCE_CLASSES.addAll(JenaProvidersRegistry.getProviders());
             RESOURCE_CLASSES.addAll(Json4JProvidersRegistry.getProviders());
-            RESOURCE_CLASSES.add(RequirementService.class);
+            RESOURCE_CLASSES.add(ServiceProviderService1.class);
             RESOURCE_CLASSES.add(Requirement.class);
             RESOURCE_CLASSES.add(Class.forName("org.eclipse.lyo.server.oauth.webapp.services.ConsumersService"));
             RESOURCE_CLASSES.add(Class.forName("org.eclipse.lyo.server.oauth.webapp.services.OAuthService"));
@@ -79,6 +89,7 @@ public class Application extends OslcWinkApplication {
             // Catalog resources
             RESOURCE_CLASSES.add(ServiceProviderCatalogService.class);
             RESOURCE_CLASSES.add(ServiceProviderService.class);
+            RESOURCE_CLASSES.add(ResourceShapeService.class);
 
             // Start of user code Custom Resource Classes
             // End of user code
@@ -115,5 +126,9 @@ public class Application extends OslcWinkApplication {
         super(RESOURCE_CLASSES,
               OslcConstants.PATH_RESOURCE_SHAPES,
               RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP);
+    }
+
+    public static Map<String, Class<?>> getResourceShapePathToResourceClassMap() {
+        return RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP;
     }
 }

@@ -38,7 +38,7 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderFactory;
 
 import com.sample.rm.RMToolConstants;
-import com.sample.rm.services.RequirementService;
+import com.sample.rm.services.ServiceProviderService1;
 
 // Start of user code imports
 // End of user code
@@ -47,7 +47,7 @@ public class ServiceProvidersFactory
 {
     private static Class<?>[] RESOURCE_CLASSES =
     {
-        RequirementService.class
+        ServiceProviderService1.class
     };
 
     private ServiceProvidersFactory()

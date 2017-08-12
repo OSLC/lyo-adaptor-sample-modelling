@@ -44,6 +44,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import javax.ws.rs.core.UriBuilder;
 
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
+import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcAllowedValue;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcDescription;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcMemberProperty;
@@ -63,8 +65,9 @@ import org.eclipse.lyo.oslc4j.core.model.Occurs;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
+import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
+import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
-import com.sample.testing.servlet.ServletListener;
 import com.sample.testing.TestingToolConstants;
 import com.sample.testing.resources.Person;
 import com.sample.testing.resources.TestScript;
@@ -126,7 +129,7 @@ public class TestCase
     
     public static URI constructURI(final String serviceProviderId, final String testCaseId)
     {
-        String basePath = ServletListener.getServicesBase();
+        String basePath = OSLC4JUtils.getServletURI();
         Map<String, Object> pathParameters = new HashMap<String, Object>();
         pathParameters.put("serviceProviderId", serviceProviderId);
         pathParameters.put("testCaseId", testCaseId);
@@ -145,6 +148,14 @@ public class TestCase
     {
         return new Link(constructURI(serviceProviderId, testCaseId));
     }
+    
+    public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
+        return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
+        OslcConstants.PATH_RESOURCE_SHAPES,
+        TestingToolConstants.PATH_TESTCASE,  
+        TestCase.class);
+    }
+    
     
     public String toString()
     {
@@ -350,7 +361,12 @@ public class TestCase
         // End of user code
     
         try {
-            s = s + (new TestScript (uses.getValue())).toHtml(false);
+            if ((uses == null) || (uses.getValue() == null)) {
+                s = s + "<em>null</em>";
+            }
+            else {
+                s = s + (new TestScript (uses.getValue())).toHtml(false);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -403,7 +419,12 @@ public class TestCase
         // End of user code
     
         try {
-            s = s + (new Person (contributor.getValue())).toHtml(false);
+            if ((contributor == null) || (contributor.getValue() == null)) {
+                s = s + "<em>null</em>";
+            }
+            else {
+                s = s + (new Person (contributor.getValue())).toHtml(false);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
