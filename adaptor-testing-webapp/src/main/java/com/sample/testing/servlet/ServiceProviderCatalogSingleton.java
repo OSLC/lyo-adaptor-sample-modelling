@@ -45,6 +45,7 @@ import org.eclipse.lyo.oslc4j.core.model.Publisher;
 import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 
 import com.sample.testing.TestingToolManager;
 import com.sample.testing.ServiceProviderInfo;
@@ -73,7 +74,7 @@ public class ServiceProviderCatalogSingleton
     static
     {
         serviceProviderCatalog = new ServiceProviderCatalog();
-        URI catalogUri = UriBuilder.fromUri(ServletListener.getServicesBase()).path("/catalog/singleton").build();
+        URI catalogUri = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catalog/singleton").build();
         serviceProviderCatalog.setAbout(catalogUri);
         serviceProviderCatalog.setTitle("Service Provider Catalog");
         serviceProviderCatalog.setDescription("");
@@ -108,7 +109,7 @@ public class ServiceProviderCatalogSingleton
 
     private static URI constructServiceProviderURI(final String serviceProviderId)
     {
-        String basePath = ServletListener.getServicesBase();
+        String basePath = OSLC4JUtils.getServletURI();
         Map<String, Object> pathParameters = new HashMap<String, Object>();
         pathParameters.put("serviceProviderId", serviceProviderId);
         String instanceURI = "serviceProviders/{serviceProviderId}";
@@ -261,8 +262,8 @@ public class ServiceProviderCatalogSingleton
             // Start of user code initServiceProviders
             // End of user code
 
-            String basePath = ServletListener.getServicesBase();
-            
+            String basePath = OSLC4JUtils.getServletURI();
+
             ServiceProviderInfo [] serviceProviderInfos = TestingToolManager.getServiceProviderInfos(httpServletRequest);
             //Register each service provider
             for (ServiceProviderInfo serviceProviderInfo : serviceProviderInfos) {

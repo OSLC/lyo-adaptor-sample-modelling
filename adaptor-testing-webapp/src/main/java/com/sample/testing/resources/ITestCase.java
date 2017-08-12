@@ -62,7 +62,6 @@ import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
-import com.sample.testing.servlet.ServletListener;
 import com.sample.testing.TestingToolConstants;
 import com.sample.testing.resources.IPerson;
 import com.sample.testing.resources.ITestScript;

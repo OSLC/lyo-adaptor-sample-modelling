@@ -21,12 +21,16 @@
 
 package com.sample.testing.servlet;
 
+import java.net.MalformedURLException;
+import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletRegistration;
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 
 import com.sample.testing.TestingToolManager;
 
@@ -35,11 +39,11 @@ import com.sample.testing.TestingToolManager;
 
 public class ServletListener implements ServletContextListener  {
     private static final String DEFAULT_BASE = "http://localhost:8080";
-    private static final String SERVICES_PATH = "/services";
     private static final String PROPERTY_BASE = servletContextParameterName("baseurl");
     private static final Logger logger = Logger.getLogger(ServletListener.class.getName());
-    private static String servletBase = null;
-    private static String servicesBase = null;
+
+    //If you are using another servletName in your web.xml configuration file, modify this variable early in the method contextInitialized below
+    private static String servletName = "JAX-RS Servlet";
 
     // Start of user code class_attributes
     // End of user code
@@ -54,9 +58,21 @@ public class ServletListener implements ServletContextListener  {
         // Start of user code contextInitialized_init
         // End of user code
 
-        String basePath = generateBasePath(servletContextEvent);
-        servletBase = basePath;
-        servicesBase = basePath + SERVICES_PATH;
+        String baseUrl = generateBasePath(servletContextEvent);
+        String servletUrlPattern = "services/";
+        try {
+            servletUrlPattern = getServletUrlPattern(servletContextEvent);
+        } catch (Exception e1) {
+            logger.log(Level.SEVERE, "servletListner encountered problems identifying the servlet URL pattern.", e1);
+        }
+        try {
+            OSLC4JUtils.setPublicURI(baseUrl);
+            OSLC4JUtils.setServletPath(servletUrlPattern);
+        } catch (MalformedURLException e) {
+            logger.log(Level.SEVERE, "servletListner encountered MalformedURLException.", e);
+        } catch (IllegalArgumentException e) {
+            logger.log(Level.SEVERE, "servletListner encountered IllegalArgumentException.", e);
+        }
 
         logger.log(Level.INFO, "servletListner contextInitialized.");
 
@@ -101,13 +117,23 @@ public class ServletListener implements ServletContextListener  {
         return base;
     }
 
-    public static String getServletBase() {
-        return servletBase;
-    }
+    private static String getServletUrlPattern(final ServletContextEvent servletContextEvent) throws Exception {
+        final ServletContext servletContext = servletContextEvent.getServletContext();
 
-    public static String getServicesBase() {
-        return servicesBase;
-    }
+        ServletRegistration servletRegistration = servletContext.getServletRegistration(servletName);
+        if (servletRegistration == null) {
+            throw new NoSuchElementException("no servlet with name \"" + servletName + "\" is found.");
+        }
+        java.util.Collection<java.lang.String> mappings = servletRegistration.getMappings();
+        if (mappings.size() != 1) {
+            throw new NoSuchElementException("unable to identify servlet mappings for servlet with name \"" + servletName + "\".");
+        }
+        String mapping = (String) mappings.toArray()[0];
 
+        //url patterns in  most cases end with '\*'. But a url-pattern with just '\' may be found for exact matches.
+        if (mapping.endsWith("*"))
+            mapping = mapping.substring(0, mapping.length()-1);
+        return mapping;
+    }
 }
 
