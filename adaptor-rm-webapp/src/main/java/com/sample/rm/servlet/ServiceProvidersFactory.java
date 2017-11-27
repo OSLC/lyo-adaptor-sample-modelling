@@ -37,7 +37,8 @@ import org.eclipse.lyo.oslc4j.core.model.Publisher;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderFactory;
 
-import com.sample.rm.RMToolConstants;
+import com.sample.rm.resources.DctermsConstants;
+import com.sample.rm.resources.Oslc_rmConstants;
 import com.sample.rm.services.ServiceProviderService1;
 
 // Start of user code imports
@@ -75,9 +76,9 @@ public class ServiceProvidersFactory
             new PrefixDefinition(OslcConstants.OSLC_DATA_NAMESPACE_PREFIX, new URI(OslcConstants.OSLC_DATA_NAMESPACE)),
             new PrefixDefinition(OslcConstants.RDF_NAMESPACE_PREFIX, new URI(OslcConstants.RDF_NAMESPACE)),
             new PrefixDefinition(OslcConstants.RDFS_NAMESPACE_PREFIX, new URI(OslcConstants.RDFS_NAMESPACE)),
-            new PrefixDefinition(RMToolConstants.DUBLIN_CORE_NAMSPACE_PREFIX, new URI(RMToolConstants.DUBLIN_CORE_NAMSPACE))
+            new PrefixDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE_PREFIX, new URI(DctermsConstants.DUBLIN_CORE_NAMSPACE))
 ,
-            new PrefixDefinition(RMToolConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE_PREFIX, new URI(RMToolConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE))
+            new PrefixDefinition(Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE_PREFIX, new URI(Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE))
         };
 
         serviceProvider.setPrefixDefinitions(prefixDefinitions);

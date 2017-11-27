@@ -15,9 +15,9 @@
  *     Alberto Giammaria    - initial API and implementation
  *     Chris Peters         - initial API and implementation
  *     Gianluca Bernardini  - initial API and implementation
- *	   Sam Padgett          - initial API and implementation
+ *       Sam Padgett          - initial API and implementation
  *     Michael Fiedler      - adapted for OSLC4J
- *     Jad El-khoury        - initial implementation of code generator (https://bugs.eclipse.org/bugs/show_bug.cgi?id=422448)
+ *     Jad El-khoury        - initial implementation of code generator (422448)
  *     Matthieu Helleboid   - Support for multiple Service Providers.
  *     Anass Radouani       - Support for multiple Service Providers.
  *
@@ -68,7 +68,10 @@ import org.eclipse.lyo.oslc4j.core.model.ValueType;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
+import com.sample.testing.resources.FoafConstants;
+import com.sample.testing.resources.DctermsConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
 import com.sample.testing.resources.Person;
 import com.sample.testing.resources.TestScript;
 
@@ -80,9 +83,9 @@ import com.sample.testing.resources.TestScript;
 
 // Start of user code classAnnotations
 // End of user code
-@OslcNamespace(TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE)
-@OslcName(TestingToolConstants.TESTCASE)
-@OslcResourceShape(title = "Test Case Resource Shape", describes = TestingToolConstants.TYPE_TESTCASE)
+@OslcNamespace(Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE)
+@OslcName(Oslc_qmConstants.TESTCASE)
+@OslcResourceShape(title = "Test Case Resource Shape", describes = Oslc_qmConstants.TYPE_TESTCASE)
 public class TestCase
     extends AbstractResource
     implements ITestCase
@@ -119,6 +122,10 @@ public class TestCase
         // End of user code
     }
     
+    /**
+    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
+    */
+    @Deprecated
     public TestCase(final String serviceProviderId, final String testCaseId)
            throws URISyntaxException
     {
@@ -127,6 +134,10 @@ public class TestCase
         // End of user code
     }
     
+    /**
+    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
+    */
+    @Deprecated
     public static URI constructURI(final String serviceProviderId, final String testCaseId)
     {
         String basePath = OSLC4JUtils.getServletURI();
@@ -139,11 +150,19 @@ public class TestCase
         return builder.path(instanceURI).buildFromMap(pathParameters);
     }
     
+    /**
+    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
+    */
+    @Deprecated
     public static Link constructLink(final String serviceProviderId, final String testCaseId , final String label)
     {
         return new Link(constructURI(serviceProviderId, testCaseId), label);
     }
     
+    /**
+    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
+    */
+    @Deprecated
     public static Link constructLink(final String serviceProviderId, final String testCaseId)
     {
         return new Link(constructURI(serviceProviderId, testCaseId));
@@ -152,7 +171,7 @@ public class TestCase
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
-        TestingToolConstants.PATH_TESTCASE,  
+        Oslc_qmConstants.PATH_TESTCASE,
         TestCase.class);
     }
     
@@ -200,7 +219,7 @@ public class TestCase
             // End of user code
         }
         else {
-            result = "<a href=\"" + getAbout() + "\">" + toString() + "</a>";
+            result = "<a href=\"" + getAbout() + "\" class=\"oslc-resource-link\">" + toString() + "</a>";
         }
     
         // Start of user code toHtml_finalize
@@ -213,10 +232,10 @@ public class TestCase
     // Start of user code getterAnnotation:uses
     // End of user code
     @OslcName("uses")
-    @OslcPropertyDefinition(TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE + "uses")
+    @OslcPropertyDefinition(Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE + "uses")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.Resource)
-    @OslcRange({TestingToolConstants.TYPE_TESTSCRIPT})
+    @OslcRange({Oslc_qmConstants.TYPE_TESTSCRIPT})
     @OslcReadOnly(false)
     public Link getUses()
     {
@@ -228,7 +247,7 @@ public class TestCase
     // Start of user code getterAnnotation:title
     // End of user code
     @OslcName("title")
-    @OslcPropertyDefinition(TestingToolConstants.DUBLIN_CORE_NAMSPACE + "title")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "title")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
@@ -242,10 +261,10 @@ public class TestCase
     // Start of user code getterAnnotation:contributor
     // End of user code
     @OslcName("contributor")
-    @OslcPropertyDefinition(TestingToolConstants.DUBLIN_CORE_NAMSPACE + "contributor")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "contributor")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.Resource)
-    @OslcRange({TestingToolConstants.TYPE_PERSON})
+    @OslcRange({FoafConstants.TYPE_PERSON})
     @OslcReadOnly(false)
     public Link getContributor()
     {
@@ -352,11 +371,6 @@ public class TestCase
     {
         String s = "";
     
-        // Start of user code usestoHtml_init
-        // End of user code
-    
-        s = s + "<label for=\"uses\"><strong>uses</strong>: </LABEL>";
-    
         // Start of user code usestoHtml_mid
         // End of user code
     
@@ -381,20 +395,15 @@ public class TestCase
     {
         String s = "";
     
-        // Start of user code titletoHtml_init
-        // End of user code
-    
-        s = s + "<label for=\"title\"><strong>title</strong>: </LABEL>";
-    
         // Start of user code titletoHtml_mid
         // End of user code
     
         try {
             if (title == null) {
-                s= s + "<em>null</em>";
+                s = s + "<em>null</em>";
             }
             else {
-                s= s + title.toString();
+                s = s + title.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -409,11 +418,6 @@ public class TestCase
     public String contributorToHtml()
     {
         String s = "";
-    
-        // Start of user code contributortoHtml_init
-        // End of user code
-    
-        s = s + "<label for=\"contributor\"><strong>contributor</strong>: </LABEL>";
     
         // Start of user code contributortoHtml_mid
         // End of user code

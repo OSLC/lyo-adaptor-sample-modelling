@@ -79,31 +79,32 @@ function create(baseUrl){
   xmlhttp.send(postData);
 }
 
-function select(){
-
-  list = document.getElementById("results");
-  if( list.length>0 && list.selectedIndex >= 0 ) {
-    option = list.options[list.selectedIndex];
-    sendResponse(option.text, option.value);
+function select() {
+  var list = document.getElementById("results");
+  if( list.length>0 && list.selectedIndex >= 0 ) { // something is selected
+    var oslcResponse = 'oslc-response:{ "oslc:results": ['
+    for (var item = 0; item < list.options.length; item++) {
+      var option = list.options[item];
+      if (option.selected) {
+        oslcResponse +=  '{"oslc:label": "' + option.text + '", "rdf:resource": "' + option.value + '"}, '
+      }
+    }    
+    oslcResponse = oslcResponse.substr(0, oslcResponse.length-2) + ']}'
+    sendResponse(oslcResponse);
   }
 }
 
-function sendResponse(label, resourceUrl) {
 
-  var oslcResponse = 'oslc-response:{ "oslc:results": [ ' +
-    ' { "oslc:label" : "' + label + '", "rdf:resource" : "' + resourceUrl + '"} ' +
-  ' ] }';
-
+function sendResponse(oslcResponse) {
   if (window.location.hash == '#oslc-core-windowName-1.0') {
-      // Window Name protocol in use
-        respondWithWindowName(oslcResponse);
+    // Window Name protocol in use
+    respondWithWindowName(oslcResponse);
   } else if (window.location.hash == '#oslc-core-postMessage-1.0') {
-      // Post Message protocol in use
+    // Post Message protocol in use
     respondWithPostMessage(oslcResponse);
   }
-
 }
-
+    
 function sendRawResponse(jsonObj) {
   var oslcResponse = "oslc-response:" + JSON.stringify(jsonObj, null, 2);
 

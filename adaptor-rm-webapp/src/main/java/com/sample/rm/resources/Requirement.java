@@ -15,9 +15,9 @@
  *     Alberto Giammaria    - initial API and implementation
  *     Chris Peters         - initial API and implementation
  *     Gianluca Bernardini  - initial API and implementation
- *	   Sam Padgett          - initial API and implementation
+ *       Sam Padgett          - initial API and implementation
  *     Michael Fiedler      - adapted for OSLC4J
- *     Jad El-khoury        - initial implementation of code generator (https://bugs.eclipse.org/bugs/show_bug.cgi?id=422448)
+ *     Jad El-khoury        - initial implementation of code generator (422448)
  *     Matthieu Helleboid   - Support for multiple Service Providers.
  *     Anass Radouani       - Support for multiple Service Providers.
  *
@@ -68,7 +68,8 @@ import org.eclipse.lyo.oslc4j.core.model.ValueType;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
-import com.sample.rm.RMToolConstants;
+import com.sample.rm.resources.Oslc_rmConstants;
+import com.sample.rm.resources.DctermsConstants;
 
 // Start of user code imports
 // End of user code
@@ -78,9 +79,9 @@ import com.sample.rm.RMToolConstants;
 
 // Start of user code classAnnotations
 // End of user code
-@OslcNamespace(RMToolConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
-@OslcName(RMToolConstants.REQUIREMENT)
-@OslcResourceShape(title = "Requirement Resource Shape", describes = RMToolConstants.TYPE_REQUIREMENT)
+@OslcNamespace(Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
+@OslcName(Oslc_rmConstants.REQUIREMENT)
+@OslcResourceShape(title = "Requirement Resource Shape", describes = Oslc_rmConstants.TYPE_REQUIREMENT)
 public class Requirement
     extends AbstractResource
     implements IRequirement
@@ -88,6 +89,9 @@ public class Requirement
     // Start of user code attributeAnnotation:title
     // End of user code
     private String title;
+    // Start of user code attributeAnnotation:description
+    // End of user code
+    private String description;
     
     // Start of user code classAttributes
     // End of user code
@@ -111,40 +115,55 @@ public class Requirement
         // End of user code
     }
     
-    public Requirement(final String serviceProviderId, final String requirementId)
+    /**
+    * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
+    */
+    @Deprecated
+    public Requirement(final String requirementId)
            throws URISyntaxException
     {
-        this (constructURI(serviceProviderId, requirementId));
+        this (constructURI(requirementId));
         // Start of user code constructor3
         // End of user code
     }
     
-    public static URI constructURI(final String serviceProviderId, final String requirementId)
+    /**
+    * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
+    */
+    @Deprecated
+    public static URI constructURI(final String requirementId)
     {
         String basePath = OSLC4JUtils.getServletURI();
         Map<String, Object> pathParameters = new HashMap<String, Object>();
-        pathParameters.put("serviceProviderId", serviceProviderId);
         pathParameters.put("requirementId", requirementId);
-        String instanceURI = "serviceProviders/{serviceProviderId}/requirements/{requirementId}";
+        String instanceURI = "requirements/{requirementId}";
     
         final UriBuilder builder = UriBuilder.fromUri(basePath);
         return builder.path(instanceURI).buildFromMap(pathParameters);
     }
     
-    public static Link constructLink(final String serviceProviderId, final String requirementId , final String label)
+    /**
+    * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
+    */
+    @Deprecated
+    public static Link constructLink(final String requirementId , final String label)
     {
-        return new Link(constructURI(serviceProviderId, requirementId), label);
+        return new Link(constructURI(requirementId), label);
     }
     
-    public static Link constructLink(final String serviceProviderId, final String requirementId)
+    /**
+    * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
+    */
+    @Deprecated
+    public static Link constructLink(final String requirementId)
     {
-        return new Link(constructURI(serviceProviderId, requirementId));
+        return new Link(constructURI(requirementId));
     }
     
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
-        RMToolConstants.PATH_REQUIREMENT,  
+        Oslc_rmConstants.PATH_REQUIREMENT,
         Requirement.class);
     }
     
@@ -192,7 +211,7 @@ public class Requirement
             // End of user code
         }
         else {
-            result = "<a href=\"" + getAbout() + "\">" + toString() + "</a>";
+            result = "<a href=\"" + getAbout() + "\" class=\"oslc-resource-link\">" + toString() + "</a>";
         }
     
         // Start of user code toHtml_finalize
@@ -205,7 +224,7 @@ public class Requirement
     // Start of user code getterAnnotation:title
     // End of user code
     @OslcName("title")
-    @OslcPropertyDefinition(RMToolConstants.DUBLIN_CORE_NAMSPACE + "title")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "title")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
@@ -214,6 +233,20 @@ public class Requirement
         // Start of user code getterInit:title
         // End of user code
         return title;
+    }
+    
+    // Start of user code getterAnnotation:description
+    // End of user code
+    @OslcName("description")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "description")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getDescription()
+    {
+        // Start of user code getterInit:description
+        // End of user code
+        return description;
     }
     
     
@@ -226,6 +259,18 @@ public class Requirement
         this.title = title;
     
         // Start of user code setterFinalize:title
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:description
+    // End of user code
+    public void setDescription(final String description )
+    {
+        // Start of user code setterInit:description
+        // End of user code
+        this.description = description;
+    
+        // Start of user code setterFinalize:description
         // End of user code
     }
     
@@ -249,31 +294,69 @@ public class Requirement
         return s;
     }
     
+    static public String descriptionToHtmlForCreation (final HttpServletRequest httpServletRequest)
+    {
+        String s = "";
+    
+        // Start of user code "Init:descriptionToHtmlForCreation(...)"
+        // End of user code
+    
+        s = s + "<label for=\"description\">description: </LABEL>";
+    
+        // Start of user code "Mid:descriptionToHtmlForCreation(...)"
+        // End of user code
+    
+        s= s + "<input name=\"description\" type=\"text\" style=\"width: 400px\" id=\"description\" >";
+        // Start of user code "Finalize:descriptionToHtmlForCreation(...)"
+        // End of user code
+    
+        return s;
+    }
+    
     
     public String titleToHtml()
     {
         String s = "";
-    
-        // Start of user code titletoHtml_init
-        // End of user code
-    
-        s = s + "<label for=\"title\"><strong>title</strong>: </LABEL>";
     
         // Start of user code titletoHtml_mid
         // End of user code
     
         try {
             if (title == null) {
-                s= s + "<em>null</em>";
+                s = s + "<em>null</em>";
             }
             else {
-                s= s + title.toString();
+                s = s + title.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     
         // Start of user code titletoHtml_finalize
+        // End of user code
+    
+        return s;
+    }
+    
+    public String descriptionToHtml()
+    {
+        String s = "";
+    
+        // Start of user code descriptiontoHtml_mid
+        // End of user code
+    
+        try {
+            if (description == null) {
+                s = s + "<em>null</em>";
+            }
+            else {
+                s = s + description.toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        // Start of user code descriptiontoHtml_finalize
         // End of user code
     
         return s;

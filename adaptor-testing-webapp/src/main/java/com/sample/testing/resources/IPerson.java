@@ -62,34 +62,35 @@ import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.resources.FoafConstants;
+import com.sample.testing.resources.FoafConstants;
 
 // Start of user code imports
 // End of user code
 
-@OslcNamespace(TestingToolConstants.FOAF_NAMSPACE)
-@OslcName(TestingToolConstants.PERSON)
-@OslcResourceShape(title = "Person Resource Shape", describes = TestingToolConstants.TYPE_PERSON)
+@OslcNamespace(FoafConstants.FOAF_NAMSPACE)
+@OslcName(FoafConstants.PERSON)
+@OslcResourceShape(title = "Person Resource Shape", describes = FoafConstants.TYPE_PERSON)
 public interface IPerson
 {
 
 
     @OslcName("name")
-    @OslcPropertyDefinition(TestingToolConstants.FOAF_NAMSPACE + "name")
+    @OslcPropertyDefinition(FoafConstants.FOAF_NAMSPACE + "name")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
     public String getName();
 
     @OslcName("givenName")
-    @OslcPropertyDefinition(TestingToolConstants.FOAF_NAMSPACE + "givenName")
+    @OslcPropertyDefinition(FoafConstants.FOAF_NAMSPACE + "givenName")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
     public String getGivenName();
 
     @OslcName("familyName")
-    @OslcPropertyDefinition(TestingToolConstants.FOAF_NAMSPACE + "familyName")
+    @OslcPropertyDefinition(FoafConstants.FOAF_NAMSPACE + "familyName")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)

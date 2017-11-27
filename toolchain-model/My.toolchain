@@ -4,18 +4,20 @@
     <serviceProviderCatalog title="Service Provider Catalog">
       <serviceProviders title="Service Provider" serviceNamespace="">
         <services domainSpecification="//@specification/@domainSpecifications.0">
-          <creationFactories title="CreationFactory1" creationURI="create" resourceTypes="//@specification/@domainSpecifications.0/@resources.2"/>
-          <basicCapabilities resourceTypes="//@specification/@domainSpecifications.0/@resources.2"/>
+          <creationFactories title="CreationFactory" creationURI="create" resourceTypes="//@specification/@domainSpecifications.0/@resources.1"/>
+          <queryCapabilities title="QueryCapability" label="QueryCapability" queryBaseURI="query" resourceTypes="//@specification/@domainSpecifications.0/@resources.1"/>
+          <basicCapabilities resourceTypes="//@specification/@domainSpecifications.0/@resources.1"/>
         </services>
       </serviceProviders>
     </serviceProviderCatalog>
     <specification/>
-    <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://your.host/adaptor/services/catalog/singleton" name="GenericRequiredAdaptor" servicedResources="//@specification/@domainSpecifications.3/@resources.0"/>
+    <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://localhost:8081/adaptor-rm/services/catalog/singleton" name="RequirementsAdaptor" servicedResources="//@specification/@domainSpecifications.3/@resources.0"/>
   </adaptorInterfaces>
   <adaptorInterfaces name="RM Tool" javaClassBaseNamespace="com.sample.rm" javaFilesBasePath="../adaptor-rm-webapp/src/main/java/" jspFilesBasePath="../adaptor-rm-webapp/src/main/webapp/" javascriptFilesBasePath="../adaptor-rm-webapp/src/main/webapp/" backendCodeTemplate_getServiceProviders="" backendCodeTemplate_getResource="">
     <serviceProviderCatalog title="Service Provider Catalog">
       <serviceProviders title="Service Provider">
-        <services domainSpecification="//@specification/@domainSpecifications.3">
+        <services domainSpecification="//@specification/@domainSpecifications.3" serviceNamespace="independantOfServiceProvider">
+          <queryCapabilities title="QueryCapability" label="QueryCapability" queryBaseURI="query" resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
           <basicCapabilities resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
         </services>
       </serviceProviders>
@@ -26,7 +28,7 @@
   <specification>
     <domainSpecifications name="Quality Management" namespaceURI="http://open-services.net/ns/qm#" namespacePrefix="//@specification/@domainPrefixes.1">
       <resources name="Test Plan" resourceProperties="//@specification/@domainSpecifications.0/@resourceProperties.2 //@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.0"/>
-      <resources name="Test Script" resourceProperties="//@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.0/@resourceProperties.3"/>
+      <resources name="Test Script" resourceProperties="//@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.0/@resourceProperties.3 //@specification/@domainSpecifications.2/@resourceProperties.2"/>
       <resources name="Test Case" resourceProperties="//@specification/@domainSpecifications.0/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.0"/>
       <resourceProperties name="Reports On" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.2"/>
       <resourceProperties name="uses" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.1"/>
@@ -42,9 +44,10 @@
     <domainSpecifications name="Dublin Core" namespaceURI="http://purl.org/dc/terms/" namespacePrefix="//@specification/@domainPrefixes.4">
       <resourceProperties name="contributor" valueType="Resource" range="//@specification/@domainSpecifications.1/@resources.0"/>
       <resourceProperties name="title" valueType="String"/>
+      <resourceProperties name="description" valueType="String"/>
     </domainSpecifications>
     <domainSpecifications name="Requirements Management" namespaceURI="http://open-services.net/ns/rm#" namespacePrefix="//@specification/@domainPrefixes.0">
-      <resources name="Requirement" resourceProperties="//@specification/@domainSpecifications.2/@resourceProperties.1"/>
+      <resources name="Requirement" resourceProperties="//@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.2"/>
     </domainSpecifications>
     <domainPrefixes name="oslc_rm"/>
     <domainPrefixes name="oslc_qm"/>
