@@ -65,7 +65,7 @@ End of user code
     <%--
 Start of user code (RECOMMENDED) headStuff
     --%>
-    <%--
+<%--
 End of user code
     --%>
 </head>
@@ -88,15 +88,28 @@ End of user code
         <%--
 Start of user code (RECOMMENDED) bodyStuff1
         --%>
-        <%--
+		<div class="alert alert-primary" role="alert">
+			<h4 class="alert-heading">Sample data!</h4>
+			<hr>
+			<p>
+				A sample set of Requirement resources is presented here. Modify the
+				method
+				<code>queryRequirements()</code>
+				in the class
+				<code>RMToolManager</code>
+				, to return the expected set of Requirement resources.
+			</p>
+		</div>
+		<%--
 End of user code
         --%>
         <% for (Requirement aResource : resources) { %>
       <%--
 Start of user code (RECOMMENDED) queryItem
           --%>
-        <p><%= aResource.toHtml() %><br /></p>
-           <%--
+		<p><%=aResource.toHtml()%><br />
+		</p>
+		<%--
 End of user code
           --%>
         <% } %>

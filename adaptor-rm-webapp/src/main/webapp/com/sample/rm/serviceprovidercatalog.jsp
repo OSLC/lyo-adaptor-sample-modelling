@@ -62,7 +62,7 @@ End of user code
     <%--
 Start of user code (RECOMMENDED) headStuff
     --%>
-    <%--
+<%--
 End of user code
     --%>
   </head>
@@ -80,11 +80,19 @@ End of user code
     <%--
 Start of user code (RECOMMENDED) bodyStuff
     --%>
-<em><strong>
-A sample list of Service Providers are listed here. 
-<p>Modify the method getServiceProviderInfos() in the class RMToolManager, to return the expected ServiceProvider resources.
-</strong></em>
-    <%--
+		<div class="alert alert-primary" role="alert">
+			<h4 class="alert-heading">Sample data!</h4>
+			<hr>
+			<p>
+				A sample list of Service Providers are listed here. Modify the
+				method
+				<code>getServiceProviderInfos()</code>
+				in the class
+				<code>RMToolManager</code>
+				, to return the expected set of ServiceProvider resources.
+			</p>
+		</div>
+		<%--
 End of user code
     --%>
 

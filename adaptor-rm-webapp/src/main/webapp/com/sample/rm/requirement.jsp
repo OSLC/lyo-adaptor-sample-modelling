@@ -64,7 +64,7 @@ End of user code
   <%--
 Start of user code (RECOMMENDED) headStuff
     --%>
-    <%--
+<%--
 End of user code
   --%>
 </head>
@@ -89,11 +89,18 @@ End of user code
         <%--
 Start of user code (RECOMMENDED) bodyStuff1
         --%>
-<em><strong>
-A sample Requirement resource is presented here. 
-<p>Modify the method getRequirement() in the class RMToolManager, to return the expected Requirement resource.
-</strong></em>
-        <%--
+		<div class="alert alert-primary" role="alert">
+			<h4 class="alert-heading">Sample data!</h4>
+			<hr>
+			<p>
+				A sample Requirement resource is presented here. Modify the method
+				<code>getRequirement()</code>
+				in the class
+				<code>RMToolManager</code>
+				, to return the expected Requirement resource.
+			</p>
+		</div>
+		<%--
 End of user code
         --%>
 
