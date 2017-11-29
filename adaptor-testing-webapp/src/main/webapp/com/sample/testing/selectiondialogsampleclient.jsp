@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html><%--
  Copyright (c) 2011, 2012 IBM Corporation and others.
 
@@ -36,18 +37,20 @@ End of user code
 <html>
 <head>
   <title>Selection Dialog client</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-  integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
-  crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-  <style>
-  #delegatedUI {
-    width: 523px;
-    height: 320px;
-  }
-  </style>
+  <link href="<c:url value="/static/css/bootstrap-4.0.0-beta.min.css"/>" rel="stylesheet">
+  <link href="<c:url value="/static/css/adaptor.css"/>" rel="stylesheet">
+
+  <script src="<c:url value="/static/js/jquery-3.2.1.min.js"/>"></script>
+  <script src="<c:url value="/static/js/popper-1.11.0.min.js"/>"></script>
+  <script src="<c:url value="/static/js/bootstrap-4.0.0-beta.min.js"/>"></script>
 </head>
 <body>
+
+<nav class="navbar sticky-top navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" href="<c:url value="/services/catalog/singleton"/>">Testing Tool</a>
+  </div>
+</nav>
 
 <div class="container">
 
@@ -82,15 +85,29 @@ End of user code
 
 </div>
 
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">
+      OSLC Adaptor was generated using <a href="http://eclipse.org/lyo">Eclipse Lyo</a> 2.3.0.M2.
+    </p>
+  </div>
+</footer>
+
 <script type="text/javascript">
   $(function () {
     function handleMessage(message) {
-      var results = JSON.parse(message);
-      var firstResult = {
-        label: results["oslc:results"][0]["oslc:label"],
-        uri: results["oslc:results"][0]["rdf:resource"]
-      };
-      handleOslcSelection(firstResult);
+            var resultsUl = document.querySelector('#results ul')
+            while(resultsUl.hasChildNodes()) {
+              resultsUl.removeChild(resultsUl.lastChild)
+            }
+      var results = JSON.parse(message)["oslc:results"];
+      for (var item in results) {
+          var aResult = {
+            label: results[item]["oslc:label"],
+            uri: results[item]["rdf:resource"]
+          }
+          handleOslcSelection(aResult);
+      }
     }
 
     function handleOslcSelection(resource) {

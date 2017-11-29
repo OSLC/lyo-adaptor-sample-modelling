@@ -30,13 +30,20 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.testing.servlet.ServiceProviderCatalogSingleton;
 import com.sample.testing.ServiceProviderInfo;
-import com.sample.testing.resources.Person;
 import com.sample.testing.resources.Requirement;
-import com.sample.testing.resources.TestCase;
 import com.sample.testing.resources.TestScript;
 
 
 // Start of user code imports
+import java.util.concurrent.ThreadLocalRandom;
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.eclipse.lyo.oslc4j.core.model.Link;
+import java.util.ArrayList;
+
+import com.sample.testing.clients.RequirementsAdaptorClient;
 // End of user code
 
 // Start of user code pre_class_code
@@ -45,10 +52,48 @@ import com.sample.testing.resources.TestScript;
 public class TestingToolManager {
 
     // Start of user code class_attributes
+	private static final Logger log = LoggerFactory.getLogger(TestingToolManager.class);
     // End of user code
     
     
     // Start of user code class_methods
+	private static int randomNumber(int origin, int bound) {
+		return ThreadLocalRandom.current().nextInt(origin, bound);
+	}
+
+	private static Link queryForRandomRequirementLink() throws URISyntaxException {
+		try {
+			String[] requirements = RequirementsAdaptorClient.queryRequirements();
+			int index = randomNumber(0, requirements.length);
+			return new Link (new URI (requirements[index]));
+		} catch (Exception e) {
+            log.error("Failed to query resources", e);
+            return null;
+		}
+	}
+
+	private static TestScript createRandomTestScript(String serviceProviderId, String id) {
+		TestScript r = null;
+		try {
+			r = TestingToolResourcesFactory.createTestScript(serviceProviderId, id);
+			r.setTitle("A sample TestScript with id:" + id);
+			r.setDescription("A sample TestScript with id:" + id);
+			r.setValidatesRequirement(queryForRandomRequirementLink());
+		} catch (URISyntaxException e) {
+            log.error("Failed to create resource", e);
+		}
+		return r;
+	}
+
+	private static List<TestScript> createRandomTestScripts(String serviceProviderId, int min, int max, int minId, int maxId)
+    {
+		int size = randomNumber(min, max);
+		List<TestScript> resources = new ArrayList<TestScript>(size);
+		for (int i = 0; i < size; i++) {
+	    	resources.add(createRandomTestScript(serviceProviderId, Integer.toString(randomNumber(minId, maxId))));
+		}
+        return resources;
+    }
     // End of user code
 
     public static void contextInitializeServletListener(final ServletContextEvent servletContextEvent)
@@ -72,28 +117,53 @@ public class TestingToolManager {
         ServiceProviderInfo[] serviceProviderInfos = {};
         
         // Start of user code "ServiceProviderInfo[] getServiceProviderInfos(...)"
-        // TODO Implement code to return the set of ServiceProviders
+        ServiceProviderInfo r1 = new ServiceProviderInfo();
+        r1.name = "A sample RM Service Provider 1";
+        r1.serviceProviderId = "1";
+
+        ServiceProviderInfo r2 = new ServiceProviderInfo();
+        r2.name = "A sample RM Service Provider 2";
+        r2.serviceProviderId = "2";
+
+        serviceProviderInfos = new ServiceProviderInfo[2];
+        serviceProviderInfos[0] = r1;
+        serviceProviderInfos[1] = r2;
         // End of user code
         return serviceProviderInfos;
     }
 
-    public static TestCase createTestCase(HttpServletRequest httpServletRequest, final TestCase aResource, final String serviceProviderId)
+    public static List<TestScript> queryTestScripts(HttpServletRequest httpServletRequest, final String serviceProviderId, String where, int page, int limit)
     {
-        TestCase newResource = null;
+        List<TestScript> resources = null;
         
-        // Start of user code createTestCase
-        // TODO Implement code to create a resource
+        // Start of user code queryTestScripts
+        resources = createRandomTestScripts(serviceProviderId, 0, 50, 1, 5000);
+        // End of user code
+        return resources;
+    }
+    public static TestScript createTestScript(HttpServletRequest httpServletRequest, final TestScript aResource, final String serviceProviderId)
+    {
+        TestScript newResource = null;
+        
+        // Start of user code createTestScript
+		try {
+			int id = randomNumber(1, 500);
+			newResource = TestingToolResourcesFactory.createTestScript(serviceProviderId, Integer.toString(id));
+			newResource.setTitle("A sample TestScriot with id:" + id);
+		} catch (URISyntaxException e) {
+            log.error("Failed to create resource", e);
+		}
         // End of user code
         return newResource;
     }
 
 
-    public static TestCase getTestCase(HttpServletRequest httpServletRequest, final String serviceProviderId, final String testCaseId)
+    public static TestScript getTestScript(HttpServletRequest httpServletRequest, final String serviceProviderId, final String testScriptId)
     {
-        TestCase aResource = null;
+        TestScript aResource = null;
         
-        // Start of user code getTestCase
-        // TODO Implement code to return a resource
+        // Start of user code getTestScript
+        aResource = createRandomTestScript(serviceProviderId, testScriptId);
         // End of user code
         return aResource;
     }
@@ -101,10 +171,10 @@ public class TestingToolManager {
 
 
 
-    public static String getETagFromTestCase(final TestCase aResource)
+    public static String getETagFromTestScript(final TestScript aResource)
     {
         String eTag = null;
-        // Start of user code getETagFromTestCase
+        // Start of user code getETagFromTestScript
         // TODO Implement code to return an ETag for a particular resource
         // End of user code
         return eTag;

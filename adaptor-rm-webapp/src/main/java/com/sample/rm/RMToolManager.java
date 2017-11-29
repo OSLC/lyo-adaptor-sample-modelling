@@ -34,6 +34,11 @@ import com.sample.rm.resources.Requirement;
 
 
 // Start of user code imports
+import java.util.concurrent.ThreadLocalRandom;
+import java.net.URISyntaxException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.util.ArrayList;
 // End of user code
 
 // Start of user code pre_class_code
@@ -42,10 +47,36 @@ import com.sample.rm.resources.Requirement;
 public class RMToolManager {
 
     // Start of user code class_attributes
+	private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
     // End of user code
     
     
     // Start of user code class_methods
+	private static int randomNumber(int origin, int bound) {
+		return ThreadLocalRandom.current().nextInt(origin, bound);
+	}
+
+	private static Requirement createRandomRequirement(String id) {
+		Requirement r = null;
+		try {
+			r = RMToolResourcesFactory.createRequirement(id);
+			r.setTitle("A sample Requirement with id:" + id);
+			r.setDescription("A sample Requirement with id:" + id);
+		} catch (URISyntaxException e) {
+            log.error("Failed to create resource", e);
+		}
+		return r;
+	}
+
+	private static List<Requirement> createRandomRequirements(int min, int max, int minId, int maxId)
+    {
+		int size = randomNumber(min, max);
+		List<Requirement> resources = new ArrayList<Requirement>(size);
+		for (int i = 0; i < size; i++) {
+	    	resources.add(createRandomRequirement(Integer.toString(randomNumber(minId, maxId))));
+		}
+        return resources;
+    }
     // End of user code
 
     public static void contextInitializeServletListener(final ServletContextEvent servletContextEvent)
@@ -69,19 +100,38 @@ public class RMToolManager {
         ServiceProviderInfo[] serviceProviderInfos = {};
         
         // Start of user code "ServiceProviderInfo[] getServiceProviderInfos(...)"
-        // TODO Implement code to return the set of ServiceProviders
+        ServiceProviderInfo r1 = new ServiceProviderInfo();
+        r1.name = "A sample RM Service Provider 1";
+        r1.serviceProviderId = "1";
+
+        ServiceProviderInfo r2 = new ServiceProviderInfo();
+        r2.name = "A sample RM Service Provider 2";
+        r2.serviceProviderId = "2";
+
+        serviceProviderInfos = new ServiceProviderInfo[2];
+        serviceProviderInfos[0] = r1;
+        serviceProviderInfos[1] = r2;
         // End of user code
         return serviceProviderInfos;
     }
 
+    public static List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, int page, int limit)
+    {
+        List<Requirement> resources = null;
+        
+        // Start of user code queryRequirements
+    	resources = createRandomRequirements(1,  30, 1,  10000);
+        // End of user code
+        return resources;
+    }
 
 
-    public static Requirement getRequirement(HttpServletRequest httpServletRequest, final String serviceProviderId, final String requirementId)
+    public static Requirement getRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
         Requirement aResource = null;
         
         // Start of user code getRequirement
-        // TODO Implement code to return a resource
+    	aResource = createRandomRequirement(requirementId);
         // End of user code
         return aResource;
     }

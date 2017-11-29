@@ -26,10 +26,9 @@
     @OslcNamespaceDefinition(prefix = OslcConstants.OSLC_DATA_NAMESPACE_PREFIX,           namespaceURI = OslcConstants.OSLC_DATA_NAMESPACE),
     @OslcNamespaceDefinition(prefix = OslcConstants.RDF_NAMESPACE_PREFIX,                 namespaceURI = OslcConstants.RDF_NAMESPACE),
     @OslcNamespaceDefinition(prefix = OslcConstants.RDFS_NAMESPACE_PREFIX,                namespaceURI = OslcConstants.RDFS_NAMESPACE),
-    @OslcNamespaceDefinition(prefix = TestingToolConstants.FOAF_NAMSPACE_PREFIX, namespaceURI = TestingToolConstants.FOAF_NAMSPACE),
-    @OslcNamespaceDefinition(prefix = TestingToolConstants.DUBLIN_CORE_NAMSPACE_PREFIX, namespaceURI = TestingToolConstants.DUBLIN_CORE_NAMSPACE),
-    @OslcNamespaceDefinition(prefix = TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE_PREFIX, namespaceURI = TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE),
-    @OslcNamespaceDefinition(prefix = TestingToolConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE_PREFIX, namespaceURI = TestingToolConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
+    @OslcNamespaceDefinition(prefix = DctermsConstants.DUBLIN_CORE_NAMSPACE_PREFIX, namespaceURI = DctermsConstants.DUBLIN_CORE_NAMSPACE),
+    @OslcNamespaceDefinition(prefix = Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE_PREFIX, namespaceURI = Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE),
+    @OslcNamespaceDefinition(prefix = Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE_PREFIX, namespaceURI = Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
 })
 package com.sample.testing.resources;
 
@@ -37,5 +36,7 @@ import org.eclipse.lyo.oslc4j.core.annotation.OslcNamespaceDefinition;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcSchema;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.resources.DctermsConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
+import com.sample.testing.resources.Oslc_rmConstants;
 

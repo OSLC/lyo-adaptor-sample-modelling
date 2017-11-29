@@ -62,36 +62,47 @@ import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
+import com.sample.testing.resources.DctermsConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
+import com.sample.testing.resources.Oslc_rmConstants;
 import com.sample.testing.resources.IRequirement;
 
 // Start of user code imports
 // End of user code
 
-@OslcNamespace(TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE)
-@OslcName(TestingToolConstants.TESTSCRIPT)
-@OslcResourceShape(title = "Test Script Resource Shape", describes = TestingToolConstants.TYPE_TESTSCRIPT)
+@OslcNamespace(Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE)
+@OslcName(Oslc_qmConstants.TESTSCRIPT)
+@OslcResourceShape(title = "Test Script Resource Shape", describes = Oslc_qmConstants.TYPE_TESTSCRIPT)
 public interface ITestScript
 {
 
 
     @OslcName("title")
-    @OslcPropertyDefinition(TestingToolConstants.DUBLIN_CORE_NAMSPACE + "title")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "title")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
     public String getTitle();
 
     @OslcName("validatesRequirement")
-    @OslcPropertyDefinition(TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE + "validatesRequirement")
+    @OslcPropertyDefinition(Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE + "validatesRequirement")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.Resource)
-    @OslcRange({TestingToolConstants.TYPE_REQUIREMENT})
+    @OslcRange({Oslc_rmConstants.TYPE_REQUIREMENT})
     @OslcReadOnly(false)
     public Link getValidatesRequirement();
+
+    @OslcName("description")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "description")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getDescription();
 
 
     public void setTitle(final String title );
     public void setValidatesRequirement(final Link validatesRequirement );
+    public void setDescription(final String description );
 }
 

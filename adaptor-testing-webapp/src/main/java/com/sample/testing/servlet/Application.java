@@ -54,11 +54,11 @@ import com.sample.testing.services.ServiceProviderCatalogService;
 import com.sample.testing.services.ServiceProviderService;
 import com.sample.testing.services.ResourceShapeService;
 
-import com.sample.testing.resources.Person;
 import com.sample.testing.resources.Requirement;
-import com.sample.testing.resources.TestCase;
 import com.sample.testing.resources.TestScript;
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.resources.DctermsConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
+import com.sample.testing.resources.Oslc_rmConstants;
 import com.sample.testing.services.ServiceProviderService1;
 
 // Start of user code imports
@@ -80,52 +80,37 @@ public class Application extends OslcWinkApplication {
 
     static
     {
-        try
-        {
-            RESOURCE_CLASSES.addAll(JenaProvidersRegistry.getProviders());
-            RESOURCE_CLASSES.addAll(Json4JProvidersRegistry.getProviders());
-            RESOURCE_CLASSES.add(ServiceProviderService1.class);
-            RESOURCE_CLASSES.add(Person.class);
-            RESOURCE_CLASSES.add(Requirement.class);
-            RESOURCE_CLASSES.add(TestCase.class);
-            RESOURCE_CLASSES.add(TestScript.class);
-            RESOURCE_CLASSES.add(Class.forName("org.eclipse.lyo.server.oauth.webapp.services.ConsumersService"));
-            RESOURCE_CLASSES.add(Class.forName("org.eclipse.lyo.server.oauth.webapp.services.OAuthService"));
+        RESOURCE_CLASSES.addAll(JenaProvidersRegistry.getProviders());
+        RESOURCE_CLASSES.addAll(Json4JProvidersRegistry.getProviders());
+        RESOURCE_CLASSES.add(ServiceProviderService1.class);
 
-            // Catalog resources
-            RESOURCE_CLASSES.add(ServiceProviderCatalogService.class);
-            RESOURCE_CLASSES.add(ServiceProviderService.class);
-            RESOURCE_CLASSES.add(ResourceShapeService.class);
+        // Catalog resources
+        RESOURCE_CLASSES.add(ServiceProviderCatalogService.class);
+        RESOURCE_CLASSES.add(ServiceProviderService.class);
+        RESOURCE_CLASSES.add(ResourceShapeService.class);
 
-            // Start of user code Custom Resource Classes
+        // Start of user code Custom Resource Classes
             // End of user code
 
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_ALLOWED_VALUES,           AllowedValues.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_COMPACT,                  Compact.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_CREATION_FACTORY,         CreationFactory.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_DIALOG,                   Dialog.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_ERROR,                    Error.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_EXTENDED_ERROR,           ExtendedError.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_OAUTH_CONFIGURATION,      OAuthConfiguration.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_PREFIX_DEFINITION,        PrefixDefinition.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_PREVIEW,                  Preview.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_PROPERTY,                 Property.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_PUBLISHER,                Publisher.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_QUERY_CAPABILITY,         QueryCapability.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_RESOURCE_SHAPE,           ResourceShape.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE,                  Service.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE_PROVIDER,         ServiceProvider.class);
-            RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE_PROVIDER_CATALOG, ServiceProviderCatalog.class);
-        } catch (ClassNotFoundException e)
-        {
-            e.printStackTrace();
-            System.err.println("Application failed to initialize");
-        }
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_ALLOWED_VALUES,           AllowedValues.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_COMPACT,                  Compact.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_CREATION_FACTORY,         CreationFactory.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_DIALOG,                   Dialog.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_ERROR,                    Error.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_EXTENDED_ERROR,           ExtendedError.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_OAUTH_CONFIGURATION,      OAuthConfiguration.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_PREFIX_DEFINITION,        PrefixDefinition.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_PREVIEW,                  Preview.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_PROPERTY,                 Property.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_PUBLISHER,                Publisher.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_QUERY_CAPABILITY,         QueryCapability.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_RESOURCE_SHAPE,           ResourceShape.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE,                  Service.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE_PROVIDER,         ServiceProvider.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE_PROVIDER_CATALOG, ServiceProviderCatalog.class);
 
-        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(TestingToolConstants.PATH_PERSON, Person.class);
-        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(TestingToolConstants.PATH_REQUIREMENT, Requirement.class);
-        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(TestingToolConstants.PATH_TESTCASE, TestCase.class);
-        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(TestingToolConstants.PATH_TESTSCRIPT, TestScript.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(Oslc_rmConstants.PATH_REQUIREMENT, Requirement.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(Oslc_qmConstants.PATH_TESTSCRIPT, TestScript.class);
     }
 
     public Application()

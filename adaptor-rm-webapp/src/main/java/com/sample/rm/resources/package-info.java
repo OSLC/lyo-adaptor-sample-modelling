@@ -26,8 +26,8 @@
     @OslcNamespaceDefinition(prefix = OslcConstants.OSLC_DATA_NAMESPACE_PREFIX,           namespaceURI = OslcConstants.OSLC_DATA_NAMESPACE),
     @OslcNamespaceDefinition(prefix = OslcConstants.RDF_NAMESPACE_PREFIX,                 namespaceURI = OslcConstants.RDF_NAMESPACE),
     @OslcNamespaceDefinition(prefix = OslcConstants.RDFS_NAMESPACE_PREFIX,                namespaceURI = OslcConstants.RDFS_NAMESPACE),
-    @OslcNamespaceDefinition(prefix = RMToolConstants.DUBLIN_CORE_NAMSPACE_PREFIX, namespaceURI = RMToolConstants.DUBLIN_CORE_NAMSPACE),
-    @OslcNamespaceDefinition(prefix = RMToolConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE_PREFIX, namespaceURI = RMToolConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
+    @OslcNamespaceDefinition(prefix = DctermsConstants.DUBLIN_CORE_NAMSPACE_PREFIX, namespaceURI = DctermsConstants.DUBLIN_CORE_NAMSPACE),
+    @OslcNamespaceDefinition(prefix = Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE_PREFIX, namespaceURI = Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
 })
 package com.sample.rm.resources;
 
@@ -35,5 +35,6 @@ import org.eclipse.lyo.oslc4j.core.annotation.OslcNamespaceDefinition;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcSchema;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 
-import com.sample.rm.RMToolConstants;
+import com.sample.rm.resources.DctermsConstants;
+import com.sample.rm.resources.Oslc_rmConstants;
 

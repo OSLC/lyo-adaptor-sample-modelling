@@ -15,9 +15,9 @@
  *     Alberto Giammaria    - initial API and implementation
  *     Chris Peters         - initial API and implementation
  *     Gianluca Bernardini  - initial API and implementation
- *	   Sam Padgett          - initial API and implementation
+ *       Sam Padgett          - initial API and implementation
  *     Michael Fiedler      - adapted for OSLC4J
- *     Jad El-khoury        - initial implementation of code generator (https://bugs.eclipse.org/bugs/show_bug.cgi?id=422448)
+ *     Jad El-khoury        - initial implementation of code generator (422448)
  *     Matthieu Helleboid   - Support for multiple Service Providers.
  *     Anass Radouani       - Support for multiple Service Providers.
  *
@@ -68,7 +68,10 @@ import org.eclipse.lyo.oslc4j.core.model.ValueType;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
+import com.sample.testing.resources.DctermsConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
+import com.sample.testing.resources.Oslc_rmConstants;
 import com.sample.testing.resources.Requirement;
 
 // Start of user code imports
@@ -79,9 +82,9 @@ import com.sample.testing.resources.Requirement;
 
 // Start of user code classAnnotations
 // End of user code
-@OslcNamespace(TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE)
-@OslcName(TestingToolConstants.TESTSCRIPT)
-@OslcResourceShape(title = "Test Script Resource Shape", describes = TestingToolConstants.TYPE_TESTSCRIPT)
+@OslcNamespace(Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE)
+@OslcName(Oslc_qmConstants.TESTSCRIPT)
+@OslcResourceShape(title = "Test Script Resource Shape", describes = Oslc_qmConstants.TYPE_TESTSCRIPT)
 public class TestScript
     extends AbstractResource
     implements ITestScript
@@ -92,6 +95,9 @@ public class TestScript
     // Start of user code attributeAnnotation:validatesRequirement
     // End of user code
     private Link validatesRequirement = new Link();
+    // Start of user code attributeAnnotation:description
+    // End of user code
+    private String description;
     
     // Start of user code classAttributes
     // End of user code
@@ -115,11 +121,56 @@ public class TestScript
         // End of user code
     }
     
+    /**
+    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
+    */
+    @Deprecated
+    public TestScript(final String serviceProviderId, final String testScriptId)
+           throws URISyntaxException
+    {
+        this (constructURI(serviceProviderId, testScriptId));
+        // Start of user code constructor3
+        // End of user code
+    }
+    
+    /**
+    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
+    */
+    @Deprecated
+    public static URI constructURI(final String serviceProviderId, final String testScriptId)
+    {
+        String basePath = OSLC4JUtils.getServletURI();
+        Map<String, Object> pathParameters = new HashMap<String, Object>();
+        pathParameters.put("serviceProviderId", serviceProviderId);
+        pathParameters.put("testScriptId", testScriptId);
+        String instanceURI = "serviceProviders/{serviceProviderId}/testScripts/{testScriptId}";
+    
+        final UriBuilder builder = UriBuilder.fromUri(basePath);
+        return builder.path(instanceURI).buildFromMap(pathParameters);
+    }
+    
+    /**
+    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
+    */
+    @Deprecated
+    public static Link constructLink(final String serviceProviderId, final String testScriptId , final String label)
+    {
+        return new Link(constructURI(serviceProviderId, testScriptId), label);
+    }
+    
+    /**
+    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
+    */
+    @Deprecated
+    public static Link constructLink(final String serviceProviderId, final String testScriptId)
+    {
+        return new Link(constructURI(serviceProviderId, testScriptId));
+    }
     
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
-        TestingToolConstants.PATH_TESTSCRIPT,  
+        Oslc_qmConstants.PATH_TESTSCRIPT,
         TestScript.class);
     }
     
@@ -167,7 +218,7 @@ public class TestScript
             // End of user code
         }
         else {
-            result = "<a href=\"" + getAbout() + "\">" + toString() + "</a>";
+            result = "<a href=\"" + getAbout() + "\" class=\"oslc-resource-link\">" + toString() + "</a>";
         }
     
         // Start of user code toHtml_finalize
@@ -180,7 +231,7 @@ public class TestScript
     // Start of user code getterAnnotation:title
     // End of user code
     @OslcName("title")
-    @OslcPropertyDefinition(TestingToolConstants.DUBLIN_CORE_NAMSPACE + "title")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "title")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
@@ -194,16 +245,30 @@ public class TestScript
     // Start of user code getterAnnotation:validatesRequirement
     // End of user code
     @OslcName("validatesRequirement")
-    @OslcPropertyDefinition(TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE + "validatesRequirement")
+    @OslcPropertyDefinition(Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE + "validatesRequirement")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.Resource)
-    @OslcRange({TestingToolConstants.TYPE_REQUIREMENT})
+    @OslcRange({Oslc_rmConstants.TYPE_REQUIREMENT})
     @OslcReadOnly(false)
     public Link getValidatesRequirement()
     {
         // Start of user code getterInit:validatesRequirement
         // End of user code
         return validatesRequirement;
+    }
+    
+    // Start of user code getterAnnotation:description
+    // End of user code
+    @OslcName("description")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "description")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getDescription()
+    {
+        // Start of user code getterInit:description
+        // End of user code
+        return description;
     }
     
     
@@ -228,6 +293,18 @@ public class TestScript
         this.validatesRequirement = validatesRequirement;
     
         // Start of user code setterFinalize:validatesRequirement
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:description
+    // End of user code
+    public void setDescription(final String description )
+    {
+        // Start of user code setterInit:description
+        // End of user code
+        this.description = description;
+    
+        // Start of user code setterFinalize:description
         // End of user code
     }
     
@@ -269,25 +346,39 @@ public class TestScript
         return s;
     }
     
+    static public String descriptionToHtmlForCreation (final HttpServletRequest httpServletRequest)
+    {
+        String s = "";
+    
+        // Start of user code "Init:descriptionToHtmlForCreation(...)"
+        // End of user code
+    
+        s = s + "<label for=\"description\">description: </LABEL>";
+    
+        // Start of user code "Mid:descriptionToHtmlForCreation(...)"
+        // End of user code
+    
+        s= s + "<input name=\"description\" type=\"text\" style=\"width: 400px\" id=\"description\" >";
+        // Start of user code "Finalize:descriptionToHtmlForCreation(...)"
+        // End of user code
+    
+        return s;
+    }
+    
     
     public String titleToHtml()
     {
         String s = "";
-    
-        // Start of user code titletoHtml_init
-        // End of user code
-    
-        s = s + "<label for=\"title\"><strong>title</strong>: </LABEL>";
     
         // Start of user code titletoHtml_mid
         // End of user code
     
         try {
             if (title == null) {
-                s= s + "<em>null</em>";
+                s = s + "<em>null</em>";
             }
             else {
-                s= s + title.toString();
+                s = s + title.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -302,11 +393,6 @@ public class TestScript
     public String validatesRequirementToHtml()
     {
         String s = "";
-    
-        // Start of user code validatesRequirementtoHtml_init
-        // End of user code
-    
-        s = s + "<label for=\"validatesRequirement\"><strong>validatesRequirement</strong>: </LABEL>";
     
         // Start of user code validatesRequirementtoHtml_mid
         // End of user code
@@ -323,6 +409,30 @@ public class TestScript
         }
     
         // Start of user code validatesRequirementtoHtml_finalize
+        // End of user code
+    
+        return s;
+    }
+    
+    public String descriptionToHtml()
+    {
+        String s = "";
+    
+        // Start of user code descriptiontoHtml_mid
+        // End of user code
+    
+        try {
+            if (description == null) {
+                s = s + "<em>null</em>";
+            }
+            else {
+                s = s + description.toString();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+        // Start of user code descriptiontoHtml_finalize
         // End of user code
     
         return s;

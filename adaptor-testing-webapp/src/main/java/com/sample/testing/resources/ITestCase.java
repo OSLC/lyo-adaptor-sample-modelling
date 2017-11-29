@@ -62,40 +62,43 @@ import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
+import com.sample.testing.resources.FoafConstants;
+import com.sample.testing.resources.DctermsConstants;
+import com.sample.testing.resources.Oslc_qmConstants;
 import com.sample.testing.resources.IPerson;
 import com.sample.testing.resources.ITestScript;
 
 // Start of user code imports
 // End of user code
 
-@OslcNamespace(TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE)
-@OslcName(TestingToolConstants.TESTCASE)
-@OslcResourceShape(title = "Test Case Resource Shape", describes = TestingToolConstants.TYPE_TESTCASE)
+@OslcNamespace(Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE)
+@OslcName(Oslc_qmConstants.TESTCASE)
+@OslcResourceShape(title = "Test Case Resource Shape", describes = Oslc_qmConstants.TYPE_TESTCASE)
 public interface ITestCase
 {
 
 
     @OslcName("uses")
-    @OslcPropertyDefinition(TestingToolConstants.QUALITY_MANAGEMENT_NAMSPACE + "uses")
+    @OslcPropertyDefinition(Oslc_qmConstants.QUALITY_MANAGEMENT_NAMSPACE + "uses")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.Resource)
-    @OslcRange({TestingToolConstants.TYPE_TESTSCRIPT})
+    @OslcRange({Oslc_qmConstants.TYPE_TESTSCRIPT})
     @OslcReadOnly(false)
     public Link getUses();
 
     @OslcName("title")
-    @OslcPropertyDefinition(TestingToolConstants.DUBLIN_CORE_NAMSPACE + "title")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "title")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
     public String getTitle();
 
     @OslcName("contributor")
-    @OslcPropertyDefinition(TestingToolConstants.DUBLIN_CORE_NAMSPACE + "contributor")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "contributor")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.Resource)
-    @OslcRange({TestingToolConstants.TYPE_PERSON})
+    @OslcRange({FoafConstants.TYPE_PERSON})
     @OslcReadOnly(false)
     public Link getContributor();
 

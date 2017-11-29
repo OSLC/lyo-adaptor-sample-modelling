@@ -24,22 +24,58 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import com.sample.testing.resources.Requirement;
 
 // Start of user code imports
+import java.net.URI;
+
+import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
+import org.eclipse.lyo.client.oslc.resources.OslcQuery;
+import org.eclipse.lyo.client.oslc.resources.OslcQueryParameters;
+import org.eclipse.lyo.client.oslc.resources.OslcQueryResult;
+
+import com.sample.testing.resources.Oslc_rmConstants;
 // End of user code
 
 
 // Start of user code pre_class_code
 // End of user code
 
-public class GenericRequiredAdaptorClient
+public class RequirementsAdaptorClient
 {
 
     // Start of user code class_attributes
     // End of user code
     
     // Start of user code class_methods
+	public static String[] queryRequirements() throws Exception 
+	{	
+        OslcClient client = new OslcClient();
+        ClientResponse response = null;
+        ServiceProviderCatalog catalog = null;
+
+        //Get the SPC
+        response = client.getResource(serviceProviderCatalogURI,OSLCConstants.CT_RDF);
+        if (response != null) {
+            catalog = response.getEntity(ServiceProviderCatalog.class);
+        }
+		
+        //Get first SP.
+		ServiceProvider sp = catalog.getServiceProviders()[0];
+		
+		//Find the QCBase that deals with SecondOT
+		String queryBaseUri = client.lookupQueryCapability(sp.getAbout().toString(), Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_DOMAIN, Oslc_rmConstants.TYPE_REQUIREMENT);
+        URI queryBase = new URI(queryBaseUri);
+
+        String where = "";
+
+        OslcQueryParameters queryParameters = new OslcQueryParameters();
+        queryParameters.setWhere(where);
+        OslcQuery query = new OslcQuery(client, queryBase.toString(), queryParameters);
+        OslcQueryResult queryResults = query.submit();    
+        String[] urls = queryResults.getMembersUrls();
+        return urls;
+	}
     // End of user code
 
-    static String serviceProviderCatalogURI = "http://your.host/adaptor/services/catalog/singleton";
+    static String serviceProviderCatalogURI = "http://localhost:8081/adaptor-rm/services/catalog/singleton";
 
     public static ServiceProviderCatalog getServiceProviderCatalog() throws Exception {
         OslcClient client = new OslcClient();

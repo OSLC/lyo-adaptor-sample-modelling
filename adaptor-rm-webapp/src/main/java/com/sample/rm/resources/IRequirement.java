@@ -62,26 +62,35 @@ import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
-import com.sample.rm.RMToolConstants;
+import com.sample.rm.resources.Oslc_rmConstants;
+import com.sample.rm.resources.DctermsConstants;
 
 // Start of user code imports
 // End of user code
 
-@OslcNamespace(RMToolConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
-@OslcName(RMToolConstants.REQUIREMENT)
-@OslcResourceShape(title = "Requirement Resource Shape", describes = RMToolConstants.TYPE_REQUIREMENT)
+@OslcNamespace(Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
+@OslcName(Oslc_rmConstants.REQUIREMENT)
+@OslcResourceShape(title = "Requirement Resource Shape", describes = Oslc_rmConstants.TYPE_REQUIREMENT)
 public interface IRequirement
 {
 
 
     @OslcName("title")
-    @OslcPropertyDefinition(RMToolConstants.DUBLIN_CORE_NAMSPACE + "title")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "title")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
     public String getTitle();
 
+    @OslcName("description")
+    @OslcPropertyDefinition(DctermsConstants.DUBLIN_CORE_NAMSPACE + "description")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getDescription();
+
 
     public void setTitle(final String title );
+    public void setDescription(final String description );
 }
 

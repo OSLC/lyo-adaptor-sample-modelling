@@ -15,9 +15,9 @@
  *     Alberto Giammaria    - initial API and implementation
  *     Chris Peters         - initial API and implementation
  *     Gianluca Bernardini  - initial API and implementation
- *	   Sam Padgett          - initial API and implementation
+ *       Sam Padgett          - initial API and implementation
  *     Michael Fiedler      - adapted for OSLC4J
- *     Jad El-khoury        - initial implementation of code generator (https://bugs.eclipse.org/bugs/show_bug.cgi?id=422448)
+ *     Jad El-khoury        - initial implementation of code generator (422448)
  *     Matthieu Helleboid   - Support for multiple Service Providers.
  *     Anass Radouani       - Support for multiple Service Providers.
  *
@@ -68,7 +68,8 @@ import org.eclipse.lyo.oslc4j.core.model.ValueType;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.resources.FoafConstants;
+import com.sample.testing.resources.FoafConstants;
 
 // Start of user code imports
 // End of user code
@@ -78,9 +79,9 @@ import com.sample.testing.TestingToolConstants;
 
 // Start of user code classAnnotations
 // End of user code
-@OslcNamespace(TestingToolConstants.FOAF_NAMSPACE)
-@OslcName(TestingToolConstants.PERSON)
-@OslcResourceShape(title = "Person Resource Shape", describes = TestingToolConstants.TYPE_PERSON)
+@OslcNamespace(FoafConstants.FOAF_NAMSPACE)
+@OslcName(FoafConstants.PERSON)
+@OslcResourceShape(title = "Person Resource Shape", describes = FoafConstants.TYPE_PERSON)
 public class Person
     extends AbstractResource
     implements IPerson
@@ -121,7 +122,7 @@ public class Person
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
-        TestingToolConstants.PATH_PERSON,  
+        FoafConstants.PATH_PERSON,
         Person.class);
     }
     
@@ -169,7 +170,7 @@ public class Person
             // End of user code
         }
         else {
-            result = "<a href=\"" + getAbout() + "\">" + toString() + "</a>";
+            result = "<a href=\"" + getAbout() + "\" class=\"oslc-resource-link\">" + toString() + "</a>";
         }
     
         // Start of user code toHtml_finalize
@@ -182,7 +183,7 @@ public class Person
     // Start of user code getterAnnotation:name
     // End of user code
     @OslcName("name")
-    @OslcPropertyDefinition(TestingToolConstants.FOAF_NAMSPACE + "name")
+    @OslcPropertyDefinition(FoafConstants.FOAF_NAMSPACE + "name")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
@@ -196,7 +197,7 @@ public class Person
     // Start of user code getterAnnotation:givenName
     // End of user code
     @OslcName("givenName")
-    @OslcPropertyDefinition(TestingToolConstants.FOAF_NAMSPACE + "givenName")
+    @OslcPropertyDefinition(FoafConstants.FOAF_NAMSPACE + "givenName")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
@@ -210,7 +211,7 @@ public class Person
     // Start of user code getterAnnotation:familyName
     // End of user code
     @OslcName("familyName")
-    @OslcPropertyDefinition(TestingToolConstants.FOAF_NAMSPACE + "familyName")
+    @OslcPropertyDefinition(FoafConstants.FOAF_NAMSPACE + "familyName")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
@@ -321,20 +322,15 @@ public class Person
     {
         String s = "";
     
-        // Start of user code nametoHtml_init
-        // End of user code
-    
-        s = s + "<label for=\"name\"><strong>name</strong>: </LABEL>";
-    
         // Start of user code nametoHtml_mid
         // End of user code
     
         try {
             if (name == null) {
-                s= s + "<em>null</em>";
+                s = s + "<em>null</em>";
             }
             else {
-                s= s + name.toString();
+                s = s + name.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -350,20 +346,15 @@ public class Person
     {
         String s = "";
     
-        // Start of user code givenNametoHtml_init
-        // End of user code
-    
-        s = s + "<label for=\"givenName\"><strong>givenName</strong>: </LABEL>";
-    
         // Start of user code givenNametoHtml_mid
         // End of user code
     
         try {
             if (givenName == null) {
-                s= s + "<em>null</em>";
+                s = s + "<em>null</em>";
             }
             else {
-                s= s + givenName.toString();
+                s = s + givenName.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -379,20 +370,15 @@ public class Person
     {
         String s = "";
     
-        // Start of user code familyNametoHtml_init
-        // End of user code
-    
-        s = s + "<label for=\"familyName\"><strong>familyName</strong>: </LABEL>";
-    
         // Start of user code familyNametoHtml_mid
         // End of user code
     
         try {
             if (familyName == null) {
-                s= s + "<em>null</em>";
+                s = s + "<em>null</em>";
             }
             else {
-                s= s + familyName.toString();
+                s = s + familyName.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
