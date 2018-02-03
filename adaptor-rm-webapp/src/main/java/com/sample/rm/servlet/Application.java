@@ -27,7 +27,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-
+import org.apache.jena.JenaRuntime;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.impl.RDFWriterFImpl;
 import org.eclipse.lyo.oslc4j.application.OslcWinkApplication;
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.model.AllowedValues;
@@ -88,7 +90,18 @@ public class Application extends OslcWinkApplication {
         RESOURCE_CLASSES.add(ResourceShapeService.class);
 
         // Start of user code Custom Resource Classes
-            // End of user code
+
+        // trigger Jena init
+        ModelFactory.createDefaultModel();
+        // force plain XML writer
+        RDFWriterFImpl.alternative(null);
+
+        //other things that didn't help
+        JenaRuntime.isRDF11 = false;
+//        final String abbrevProp = System.getProperty(
+//                "org.eclipse.lyo.oslc4j.alwaysXMLAbbrevOnlyProviders");
+
+        // End of user code
 
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_ALLOWED_VALUES,           AllowedValues.class);
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_COMPACT,                  Compact.class);
