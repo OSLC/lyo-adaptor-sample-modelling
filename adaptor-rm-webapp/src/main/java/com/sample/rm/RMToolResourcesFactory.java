@@ -1,3 +1,4 @@
+// Start of user code Copyright
 /*******************************************************************************
  * Copyright (c) 2017 Jad El-khoury.
  *
@@ -14,6 +15,7 @@
  *     Jad El-khoury        - initial implementation
  *     
  *******************************************************************************/
+// End of user code
 
 package com.sample.rm;
 
