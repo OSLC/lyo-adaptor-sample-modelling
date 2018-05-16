@@ -18,6 +18,7 @@
       <serviceProviders title="Service Provider">
         <services domainSpecification="//@specification/@domainSpecifications.3" serviceNamespace="independantOfServiceProvider">
           <queryCapabilities title="QueryCapability" label="QueryCapability" queryBaseURI="query" resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
+          <selectionDialogs title="SelectionDialog1" label="SelectionDialog1" dialogURI="selector" resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
           <basicCapabilities resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
         </services>
       </serviceProviders>

@@ -126,6 +126,15 @@ public class RMToolManager {
         // End of user code
         return resources;
     }
+    public static List<Requirement> RequirementSelector(HttpServletRequest httpServletRequest, String terms)   
+    {
+        List<Requirement> resources = null;
+        
+        // Start of user code RequirementSelector
+    	resources = createRandomRequirements(1,  30, 1,  10000);
+        // End of user code
+        return resources;
+    }
 
 
     public static Requirement getRequirement(HttpServletRequest httpServletRequest, final String requirementId)

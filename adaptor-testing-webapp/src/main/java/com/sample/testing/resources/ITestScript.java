@@ -73,9 +73,9 @@ import com.sample.testing.resources.IRequirement;
 // Start of user code imports
 // End of user code
 
-@OslcNamespace(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE)
-@OslcName(Oslc_qmDomainConstants.TESTSCRIPT)
-@OslcResourceShape(title = "Test Script Resource Shape", describes = Oslc_qmDomainConstants.TYPE_TESTSCRIPT)
+@OslcNamespace(Oslc_qmDomainConstants.TEST_SCRIPT_NAMESPACE)
+@OslcName(Oslc_qmDomainConstants.TEST_SCRIPT_LOCALNAME)
+@OslcResourceShape(title = "Test Script Resource Shape", describes = Oslc_qmDomainConstants.TEST_SCRIPT_TYPE)
 public interface ITestScript
 {
 
@@ -91,7 +91,7 @@ public interface ITestScript
     @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "validatesRequirement")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.Resource)
-    @OslcRange({Oslc_rmDomainConstants.TYPE_REQUIREMENT})
+    @OslcRange({Oslc_rmDomainConstants.REQUIREMENT_TYPE})
     @OslcReadOnly(false)
     public Link getValidatesRequirement();
 

@@ -109,8 +109,8 @@ public class ServiceProviderService1
     (
         title = "QueryCapability",
         label = "QueryCapability",
-        resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_rmDomainConstants.PATH_REQUIREMENT,
-        resourceTypes = {Oslc_rmDomainConstants.TYPE_REQUIREMENT},
+        resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_rmDomainConstants.REQUIREMENT_PATH,
+        resourceTypes = {Oslc_rmDomainConstants.REQUIREMENT_TYPE},
         usages = {}
     )
     @GET
@@ -179,6 +179,56 @@ public class ServiceProviderService1
         }
 
         throw new WebApplicationException(Status.NOT_FOUND);
+    }
+
+    @OslcDialog
+    (
+         title = "SelectionDialog1",
+         label = "SelectionDialog1",
+         uri = "requirements/selector",
+         hintWidth = "0px",
+         hintHeight = "0px",
+         resourceTypes = {Oslc_rmDomainConstants.REQUIREMENT_TYPE},
+         usages = {}
+    )
+    @GET
+    @Path("selector")
+    @Consumes({ MediaType.TEXT_HTML, MediaType.WILDCARD })
+    public void RequirementSelector(
+        @QueryParam("terms") final String terms
+        
+        ) throws ServletException, IOException
+    {
+        try {
+            // Start of user code RequirementSelector_init
+            // End of user code
+
+            httpServletRequest.setAttribute("selectionUri",UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(uriInfo.getPath()).build().toString());
+            // Start of user code RequirementSelector_setAttributes
+            // End of user code
+
+            if (terms != null ) {
+                httpServletRequest.setAttribute("terms", terms);
+                final List<Requirement> resources = RMToolManager.RequirementSelector(httpServletRequest, terms);
+                if (resources!= null) {
+                            httpServletRequest.setAttribute("resources", resources);
+                            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementselectorresults.jsp");
+                            rd.forward(httpServletRequest, httpServletResponse);
+                }
+                //a empty search should return an empty list and not NULL!
+                throw new WebApplicationException(Status.NOT_FOUND);
+
+            } else {
+                try {
+                    RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementselector.jsp");
+                    rd.forward(httpServletRequest, httpServletResponse);
+                } catch (Exception e) {
+                    throw new ServletException(e);
+                }
+            }
+        } catch (Exception e) {
+            throw new WebApplicationException(e);
+        }
     }
 
     @GET
@@ -261,12 +311,12 @@ public class ServiceProviderService1
             smallPreview.setDocument(UriBuilder.fromUri(aRequirement.getAbout()).path("smallPreview").build());
             compact.setSmallPreview(smallPreview);
 
-            //Use the HTML representation of a change request as the large preview as well
             final Preview largePreview = new Preview();
             largePreview.setHintHeight(largePreviewHintHeight);
             largePreview.setHintWidth(largePreviewHintWidth);
-            largePreview.setDocument(aRequirement.getAbout());
+            largePreview.setDocument(UriBuilder.fromUri(aRequirement.getAbout()).path("largePreview").build());
             compact.setLargePreview(largePreview);
+
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
             return compact;
         }
@@ -291,6 +341,31 @@ public class ServiceProviderService1
             // End of user code
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementsmallpreview.jsp");
+            httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
+            rd.forward(httpServletRequest, httpServletResponse);
+        }
+
+        throw new WebApplicationException(Status.NOT_FOUND);
+    }
+
+    @GET
+    @Path("{requirementId}/largePreview")
+    @Produces({ MediaType.TEXT_HTML })
+    public void getRequirementAsHtmlLargePreview(
+        @PathParam("requirementId") final String requirementId
+        ) throws ServletException, IOException, URISyntaxException
+    {
+        // Start of user code getRequirementAsHtmlLargePreview_init
+        // End of user code
+
+        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+
+        if (aRequirement != null) {
+            httpServletRequest.setAttribute("aRequirement", aRequirement);
+            // Start of user code getRequirementAsHtmlLargePreview_setAttributes
+            // End of user code
+
+            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementlargepreview.jsp");
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
             rd.forward(httpServletRequest, httpServletResponse);
         }

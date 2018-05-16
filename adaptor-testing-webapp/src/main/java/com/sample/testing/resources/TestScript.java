@@ -84,9 +84,9 @@ import com.sample.testing.resources.Requirement;
 
 // Start of user code classAnnotations
 // End of user code
-@OslcNamespace(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE)
-@OslcName(Oslc_qmDomainConstants.TESTSCRIPT)
-@OslcResourceShape(title = "Test Script Resource Shape", describes = Oslc_qmDomainConstants.TYPE_TESTSCRIPT)
+@OslcNamespace(Oslc_qmDomainConstants.TEST_SCRIPT_NAMESPACE)
+@OslcName(Oslc_qmDomainConstants.TEST_SCRIPT_LOCALNAME)
+@OslcResourceShape(title = "Test Script Resource Shape", describes = Oslc_qmDomainConstants.TEST_SCRIPT_TYPE)
 public class TestScript
     extends AbstractResource
     implements ITestScript
@@ -172,7 +172,7 @@ public class TestScript
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
-        Oslc_qmDomainConstants.PATH_TESTSCRIPT,
+        Oslc_qmDomainConstants.TEST_SCRIPT_PATH,
         TestScript.class);
     }
     
@@ -250,7 +250,7 @@ public class TestScript
     @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "validatesRequirement")
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.Resource)
-    @OslcRange({Oslc_rmDomainConstants.TYPE_REQUIREMENT})
+    @OslcRange({Oslc_rmDomainConstants.REQUIREMENT_TYPE})
     @OslcReadOnly(false)
     public Link getValidatesRequirement()
     {

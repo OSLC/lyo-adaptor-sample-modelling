@@ -81,9 +81,9 @@ import com.sample.rm.resources.DctermsDomainConstants;
 
 // Start of user code classAnnotations
 // End of user code
-@OslcNamespace(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
-@OslcName(Oslc_rmDomainConstants.REQUIREMENT)
-@OslcResourceShape(title = "Requirement Resource Shape", describes = Oslc_rmDomainConstants.TYPE_REQUIREMENT)
+@OslcNamespace(Oslc_rmDomainConstants.REQUIREMENT_NAMESPACE)
+@OslcName(Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME)
+@OslcResourceShape(title = "Requirement Resource Shape", describes = Oslc_rmDomainConstants.REQUIREMENT_TYPE)
 public class Requirement
     extends AbstractResource
     implements IRequirement
@@ -165,7 +165,7 @@ public class Requirement
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
-        Oslc_rmDomainConstants.PATH_REQUIREMENT,
+        Oslc_rmDomainConstants.REQUIREMENT_PATH,
         Requirement.class);
     }
     

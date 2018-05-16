@@ -27,6 +27,7 @@ package com.sample.rm.resources;
 
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 
+
 // Start of user code imports
 // End of user code
 

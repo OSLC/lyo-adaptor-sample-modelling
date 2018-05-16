@@ -70,9 +70,9 @@ import com.sample.rm.resources.DctermsDomainConstants;
 // Start of user code imports
 // End of user code
 
-@OslcNamespace(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
-@OslcName(Oslc_rmDomainConstants.REQUIREMENT)
-@OslcResourceShape(title = "Requirement Resource Shape", describes = Oslc_rmDomainConstants.TYPE_REQUIREMENT)
+@OslcNamespace(Oslc_rmDomainConstants.REQUIREMENT_NAMESPACE)
+@OslcName(Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME)
+@OslcResourceShape(title = "Requirement Resource Shape", describes = Oslc_rmDomainConstants.REQUIREMENT_TYPE)
 public interface IRequirement
 {
 

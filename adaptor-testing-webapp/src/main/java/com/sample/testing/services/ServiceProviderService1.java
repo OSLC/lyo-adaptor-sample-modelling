@@ -110,8 +110,8 @@ public class ServiceProviderService1
     (
         title = "QueryCapability",
         label = "QueryCapability",
-        resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.PATH_TESTSCRIPT,
-        resourceTypes = {Oslc_qmDomainConstants.TYPE_TESTSCRIPT},
+        resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TEST_SCRIPT_PATH,
+        resourceTypes = {Oslc_qmDomainConstants.TEST_SCRIPT_TYPE},
         usages = {}
     )
     @GET
@@ -192,8 +192,8 @@ public class ServiceProviderService1
     (
          title = "CreationFactory",
          label = "",
-         resourceShapes = {OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.PATH_TESTSCRIPT},
-         resourceTypes = {Oslc_qmDomainConstants.TYPE_TESTSCRIPT},
+         resourceShapes = {OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TEST_SCRIPT_PATH},
+         resourceTypes = {Oslc_qmDomainConstants.TEST_SCRIPT_TYPE},
          usages = {}
     )
     @POST
@@ -295,12 +295,12 @@ public class ServiceProviderService1
             smallPreview.setDocument(UriBuilder.fromUri(aTestScript.getAbout()).path("smallPreview").build());
             compact.setSmallPreview(smallPreview);
 
-            //Use the HTML representation of a change request as the large preview as well
             final Preview largePreview = new Preview();
             largePreview.setHintHeight(largePreviewHintHeight);
             largePreview.setHintWidth(largePreviewHintWidth);
-            largePreview.setDocument(aTestScript.getAbout());
+            largePreview.setDocument(UriBuilder.fromUri(aTestScript.getAbout()).path("largePreview").build());
             compact.setLargePreview(largePreview);
+
             httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
             return compact;
         }
@@ -325,6 +325,31 @@ public class ServiceProviderService1
             // End of user code
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/testscriptsmallpreview.jsp");
+            httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
+            rd.forward(httpServletRequest, httpServletResponse);
+        }
+
+        throw new WebApplicationException(Status.NOT_FOUND);
+    }
+
+    @GET
+    @Path("{testScriptId}/largePreview")
+    @Produces({ MediaType.TEXT_HTML })
+    public void getTestScriptAsHtmlLargePreview(
+        @PathParam("serviceProviderId") final String serviceProviderId, @PathParam("testScriptId") final String testScriptId
+        ) throws ServletException, IOException, URISyntaxException
+    {
+        // Start of user code getTestScriptAsHtmlLargePreview_init
+        // End of user code
+
+        final TestScript aTestScript = TestingToolManager.getTestScript(httpServletRequest, serviceProviderId, testScriptId);
+
+        if (aTestScript != null) {
+            httpServletRequest.setAttribute("aTestScript", aTestScript);
+            // Start of user code getTestScriptAsHtmlLargePreview_setAttributes
+            // End of user code
+
+            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/testscriptlargepreview.jsp");
             httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
             rd.forward(httpServletRequest, httpServletResponse);
         }
