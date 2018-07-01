@@ -30,9 +30,15 @@ import java.util.List;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
+import org.eclipse.lyo.oslc4j.core.model.Link;
+
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
-import com.sample.rm.ServiceProviderInfo;
+import com.sample.rm.ServiceProvider1Info;
+import com.sample.rm.ServiceProvider2Info;
+import com.sample.rm.resources.ProviderToTRS;
 import com.sample.rm.resources.Requirement;
+import com.sample.rm.resources.SP;
+import com.sample.rm.resources.TRS;
 
 
 // Start of user code imports
@@ -97,22 +103,36 @@ public class RMToolManager {
         // End of user code
     }
 
-    public static ServiceProviderInfo[] getServiceProviderInfos(HttpServletRequest httpServletRequest)
+    public static ServiceProvider1Info[] getServiceProvider1Infos(HttpServletRequest httpServletRequest)
     {
-        ServiceProviderInfo[] serviceProviderInfos = {};
+        ServiceProvider1Info[] serviceProviderInfos = {};
         
-        // Start of user code "ServiceProviderInfo[] getServiceProviderInfos(...)"
-        ServiceProviderInfo r1 = new ServiceProviderInfo();
+        // Start of user code "ServiceProvider1Info[] getServiceProvider1Infos(...)"
+        ServiceProvider1Info r1 = new ServiceProvider1Info();
         r1.name = "A sample RM Service Provider 1";
-        r1.serviceProviderId = "1";
+        r1.serviceProviderId = "0";
 
-        ServiceProviderInfo r2 = new ServiceProviderInfo();
+        ServiceProvider1Info r2 = new ServiceProvider1Info();
         r2.name = "A sample RM Service Provider 2";
-        r2.serviceProviderId = "2";
+        r2.serviceProviderId = "1";
 
-        serviceProviderInfos = new ServiceProviderInfo[2];
+        serviceProviderInfos = new ServiceProvider1Info[2];
         serviceProviderInfos[0] = r1;
         serviceProviderInfos[1] = r2;
+        // End of user code
+        return serviceProviderInfos;
+    }
+    public static ServiceProvider2Info[] getServiceProvider2Infos(HttpServletRequest httpServletRequest)
+    {
+        ServiceProvider2Info[] serviceProviderInfos = {};
+        
+        // Start of user code "ServiceProvider2Info[] getServiceProvider2Infos(...)"
+        ServiceProvider2Info r1 = new ServiceProvider2Info();
+        r1.name = "A sample Service Provider";
+        r1.serviceProviderId = "2";
+
+        serviceProviderInfos = new ServiceProvider2Info[1];
+        serviceProviderInfos[0] = r1;
         // End of user code
         return serviceProviderInfos;
     }
@@ -149,7 +169,59 @@ public class RMToolManager {
 
 
 
+    public static List<ProviderToTRS> queryProviderToTRSs(HttpServletRequest httpServletRequest, String where, int page, int limit)
+    {
+        List<ProviderToTRS> resources = null;
+        
+        // Start of user code queryProviderToTRSs
+		resources = new ArrayList<ProviderToTRS>(2);
+		for (int i = 0; i < 2; i++) {
+			try {
+				String serviceProviderId = Integer.toString(i);
+				ProviderToTRS r = RMToolResourcesFactory.createProviderToTRS(serviceProviderId);
+				ServiceProvider sp = ServiceProviderCatalogSingleton.getServiceProvider1(httpServletRequest, serviceProviderId);
+				r.setServiceProvider(new Link(sp.getAbout()));
+				r.setTRS(new Link(sp.getAbout()));
+				resources.add(r);
+			} catch (URISyntaxException e) {
+	            log.error("Failed to create resource", e);
+			}
+		}
+        // End of user code
+        return resources;
+    }
 
+
+    public static ProviderToTRS getProviderToTRS(HttpServletRequest httpServletRequest, final String providerToTRSId)
+    {
+        ProviderToTRS aResource = null;
+        
+        // Start of user code getProviderToTRS
+		try {
+			String serviceProviderId = providerToTRSId;
+			ProviderToTRS r = RMToolResourcesFactory.createProviderToTRS(serviceProviderId);
+			ServiceProvider sp = ServiceProviderCatalogSingleton.getServiceProvider1(httpServletRequest, serviceProviderId);
+			r.setServiceProvider(new Link(sp.getAbout()));
+			r.setTRS(new Link(sp.getAbout()));
+			aResource = r;
+		} catch (URISyntaxException e) {
+            log.error("Failed to create resource", e);
+		}
+        // End of user code
+        return aResource;
+    }
+
+
+
+
+    public static String getETagFromProviderToTRS(final ProviderToTRS aResource)
+    {
+        String eTag = null;
+        // Start of user code getETagFromProviderToTRS
+        // TODO Implement code to return an ETag for a particular resource
+        // End of user code
+        return eTag;
+    }
     public static String getETagFromRequirement(final Requirement aResource)
     {
         String eTag = null;

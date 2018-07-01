@@ -15,11 +15,17 @@
   </adaptorInterfaces>
   <adaptorInterfaces name="RM Tool" javaClassBaseNamespace="com.sample.rm" javaFilesBasePath="../adaptor-rm-webapp/src/main/java/" jspFilesBasePath="../adaptor-rm-webapp/src/main/webapp/" javascriptFilesBasePath="../adaptor-rm-webapp/src/main/webapp/" backendCodeTemplate_getServiceProviders="" backendCodeTemplate_getResource="">
     <serviceProviderCatalog title="Service Provider Catalog">
-      <serviceProviders title="Service Provider">
+      <serviceProviders title="Service Provider" instanceID="">
         <services domainSpecification="//@specification/@domainSpecifications.3" serviceNamespace="independantOfServiceProvider">
           <queryCapabilities title="QueryCapability" label="QueryCapability" queryBaseURI="query" resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
           <selectionDialogs title="SelectionDialog1" label="SelectionDialog1" dialogURI="selector" resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
           <basicCapabilities resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
+        </services>
+      </serviceProviders>
+      <serviceProviders title="SP to TRS ServiceProvider" description="SP to TRS ServiceProvider" instanceID="">
+        <services domainSpecification="//@specification/@domainSpecifications.3" serviceNamespace="independantOfServiceProvider">
+          <queryCapabilities title="QueryCapability1" label="QueryCapability1" queryBaseURI="query" resourceTypes="//@specification/@domainSpecifications.4/@resources.2"/>
+          <basicCapabilities resourceTypes="//@specification/@domainSpecifications.4/@resources.2"/>
         </services>
       </serviceProviders>
     </serviceProviderCatalog>
@@ -50,6 +56,15 @@
     <domainSpecifications name="Requirements Management" namespaceURI="http://open-services.net/ns/rm#" namespacePrefix="//@specification/@domainPrefixes.0">
       <resources name="Requirement" resourceProperties="//@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.2"/>
     </domainSpecifications>
+    <domainSpecifications name="OSLC Domains" namespaceURI="http://open-services.net/ns/core#" namespacePrefix="//@specification/@domainPrefixes.8">
+      <resources name="SP"/>
+      <resources name="TRS" resourceProperties="//@specification/@domainSpecifications.4/@resourceProperties.0 //@specification/@domainSpecifications.4/@resourceProperties.1"/>
+      <resources name="ProviderToTRS" resourceProperties="//@specification/@domainSpecifications.4/@resourceProperties.2 //@specification/@domainSpecifications.4/@resourceProperties.3"/>
+      <resourceProperties name="baseLog" valueType="URI"/>
+      <resourceProperties name="changeLog" valueType="URI"/>
+      <resourceProperties name="TRS" valueType="Resource" range="//@specification/@domainSpecifications.4/@resources.1"/>
+      <resourceProperties name="serviceProvider" valueType="Resource" range="//@specification/@domainSpecifications.4/@resources.0"/>
+    </domainSpecifications>
     <domainPrefixes name="oslc_rm"/>
     <domainPrefixes name="oslc_qm"/>
     <domainPrefixes name="nsp3"/>
@@ -58,5 +73,6 @@
     <domainPrefixes name="foaf"/>
     <domainPrefixes name="nsp7"/>
     <domainPrefixes name="nsp8"/>
+    <domainPrefixes name="oslc"/>
   </specification>
 </oslc4j_tc:Toolchain>

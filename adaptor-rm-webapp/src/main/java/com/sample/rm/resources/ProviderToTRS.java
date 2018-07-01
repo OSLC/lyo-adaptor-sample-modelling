@@ -70,10 +70,12 @@ import org.eclipse.lyo.oslc4j.core.model.ValueType;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
-import com.sample.rm.resources.Oslc_rmDomainConstants;
+import com.sample.rm.resources.OslcDomainConstants;
 
 
-import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.OslcDomainConstants;
+import com.sample.rm.resources.TRS;
+import com.sample.rm.resources.SP;
 
 // Start of user code imports
 // End of user code
@@ -83,25 +85,25 @@ import com.sample.rm.resources.DctermsDomainConstants;
 
 // Start of user code classAnnotations
 // End of user code
-@OslcNamespace(Oslc_rmDomainConstants.REQUIREMENT_NAMESPACE)
-@OslcName(Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME)
-@OslcResourceShape(title = "Requirement Resource Shape", describes = Oslc_rmDomainConstants.REQUIREMENT_TYPE)
-public class Requirement
+@OslcNamespace(OslcDomainConstants.PROVIDERTOTRS_NAMESPACE)
+@OslcName(OslcDomainConstants.PROVIDERTOTRS_LOCALNAME)
+@OslcResourceShape(title = "ProviderToTRS Resource Shape", describes = OslcDomainConstants.PROVIDERTOTRS_TYPE)
+public class ProviderToTRS
     extends AbstractResource
-    implements IRequirement
+    implements IProviderToTRS
 {
-    // Start of user code attributeAnnotation:title
+    // Start of user code attributeAnnotation:tRS
     // End of user code
-    private String title;
-    // Start of user code attributeAnnotation:description
+    private Link tRS = new Link();
+    // Start of user code attributeAnnotation:serviceProvider
     // End of user code
-    private String description;
+    private Link serviceProvider = new Link();
     
     // Start of user code classAttributes
     // End of user code
     // Start of user code classMethods
     // End of user code
-    public Requirement()
+    public ProviderToTRS()
            throws URISyntaxException
     {
         super();
@@ -110,7 +112,7 @@ public class Requirement
         // End of user code
     }
     
-    public Requirement(final URI about)
+    public ProviderToTRS(final URI about)
            throws URISyntaxException
     {
         super(about);
@@ -123,10 +125,10 @@ public class Requirement
     * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
     */
     @Deprecated
-    public Requirement(final String requirementId)
+    public ProviderToTRS(final String providerToTRSId)
            throws URISyntaxException
     {
-        this (constructURI(requirementId));
+        this (constructURI(providerToTRSId));
         // Start of user code constructor3
         // End of user code
     }
@@ -135,12 +137,12 @@ public class Requirement
     * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
     */
     @Deprecated
-    public static URI constructURI(final String requirementId)
+    public static URI constructURI(final String providerToTRSId)
     {
         String basePath = OSLC4JUtils.getServletURI();
         Map<String, Object> pathParameters = new HashMap<String, Object>();
-        pathParameters.put("requirementId", requirementId);
-        String instanceURI = "requirements/{requirementId}";
+        pathParameters.put("providerToTRSId", providerToTRSId);
+        String instanceURI = "providerToTRSs/{providerToTRSId}";
     
         final UriBuilder builder = UriBuilder.fromUri(basePath);
         return builder.path(instanceURI).buildFromMap(pathParameters);
@@ -150,25 +152,25 @@ public class Requirement
     * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
     */
     @Deprecated
-    public static Link constructLink(final String requirementId , final String label)
+    public static Link constructLink(final String providerToTRSId , final String label)
     {
-        return new Link(constructURI(requirementId), label);
+        return new Link(constructURI(providerToTRSId), label);
     }
     
     /**
     * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
     */
     @Deprecated
-    public static Link constructLink(final String requirementId)
+    public static Link constructLink(final String providerToTRSId)
     {
-        return new Link(constructURI(requirementId));
+        return new Link(constructURI(providerToTRSId));
     }
     
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
-        Oslc_rmDomainConstants.REQUIREMENT_PATH,
-        Requirement.class);
+        OslcDomainConstants.PROVIDERTOTRS_PATH,
+        ProviderToTRS.class);
     }
     
     
@@ -184,7 +186,7 @@ public class Requirement
         // End of user code
     
         if (asLocalResource) {
-            result = result + "{a Local Requirement Resource} - update Requirement.toString() to present resource as desired.";
+            result = result + "{a Local ProviderToTRS Resource} - update ProviderToTRS.toString() to present resource as desired.";
             // Start of user code toString_bodyForLocalResource
             // End of user code
         }
@@ -225,142 +227,142 @@ public class Requirement
     }
     
     
-    // Start of user code getterAnnotation:title
+    // Start of user code getterAnnotation:tRS
     // End of user code
-    @OslcName("title")
-    @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "title")
+    @OslcName("tRS")
+    @OslcPropertyDefinition(OslcDomainConstants.OSLC_DOMAINS_NAMSPACE + "tRS")
     @OslcOccurs(Occurs.ExactlyOne)
-    @OslcValueType(ValueType.String)
+    @OslcValueType(ValueType.Resource)
+    @OslcRange({OslcDomainConstants.TRS_TYPE})
     @OslcReadOnly(false)
-    public String getTitle()
+    public Link getTRS()
     {
-        // Start of user code getterInit:title
+        // Start of user code getterInit:tRS
         // End of user code
-        return title;
+        return tRS;
     }
     
-    // Start of user code getterAnnotation:description
+    // Start of user code getterAnnotation:serviceProvider
     // End of user code
-    @OslcName("description")
-    @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "description")
+    @OslcName("serviceProvider")
+    @OslcPropertyDefinition(OslcDomainConstants.OSLC_DOMAINS_NAMSPACE + "serviceProvider")
     @OslcOccurs(Occurs.ExactlyOne)
-    @OslcValueType(ValueType.String)
+    @OslcValueType(ValueType.Resource)
+    @OslcRange({OslcDomainConstants.SP_TYPE})
     @OslcReadOnly(false)
-    public String getDescription()
+    public Link getServiceProvider()
     {
-        // Start of user code getterInit:description
+        // Start of user code getterInit:serviceProvider
         // End of user code
-        return description;
+        return serviceProvider;
     }
     
     
-    // Start of user code setterAnnotation:title
+    // Start of user code setterAnnotation:tRS
     // End of user code
-    public void setTitle(final String title )
+    public void setTRS(final Link tRS )
     {
-        // Start of user code setterInit:title
+        // Start of user code setterInit:tRS
         // End of user code
-        this.title = title;
+        this.tRS = tRS;
     
-        // Start of user code setterFinalize:title
+        // Start of user code setterFinalize:tRS
         // End of user code
     }
     
-    // Start of user code setterAnnotation:description
+    // Start of user code setterAnnotation:serviceProvider
     // End of user code
-    public void setDescription(final String description )
+    public void setServiceProvider(final Link serviceProvider )
     {
-        // Start of user code setterInit:description
+        // Start of user code setterInit:serviceProvider
         // End of user code
-        this.description = description;
+        this.serviceProvider = serviceProvider;
     
-        // Start of user code setterFinalize:description
+        // Start of user code setterFinalize:serviceProvider
         // End of user code
     }
     
     
-    static public String titleToHtmlForCreation (final HttpServletRequest httpServletRequest)
+    static public String tRSToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
     
-        // Start of user code "Init:titleToHtmlForCreation(...)"
+        // Start of user code "Init:tRSToHtmlForCreation(...)"
         // End of user code
     
-        s = s + "<label for=\"title\">title: </LABEL>";
+        s = s + "<label for=\"TRS\">TRS: </LABEL>";
     
-        // Start of user code "Mid:titleToHtmlForCreation(...)"
+        // Start of user code "Mid:tRSToHtmlForCreation(...)"
         // End of user code
     
-        s= s + "<input name=\"title\" type=\"text\" style=\"width: 400px\" id=\"title\" >";
-        // Start of user code "Finalize:titleToHtmlForCreation(...)"
+        // Start of user code "Finalize:tRSToHtmlForCreation(...)"
         // End of user code
     
         return s;
     }
     
-    static public String descriptionToHtmlForCreation (final HttpServletRequest httpServletRequest)
+    static public String serviceProviderToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
     
-        // Start of user code "Init:descriptionToHtmlForCreation(...)"
+        // Start of user code "Init:serviceProviderToHtmlForCreation(...)"
         // End of user code
     
-        s = s + "<label for=\"description\">description: </LABEL>";
+        s = s + "<label for=\"serviceProvider\">serviceProvider: </LABEL>";
     
-        // Start of user code "Mid:descriptionToHtmlForCreation(...)"
+        // Start of user code "Mid:serviceProviderToHtmlForCreation(...)"
         // End of user code
     
-        s= s + "<input name=\"description\" type=\"text\" style=\"width: 400px\" id=\"description\" >";
-        // Start of user code "Finalize:descriptionToHtmlForCreation(...)"
+        // Start of user code "Finalize:serviceProviderToHtmlForCreation(...)"
         // End of user code
     
         return s;
     }
     
     
-    public String titleToHtml()
+    public String tRSToHtml()
     {
         String s = "";
     
-        // Start of user code titletoHtml_mid
+        // Start of user code tRStoHtml_mid
         // End of user code
     
         try {
-            if (title == null) {
+            if ((tRS == null) || (tRS.getValue() == null)) {
                 s = s + "<em>null</em>";
             }
             else {
-                s = s + title.toString();
+                s = s + (new TRS (tRS.getValue())).toHtml(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     
-        // Start of user code titletoHtml_finalize
+        // Start of user code tRStoHtml_finalize
         // End of user code
     
         return s;
     }
     
-    public String descriptionToHtml()
+    public String serviceProviderToHtml()
     {
         String s = "";
     
-        // Start of user code descriptiontoHtml_mid
+        // Start of user code serviceProvidertoHtml_mid
         // End of user code
     
         try {
-            if (description == null) {
+            if ((serviceProvider == null) || (serviceProvider.getValue() == null)) {
                 s = s + "<em>null</em>";
             }
             else {
-                s = s + description.toString();
+                s = s + (new SP (serviceProvider.getValue())).toHtml(false);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     
-        // Start of user code descriptiontoHtml_finalize
+        // Start of user code serviceProvidertoHtml_finalize
         // End of user code
     
         return s;

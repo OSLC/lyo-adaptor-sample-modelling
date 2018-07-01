@@ -25,7 +25,7 @@ package com.sample.rm;
 
 // Start of user code pre_class_code
 // End of user code
-public class ServiceProviderInfo {
+public class ServiceProvider2Info {
     public String name;
     public String serviceProviderId;
 

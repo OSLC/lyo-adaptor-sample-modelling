@@ -53,13 +53,19 @@ import org.eclipse.lyo.oslc4j.provider.jena.JenaProvidersRegistry;
 import org.eclipse.lyo.oslc4j.provider.json4j.Json4JProvidersRegistry;
 
 import com.sample.rm.services.ServiceProviderCatalogService;
-import com.sample.rm.services.ServiceProviderService;
+import com.sample.rm.services.ServiceProvider1Service;
+import com.sample.rm.services.ServiceProvider2Service;
 import com.sample.rm.services.ResourceShapeService;
 
+import com.sample.rm.resources.ProviderToTRS;
 import com.sample.rm.resources.Requirement;
+import com.sample.rm.resources.SP;
+import com.sample.rm.resources.TRS;
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.OslcDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
-import com.sample.rm.services.ServiceProviderService1;
+import com.sample.rm.services.ServiceProvider1Service1;
+import com.sample.rm.services.ServiceProvider2Service1;
 
 // Start of user code imports
 // End of user code
@@ -82,11 +88,13 @@ public class Application extends OslcWinkApplication {
     {
         RESOURCE_CLASSES.addAll(JenaProvidersRegistry.getProviders());
         RESOURCE_CLASSES.addAll(Json4JProvidersRegistry.getProviders());
-        RESOURCE_CLASSES.add(ServiceProviderService1.class);
+        RESOURCE_CLASSES.add(ServiceProvider1Service1.class);
+        RESOURCE_CLASSES.add(ServiceProvider2Service1.class);
 
         // Catalog resources
         RESOURCE_CLASSES.add(ServiceProviderCatalogService.class);
-        RESOURCE_CLASSES.add(ServiceProviderService.class);
+        RESOURCE_CLASSES.add(ServiceProvider1Service.class);
+        RESOURCE_CLASSES.add(ServiceProvider2Service.class);
         RESOURCE_CLASSES.add(ResourceShapeService.class);
 
         // Start of user code Custom Resource Classes
@@ -109,7 +117,10 @@ public class Application extends OslcWinkApplication {
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE_PROVIDER,         ServiceProvider.class);
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE_PROVIDER_CATALOG, ServiceProviderCatalog.class);
 
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcDomainConstants.PROVIDERTOTRS_PATH, ProviderToTRS.class);
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(Oslc_rmDomainConstants.REQUIREMENT_PATH, Requirement.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcDomainConstants.SP_PATH, SP.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcDomainConstants.TRS_PATH, TRS.class);
     }
 
     public Application()

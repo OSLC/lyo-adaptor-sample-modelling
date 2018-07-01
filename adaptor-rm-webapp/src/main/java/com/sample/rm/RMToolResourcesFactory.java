@@ -27,7 +27,10 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
+import com.sample.rm.resources.ProviderToTRS;
 import com.sample.rm.resources.Requirement;
+import com.sample.rm.resources.SP;
+import com.sample.rm.resources.TRS;
 
 // Start of user code imports
 // End of user code
@@ -42,6 +45,35 @@ public class RMToolResourcesFactory {
     
     // Start of user code class_methods
     // End of user code
+
+    //methods for ProviderToTRS resource
+    public static ProviderToTRS createProviderToTRS(final String providerToTRSId)
+           throws URISyntaxException
+    {
+        return new ProviderToTRS(constructURIForProviderToTRS(providerToTRSId));
+    }
+    
+    public static URI constructURIForProviderToTRS(final String providerToTRSId)
+    {
+        String basePath = OSLC4JUtils.getServletURI();
+        Map<String, Object> pathParameters = new HashMap<String, Object>();
+        pathParameters.put("providerToTRSId", providerToTRSId);
+        String instanceURI = "providerToTRSs/{providerToTRSId}";
+    
+        final UriBuilder builder = UriBuilder.fromUri(basePath);
+        return builder.path(instanceURI).buildFromMap(pathParameters);
+    }
+    
+    public static Link constructLinkForProviderToTRS(final String providerToTRSId , final String label)
+    {
+        return new Link(constructURIForProviderToTRS(providerToTRSId), label);
+    }
+    
+    public static Link constructLinkForProviderToTRS(final String providerToTRSId)
+    {
+        return new Link(constructURIForProviderToTRS(providerToTRSId));
+    }
+    
 
     //methods for Requirement resource
     public static Requirement createRequirement(final String requirementId)

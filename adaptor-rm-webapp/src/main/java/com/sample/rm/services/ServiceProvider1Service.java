@@ -53,8 +53,8 @@ import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 // End of user code
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
-@Path("serviceProviders")
-public class ServiceProviderService
+@Path("serviceProviders1")
+public class ServiceProvider1Service
 {
     @Context private HttpServletRequest httpServletRequest;
     @Context private HttpServletResponse httpServletResponse;
@@ -102,7 +102,7 @@ public class ServiceProviderService
     public ServiceProvider getServiceProvider(@PathParam("serviceProviderId") final String serviceProviderId)
     {
         httpServletResponse.addHeader("Oslc-Core-Version","2.0");
-        return ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, serviceProviderId);
+        return ServiceProviderCatalogSingleton.getServiceProvider1(httpServletRequest, serviceProviderId);
     }
 
     /**
@@ -117,7 +117,7 @@ public class ServiceProviderService
     @Produces(MediaType.TEXT_HTML)
     public void getHtmlServiceProvider(@PathParam("serviceProviderId") final String serviceProviderId)
     {
-        ServiceProvider serviceProvider = ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, serviceProviderId);
+        ServiceProvider serviceProvider = ServiceProviderCatalogSingleton.getServiceProvider1(httpServletRequest, serviceProviderId);
         Service [] services = serviceProvider.getServices();
 
         httpServletRequest.setAttribute("serviceProvider", serviceProvider);
@@ -125,7 +125,7 @@ public class ServiceProviderService
         // Start of user code getHtmlServiceProvider_setAttributes
         // End of user code
 
-        RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/serviceprovider.jsp");
+        RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/serviceprovider1.jsp");
         try {
             rd.forward(httpServletRequest, httpServletResponse);
         } catch (Exception e) {

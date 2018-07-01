@@ -70,10 +70,10 @@ import org.eclipse.lyo.oslc4j.core.model.ValueType;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
-import com.sample.rm.resources.Oslc_rmDomainConstants;
+import com.sample.rm.resources.OslcDomainConstants;
 
 
-import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.OslcDomainConstants;
 
 // Start of user code imports
 // End of user code
@@ -83,25 +83,25 @@ import com.sample.rm.resources.DctermsDomainConstants;
 
 // Start of user code classAnnotations
 // End of user code
-@OslcNamespace(Oslc_rmDomainConstants.REQUIREMENT_NAMESPACE)
-@OslcName(Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME)
-@OslcResourceShape(title = "Requirement Resource Shape", describes = Oslc_rmDomainConstants.REQUIREMENT_TYPE)
-public class Requirement
+@OslcNamespace(OslcDomainConstants.TRS_NAMESPACE)
+@OslcName(OslcDomainConstants.TRS_LOCALNAME)
+@OslcResourceShape(title = "TRS Resource Shape", describes = OslcDomainConstants.TRS_TYPE)
+public class TRS
     extends AbstractResource
-    implements IRequirement
+    implements ITRS
 {
-    // Start of user code attributeAnnotation:title
+    // Start of user code attributeAnnotation:baseLog
     // End of user code
-    private String title;
-    // Start of user code attributeAnnotation:description
+    private URI baseLog;
+    // Start of user code attributeAnnotation:changeLog
     // End of user code
-    private String description;
+    private URI changeLog;
     
     // Start of user code classAttributes
     // End of user code
     // Start of user code classMethods
     // End of user code
-    public Requirement()
+    public TRS()
            throws URISyntaxException
     {
         super();
@@ -110,7 +110,7 @@ public class Requirement
         // End of user code
     }
     
-    public Requirement(final URI about)
+    public TRS(final URI about)
            throws URISyntaxException
     {
         super(about);
@@ -119,56 +119,12 @@ public class Requirement
         // End of user code
     }
     
-    /**
-    * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
-    */
-    @Deprecated
-    public Requirement(final String requirementId)
-           throws URISyntaxException
-    {
-        this (constructURI(requirementId));
-        // Start of user code constructor3
-        // End of user code
-    }
-    
-    /**
-    * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
-    */
-    @Deprecated
-    public static URI constructURI(final String requirementId)
-    {
-        String basePath = OSLC4JUtils.getServletURI();
-        Map<String, Object> pathParameters = new HashMap<String, Object>();
-        pathParameters.put("requirementId", requirementId);
-        String instanceURI = "requirements/{requirementId}";
-    
-        final UriBuilder builder = UriBuilder.fromUri(basePath);
-        return builder.path(instanceURI).buildFromMap(pathParameters);
-    }
-    
-    /**
-    * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
-    */
-    @Deprecated
-    public static Link constructLink(final String requirementId , final String label)
-    {
-        return new Link(constructURI(requirementId), label);
-    }
-    
-    /**
-    * @deprecated Use the methods in class {@link com.sample.rm.RMToolResourcesFactory} instead.
-    */
-    @Deprecated
-    public static Link constructLink(final String requirementId)
-    {
-        return new Link(constructURI(requirementId));
-    }
     
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
-        Oslc_rmDomainConstants.REQUIREMENT_PATH,
-        Requirement.class);
+        OslcDomainConstants.TRS_PATH,
+        TRS.class);
     }
     
     
@@ -184,7 +140,7 @@ public class Requirement
         // End of user code
     
         if (asLocalResource) {
-            result = result + "{a Local Requirement Resource} - update Requirement.toString() to present resource as desired.";
+            result = result + "{a Local TRS Resource} - update TRS.toString() to present resource as desired.";
             // Start of user code toString_bodyForLocalResource
             // End of user code
         }
@@ -225,142 +181,140 @@ public class Requirement
     }
     
     
-    // Start of user code getterAnnotation:title
+    // Start of user code getterAnnotation:baseLog
     // End of user code
-    @OslcName("title")
-    @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "title")
+    @OslcName("baseLog")
+    @OslcPropertyDefinition(OslcDomainConstants.OSLC_DOMAINS_NAMSPACE + "baseLog")
     @OslcOccurs(Occurs.ExactlyOne)
-    @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
-    public String getTitle()
+    public URI getBaseLog()
     {
-        // Start of user code getterInit:title
+        // Start of user code getterInit:baseLog
         // End of user code
-        return title;
+        return baseLog;
     }
     
-    // Start of user code getterAnnotation:description
+    // Start of user code getterAnnotation:changeLog
     // End of user code
-    @OslcName("description")
-    @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "description")
+    @OslcName("changeLog")
+    @OslcPropertyDefinition(OslcDomainConstants.OSLC_DOMAINS_NAMSPACE + "changeLog")
     @OslcOccurs(Occurs.ExactlyOne)
-    @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
-    public String getDescription()
+    public URI getChangeLog()
     {
-        // Start of user code getterInit:description
+        // Start of user code getterInit:changeLog
         // End of user code
-        return description;
+        return changeLog;
     }
     
     
-    // Start of user code setterAnnotation:title
+    // Start of user code setterAnnotation:baseLog
     // End of user code
-    public void setTitle(final String title )
+    public void setBaseLog(final URI baseLog )
     {
-        // Start of user code setterInit:title
+        // Start of user code setterInit:baseLog
         // End of user code
-        this.title = title;
+        this.baseLog = baseLog;
     
-        // Start of user code setterFinalize:title
+        // Start of user code setterFinalize:baseLog
         // End of user code
     }
     
-    // Start of user code setterAnnotation:description
+    // Start of user code setterAnnotation:changeLog
     // End of user code
-    public void setDescription(final String description )
+    public void setChangeLog(final URI changeLog )
     {
-        // Start of user code setterInit:description
+        // Start of user code setterInit:changeLog
         // End of user code
-        this.description = description;
+        this.changeLog = changeLog;
     
-        // Start of user code setterFinalize:description
+        // Start of user code setterFinalize:changeLog
         // End of user code
     }
     
     
-    static public String titleToHtmlForCreation (final HttpServletRequest httpServletRequest)
+    static public String baseLogToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
     
-        // Start of user code "Init:titleToHtmlForCreation(...)"
+        // Start of user code "Init:baseLogToHtmlForCreation(...)"
         // End of user code
     
-        s = s + "<label for=\"title\">title: </LABEL>";
+        s = s + "<label for=\"baseLog\">baseLog: </LABEL>";
     
-        // Start of user code "Mid:titleToHtmlForCreation(...)"
+        // Start of user code "Mid:baseLogToHtmlForCreation(...)"
         // End of user code
     
-        s= s + "<input name=\"title\" type=\"text\" style=\"width: 400px\" id=\"title\" >";
-        // Start of user code "Finalize:titleToHtmlForCreation(...)"
+        s= s + "<input name=\"baseLog\" type=\"text\" style=\"width: 400px\" id=\"baseLog\" >";
+        // Start of user code "Finalize:baseLogToHtmlForCreation(...)"
         // End of user code
     
         return s;
     }
     
-    static public String descriptionToHtmlForCreation (final HttpServletRequest httpServletRequest)
+    static public String changeLogToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
     
-        // Start of user code "Init:descriptionToHtmlForCreation(...)"
+        // Start of user code "Init:changeLogToHtmlForCreation(...)"
         // End of user code
     
-        s = s + "<label for=\"description\">description: </LABEL>";
+        s = s + "<label for=\"changeLog\">changeLog: </LABEL>";
     
-        // Start of user code "Mid:descriptionToHtmlForCreation(...)"
+        // Start of user code "Mid:changeLogToHtmlForCreation(...)"
         // End of user code
     
-        s= s + "<input name=\"description\" type=\"text\" style=\"width: 400px\" id=\"description\" >";
-        // Start of user code "Finalize:descriptionToHtmlForCreation(...)"
+        s= s + "<input name=\"changeLog\" type=\"text\" style=\"width: 400px\" id=\"changeLog\" >";
+        // Start of user code "Finalize:changeLogToHtmlForCreation(...)"
         // End of user code
     
         return s;
     }
     
     
-    public String titleToHtml()
+    public String baseLogToHtml()
     {
         String s = "";
     
-        // Start of user code titletoHtml_mid
+        // Start of user code baseLogtoHtml_mid
         // End of user code
     
         try {
-            if (title == null) {
+            if (baseLog == null) {
                 s = s + "<em>null</em>";
             }
             else {
-                s = s + title.toString();
+                s = s + baseLog.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     
-        // Start of user code titletoHtml_finalize
+        // Start of user code baseLogtoHtml_finalize
         // End of user code
     
         return s;
     }
     
-    public String descriptionToHtml()
+    public String changeLogToHtml()
     {
         String s = "";
     
-        // Start of user code descriptiontoHtml_mid
+        // Start of user code changeLogtoHtml_mid
         // End of user code
     
         try {
-            if (description == null) {
+            if (changeLog == null) {
                 s = s + "<em>null</em>";
             }
             else {
-                s = s + description.toString();
+                s = s + changeLog.toString();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     
-        // Start of user code descriptiontoHtml_finalize
+        // Start of user code changeLogtoHtml_finalize
         // End of user code
     
         return s;

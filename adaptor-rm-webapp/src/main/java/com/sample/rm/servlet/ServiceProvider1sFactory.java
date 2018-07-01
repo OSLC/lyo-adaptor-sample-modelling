@@ -43,20 +43,21 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderFactory;
 
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.OslcDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
-import com.sample.rm.services.ServiceProviderService1;
+import com.sample.rm.services.ServiceProvider1Service1;
 
 // Start of user code imports
 // End of user code
 
-public class ServiceProvidersFactory
+public class ServiceProvider1sFactory
 {
     private static Class<?>[] RESOURCE_CLASSES =
     {
-        ServiceProviderService1.class
+        ServiceProvider1Service1.class
     };
 
-    private ServiceProvidersFactory()
+    private ServiceProvider1sFactory()
     {
         super();
     }
@@ -87,6 +88,12 @@ public class ServiceProvidersFactory
         };
 
         serviceProvider.setPrefixDefinitions(prefixDefinitions);
+
+        Map<QName, Object> properties = new HashMap<QName, Object>();
+        QName key = new QName(baseURI, "someLocalPart");
+		URI value = new URI (baseURI + "/someTRSURI");
+		properties.put(key, value);
+		serviceProvider.setExtendedProperties(properties);
 
         return serviceProvider;
     }

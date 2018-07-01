@@ -29,10 +29,7 @@ package com.sample.rm.servlet;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.namespace.QName;
 
 import org.eclipse.lyo.oslc4j.client.ServiceProviderRegistryURIs;
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
@@ -43,20 +40,21 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderFactory;
 
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.OslcDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
-import com.sample.rm.services.ServiceProviderService1;
+import com.sample.rm.services.ServiceProvider2Service1;
 
 // Start of user code imports
 // End of user code
 
-public class ServiceProvidersFactory
+public class ServiceProvider2sFactory
 {
     private static Class<?>[] RESOURCE_CLASSES =
     {
-        ServiceProviderService1.class
+        ServiceProvider2Service1.class
     };
 
-    private ServiceProvidersFactory()
+    private ServiceProvider2sFactory()
     {
         super();
     }
@@ -81,7 +79,7 @@ public class ServiceProvidersFactory
             new PrefixDefinition(OslcConstants.OSLC_DATA_NAMESPACE_PREFIX, new URI(OslcConstants.OSLC_DATA_NAMESPACE)),
             new PrefixDefinition(OslcConstants.RDF_NAMESPACE_PREFIX, new URI(OslcConstants.RDF_NAMESPACE)),
             new PrefixDefinition(OslcConstants.RDFS_NAMESPACE_PREFIX, new URI(OslcConstants.RDFS_NAMESPACE)),
-            new PrefixDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE_PREFIX, new URI(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE))
+            new PrefixDefinition(OslcDomainConstants.OSLC_DOMAINS_NAMSPACE_PREFIX, new URI(OslcDomainConstants.OSLC_DOMAINS_NAMSPACE))
 ,
             new PrefixDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE_PREFIX, new URI(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE))
         };
