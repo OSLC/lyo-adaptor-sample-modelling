@@ -98,6 +98,12 @@ public class ServiceProviderService1
     // End of user code
 
     // Start of user code class_methods
+    private void addCORS(final HttpServletResponse httpServletResponse) {
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
+        httpServletResponse.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
+        httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
+    }
     // End of user code
 
     public ServiceProviderService1()
@@ -318,6 +324,7 @@ public class ServiceProviderService1
             compact.setLargePreview(largePreview);
 
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
+            addCORS(httpServletResponse);
             return compact;
         }
         throw new WebApplicationException(Status.NOT_FOUND);
@@ -342,6 +349,7 @@ public class ServiceProviderService1
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementsmallpreview.jsp");
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
+            addCORS(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
         }
 
@@ -367,6 +375,7 @@ public class ServiceProviderService1
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementlargepreview.jsp");
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
+            addCORS(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
         }
 
