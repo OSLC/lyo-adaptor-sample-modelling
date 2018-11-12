@@ -37,6 +37,7 @@ To revert to the default generated content, delete all content in this file, and
 <%@page import="org.eclipse.lyo.oslc4j.core.model.ServiceProvider"%>
 <%@page import="java.util.List" %>
 <%@page import="com.sample.rm.resources.Requirement"%>
+<%@ page import="com.sample.rm.resources.Oslc_rmHtmlHelper" %>
 
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 
@@ -49,7 +50,7 @@ To revert to the default generated content, delete all content in this file, and
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><%= aRequirement.toString(true) %></title>
+  <title><%= Oslc_rmHtmlHelper.requirementToString(aRequirement, true) %></title>
 
   <link href="<c:url value="/static/css/bootstrap-4.0.0-beta.min.css"/>" rel="stylesheet">
   <link href="<c:url value="/static/css/adaptor.css"/>" rel="stylesheet">

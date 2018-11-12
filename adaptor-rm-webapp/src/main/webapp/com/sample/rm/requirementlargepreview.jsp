@@ -36,11 +36,16 @@ To revert to the default generated content, delete all content in this file, and
 <%@page import="org.eclipse.lyo.oslc4j.core.model.ServiceProvider"%>
 <%@page import="java.util.List" %>
 <%@page import="com.sample.rm.resources.Requirement"%>
+<%@ page import="com.sample.rm.resources.Oslc_rmHtmlHelper" %>
+<%@ page import="com.sample.rm.resources.Oslc_rmHtmlHelperOverload" %>
+<%@ page import="com.sample.rm.resources.Oslc_rmHelperFactory" %>
+<%@ page import="com.sample.rm.resources.Helper" %>
 
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 
 <%
   Requirement aRequirement = (Requirement) request.getAttribute("aRequirement");
+  final Helper<Requirement> helper = Oslc_rmHelperFactory.INSTANCE.getHelperFor(aRequirement);
 %>
 
 <html lang="en">
@@ -49,7 +54,7 @@ To revert to the default generated content, delete all content in this file, and
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><%= aRequirement.toString(false) %></title>
+  <title><%= helper.resourceToString(false) %></title>
 
   <link href="<c:url value="/static/css/bootstrap-4.0.0-beta.min.css"/>" rel="stylesheet">
   <link href="<c:url value="/static/css/adaptor.css"/>" rel="stylesheet">
@@ -66,11 +71,15 @@ To revert to the default generated content, delete all content in this file, and
         <div>
           <dl class="dl-horizontal">
             <dt>title</dt>
-            <dd><%= aRequirement.titleToHtml()%></dd>
+            <%--<dd><%= aRequirement.titleToHtml()%></dd>--%>
+            <dd><%= Oslc_rmHtmlHelper.requirementTitleToHtml(aRequirement) %></dd>
+            <dd><%= Oslc_rmHtmlHelperOverload.requirementTitleToHtml(aRequirement) %></dd>
+            <dd><%= helper.resourcePropertyToHtml("title") %></dd>
           </dl>
           <dl class="dl-horizontal">
             <dt>description</dt>
             <dd><%= aRequirement.descriptionToHtml()%></dd>
+            <dd><%= helper.resourcePropertyToHtml("title") %></dd>
           </dl>
         </div>
       </div>

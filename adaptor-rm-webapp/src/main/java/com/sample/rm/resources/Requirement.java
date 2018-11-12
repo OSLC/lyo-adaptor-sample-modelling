@@ -168,19 +168,24 @@ public class Requirement
         Oslc_rmDomainConstants.REQUIREMENT_PATH,
         Requirement.class);
     }
-    
-    
-    public String toString()
-    {
-        return toString(false);
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Requirement{");
+        sb.append("title='").append(title).append('\'');
+        sb.append(", description='").append(description).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
-    
+
+    @Deprecated
     public String toString(boolean asLocalResource)
     {
         String result = "";
         // Start of user code toString_init
         // End of user code
-    
+
         if (asLocalResource) {
             result = result + "{a Local Requirement Resource} - update Requirement.toString() to present resource as desired.";
             // Start of user code toString_bodyForLocalResource
@@ -189,24 +194,26 @@ public class Requirement
         else {
             result = getAbout().toString();
         }
-    
+
         // Start of user code toString_finalize
         // End of user code
-    
+
         return result;
     }
-    
+
+    @Deprecated
     public String toHtml()
     {
         return toHtml(false);
     }
-    
+
+    @Deprecated
     public String toHtml(boolean asLocalResource)
     {
         String result = "";
         // Start of user code toHtml_init
         // End of user code
-    
+
         if (asLocalResource) {
             result = toString(true);
             // Start of user code toHtml_bodyForLocalResource
@@ -215,14 +222,14 @@ public class Requirement
         else {
             result = "<a href=\"" + getAbout() + "\" class=\"oslc-resource-link\">" + toString() + "</a>";
         }
-    
+
         // Start of user code toHtml_finalize
         // End of user code
-    
+
         return result;
     }
-    
-    
+
+
     // Start of user code getterAnnotation:title
     // End of user code
     @OslcName("title")
@@ -276,7 +283,7 @@ public class Requirement
         // End of user code
     }
     
-    
+    @Deprecated
     static public String titleToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
@@ -295,7 +302,8 @@ public class Requirement
     
         return s;
     }
-    
+
+    @Deprecated
     static public String descriptionToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
@@ -315,7 +323,7 @@ public class Requirement
         return s;
     }
     
-    
+    @Deprecated
     public String titleToHtml()
     {
         String s = "";
@@ -339,7 +347,8 @@ public class Requirement
     
         return s;
     }
-    
+
+    @Deprecated
     public String descriptionToHtml()
     {
         String s = "";
