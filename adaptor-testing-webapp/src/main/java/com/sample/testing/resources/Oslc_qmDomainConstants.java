@@ -40,16 +40,16 @@ public interface Oslc_qmDomainConstants
     public static String QUALITY_MANAGEMENT_NAMSPACE = "http://open-services.net/ns/qm#";
     public static String QUALITY_MANAGEMENT_NAMSPACE_PREFIX = "oslc_qm";
 
-    public static String TEST_CASE_PATH = "testCase";
-    public static String TEST_CASE_NAMESPACE = QUALITY_MANAGEMENT_NAMSPACE; //namespace of the rdfs:class the resource describes
-    public static String TEST_CASE_LOCALNAME = "TestCase"; //localName of the rdfs:class the resource describes
-    public static String TEST_CASE_TYPE = TEST_CASE_NAMESPACE + TEST_CASE_LOCALNAME; //fullname of the rdfs:class the resource describes
-    public static String TEST_PLAN_PATH = "testPlan";
-    public static String TEST_PLAN_NAMESPACE = QUALITY_MANAGEMENT_NAMSPACE; //namespace of the rdfs:class the resource describes
-    public static String TEST_PLAN_LOCALNAME = "TestPlan"; //localName of the rdfs:class the resource describes
-    public static String TEST_PLAN_TYPE = TEST_PLAN_NAMESPACE + TEST_PLAN_LOCALNAME; //fullname of the rdfs:class the resource describes
-    public static String TEST_SCRIPT_PATH = "testScript";
-    public static String TEST_SCRIPT_NAMESPACE = QUALITY_MANAGEMENT_NAMSPACE; //namespace of the rdfs:class the resource describes
-    public static String TEST_SCRIPT_LOCALNAME = "TestScript"; //localName of the rdfs:class the resource describes
-    public static String TEST_SCRIPT_TYPE = TEST_SCRIPT_NAMESPACE + TEST_SCRIPT_LOCALNAME; //fullname of the rdfs:class the resource describes
+    public static String TESTCASE_PATH = "testCase";
+    public static String TESTCASE_NAMESPACE = QUALITY_MANAGEMENT_NAMSPACE; //namespace of the rdfs:class the resource describes
+    public static String TESTCASE_LOCALNAME = "TestCase"; //localName of the rdfs:class the resource describes
+    public static String TESTCASE_TYPE = TESTCASE_NAMESPACE + TESTCASE_LOCALNAME; //fullname of the rdfs:class the resource describes
+    public static String TESTPLAN_PATH = "testPlan";
+    public static String TESTPLAN_NAMESPACE = QUALITY_MANAGEMENT_NAMSPACE; //namespace of the rdfs:class the resource describes
+    public static String TESTPLAN_LOCALNAME = "TestPlan"; //localName of the rdfs:class the resource describes
+    public static String TESTPLAN_TYPE = TESTPLAN_NAMESPACE + TESTPLAN_LOCALNAME; //fullname of the rdfs:class the resource describes
+    public static String TESTSCRIPT_PATH = "testScript";
+    public static String TESTSCRIPT_NAMESPACE = QUALITY_MANAGEMENT_NAMSPACE; //namespace of the rdfs:class the resource describes
+    public static String TESTSCRIPT_LOCALNAME = "TestScript"; //localName of the rdfs:class the resource describes
+    public static String TESTSCRIPT_TYPE = TESTSCRIPT_NAMESPACE + TESTSCRIPT_LOCALNAME; //fullname of the rdfs:class the resource describes
 }

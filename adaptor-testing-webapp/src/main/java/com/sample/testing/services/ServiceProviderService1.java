@@ -81,6 +81,8 @@ import com.sample.testing.resources.Oslc_qmDomainConstants;
 import com.sample.testing.servlet.ServiceProviderCatalogSingleton;
 import com.sample.testing.resources.Requirement;
 import com.sample.testing.resources.TestScript;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 // Start of user code imports
 // End of user code
@@ -89,6 +91,7 @@ import com.sample.testing.resources.TestScript;
 // End of user code
 @OslcService(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_DOMAIN)
 @Path("serviceProviders/{serviceProviderId}/testScripts")
+@Api(value = "OSLC Service for {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}")
 public class ServiceProviderService1
 {
     @Context private HttpServletRequest httpServletRequest;
@@ -110,13 +113,19 @@ public class ServiceProviderService1
     (
         title = "QueryCapability",
         label = "QueryCapability",
-        resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TEST_SCRIPT_PATH,
-        resourceTypes = {Oslc_qmDomainConstants.TEST_SCRIPT_TYPE},
+        resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH,
+        resourceTypes = {Oslc_qmDomainConstants.TESTSCRIPT_TYPE},
         usages = {}
     )
     @GET
     @Path("query")
     @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
+    @ApiOperation(
+        value = "Query capability for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
+        notes = "Query capability for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
+            ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}",
+        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML
+    )
     public TestScript[] queryTestScripts(
                                                     @PathParam("serviceProviderId") final String serviceProviderId ,
                                                      @QueryParam("oslc.where") final String where,
@@ -143,6 +152,12 @@ public class ServiceProviderService1
     @GET
     @Path("query")
     @Produces({ MediaType.TEXT_HTML })
+    @ApiOperation(
+        value = "Query capability for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
+        notes = "Query capability for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
+            ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}",
+        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML
+    )
     public Response queryTestScriptsAsHtml(
                                     @PathParam("serviceProviderId") final String serviceProviderId ,
                                        @QueryParam("oslc.where") final String where,
@@ -192,14 +207,20 @@ public class ServiceProviderService1
     (
          title = "CreationFactory",
          label = "",
-         resourceShapes = {OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TEST_SCRIPT_PATH},
-         resourceTypes = {Oslc_qmDomainConstants.TEST_SCRIPT_TYPE},
+         resourceShapes = {OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH},
+         resourceTypes = {Oslc_qmDomainConstants.TESTSCRIPT_TYPE},
          usages = {}
     )
     @POST
     @Path("create")
     @Consumes({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
     @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
+    @ApiOperation(
+        value = "Creation factory for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
+        notes = "Creation factory for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
+            ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}",
+        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE
+    )
     public Response createTestScript(
             @PathParam("serviceProviderId") final String serviceProviderId ,
             final TestScript aResource
@@ -218,6 +239,12 @@ public class ServiceProviderService1
     @GET
     @Path("{testScriptId}")
     @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
+    @ApiOperation(
+        value = "GET for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
+        notes = "GET for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
+            ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}",
+        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML + ", " + OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML
+    )
     public TestScript getTestScript(
                 @PathParam("serviceProviderId") final String serviceProviderId, @PathParam("testScriptId") final String testScriptId
         ) throws IOException, ServletException, URISyntaxException
@@ -240,6 +267,12 @@ public class ServiceProviderService1
     @GET
     @Path("{testScriptId}")
     @Produces({ MediaType.TEXT_HTML })
+    @ApiOperation(
+        value = "GET for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
+        notes = "GET for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
+            ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}",
+        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML + ", " + OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML
+    )
     public Response getTestScriptAsHtml(
         @PathParam("serviceProviderId") final String serviceProviderId, @PathParam("testScriptId") final String testScriptId
         ) throws ServletException, IOException, URISyntaxException
@@ -264,6 +297,12 @@ public class ServiceProviderService1
     @GET
     @Path("{testScriptId}")
     @Produces({OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML})
+    @ApiOperation(
+        value = "GET for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
+        notes = "GET for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
+            ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}",
+        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML + ", " + OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML
+    )
     public Compact getTestScriptCompact(
         @PathParam("serviceProviderId") final String serviceProviderId, @PathParam("testScriptId") final String testScriptId
         ) throws ServletException, IOException, URISyntaxException

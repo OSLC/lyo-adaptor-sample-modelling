@@ -71,6 +71,8 @@ import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
 import com.sample.testing.resources.Oslc_qmDomainConstants;
+
+
 import com.sample.testing.resources.DctermsDomainConstants;
 import com.sample.testing.resources.Oslc_qmDomainConstants;
 import com.sample.testing.resources.Oslc_rmDomainConstants;
@@ -84,9 +86,9 @@ import com.sample.testing.resources.Requirement;
 
 // Start of user code classAnnotations
 // End of user code
-@OslcNamespace(Oslc_qmDomainConstants.TEST_SCRIPT_NAMESPACE)
-@OslcName(Oslc_qmDomainConstants.TEST_SCRIPT_LOCALNAME)
-@OslcResourceShape(title = "Test Script Resource Shape", describes = Oslc_qmDomainConstants.TEST_SCRIPT_TYPE)
+@OslcNamespace(Oslc_qmDomainConstants.TESTSCRIPT_NAMESPACE)
+@OslcName(Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME)
+@OslcResourceShape(title = "TestScript Resource Shape", describes = Oslc_qmDomainConstants.TESTSCRIPT_TYPE)
 public class TestScript
     extends AbstractResource
     implements ITestScript
@@ -172,7 +174,7 @@ public class TestScript
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
-        Oslc_qmDomainConstants.TEST_SCRIPT_PATH,
+        Oslc_qmDomainConstants.TESTSCRIPT_PATH,
         TestScript.class);
     }
     
@@ -189,7 +191,7 @@ public class TestScript
         // End of user code
     
         if (asLocalResource) {
-            result = result + "{a Local Test Script Resource} - update Test Script.toString() to present resource as desired.";
+            result = result + "{a Local TestScript Resource} - update TestScript.toString() to present resource as desired.";
             // Start of user code toString_bodyForLocalResource
             // End of user code
         }
@@ -203,11 +205,13 @@ public class TestScript
         return result;
     }
     
+    @Deprecated
     public String toHtml()
     {
         return toHtml(false);
     }
     
+    @Deprecated
     public String toHtml(boolean asLocalResource)
     {
         String result = "";
@@ -311,6 +315,7 @@ public class TestScript
     }
     
     
+    @Deprecated
     static public String titleToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
@@ -330,6 +335,7 @@ public class TestScript
         return s;
     }
     
+    @Deprecated
     static public String validatesRequirementToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
@@ -348,6 +354,7 @@ public class TestScript
         return s;
     }
     
+    @Deprecated
     static public String descriptionToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
@@ -368,6 +375,7 @@ public class TestScript
     }
     
     
+    @Deprecated
     public String titleToHtml()
     {
         String s = "";
@@ -392,6 +400,7 @@ public class TestScript
         return s;
     }
     
+    @Deprecated
     public String validatesRequirementToHtml()
     {
         String s = "";
@@ -416,6 +425,7 @@ public class TestScript
         return s;
     }
     
+    @Deprecated
     public String descriptionToHtml()
     {
         String s = "";

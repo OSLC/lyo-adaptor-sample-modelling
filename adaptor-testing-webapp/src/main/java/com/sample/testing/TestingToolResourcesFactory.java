@@ -27,8 +27,8 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
-import com.sample.testing.resources.TestScript;
 import com.sample.testing.resources.Requirement;
+import com.sample.testing.resources.TestScript;
 
 // Start of user code imports
 // End of user code

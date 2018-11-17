@@ -73,9 +73,9 @@ import com.sample.testing.resources.IRequirement;
 // Start of user code imports
 // End of user code
 
-@OslcNamespace(Oslc_qmDomainConstants.TEST_SCRIPT_NAMESPACE)
-@OslcName(Oslc_qmDomainConstants.TEST_SCRIPT_LOCALNAME)
-@OslcResourceShape(title = "Test Script Resource Shape", describes = Oslc_qmDomainConstants.TEST_SCRIPT_TYPE)
+@OslcNamespace(Oslc_qmDomainConstants.TESTSCRIPT_NAMESPACE)
+@OslcName(Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME)
+@OslcResourceShape(title = "TestScript Resource Shape", describes = Oslc_qmDomainConstants.TESTSCRIPT_TYPE)
 public interface ITestScript
 {
 

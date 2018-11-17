@@ -91,6 +91,10 @@ public class Application extends OslcWinkApplication {
         RESOURCE_CLASSES.add(ServiceProviderService.class);
         RESOURCE_CLASSES.add(ResourceShapeService.class);
 
+        // Swagger resources
+        RESOURCE_CLASSES.add(io.swagger.jaxrs.listing.ApiListingResource.class);
+        RESOURCE_CLASSES.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
+
         // Start of user code Custom Resource Classes
             // End of user code
 
@@ -112,7 +116,7 @@ public class Application extends OslcWinkApplication {
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE_PROVIDER_CATALOG, ServiceProviderCatalog.class);
 
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(Oslc_rmDomainConstants.REQUIREMENT_PATH, Requirement.class);
-        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(Oslc_qmDomainConstants.TEST_SCRIPT_PATH, TestScript.class);
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(Oslc_qmDomainConstants.TESTSCRIPT_PATH, TestScript.class);
     }
 
     public Application()

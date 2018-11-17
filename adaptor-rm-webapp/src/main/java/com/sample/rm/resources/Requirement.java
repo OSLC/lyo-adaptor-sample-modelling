@@ -71,6 +71,8 @@ import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
 import com.sample.rm.resources.Oslc_rmDomainConstants;
+
+
 import com.sample.rm.resources.DctermsDomainConstants;
 
 // Start of user code imports
@@ -196,11 +198,13 @@ public class Requirement
         return result;
     }
     
+    @Deprecated
     public String toHtml()
     {
         return toHtml(false);
     }
     
+    @Deprecated
     public String toHtml(boolean asLocalResource)
     {
         String result = "";
@@ -277,6 +281,7 @@ public class Requirement
     }
     
     
+    @Deprecated
     static public String titleToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
@@ -296,6 +301,7 @@ public class Requirement
         return s;
     }
     
+    @Deprecated
     static public String descriptionToHtmlForCreation (final HttpServletRequest httpServletRequest)
     {
         String s = "";
@@ -316,6 +322,7 @@ public class Requirement
     }
     
     
+    @Deprecated
     public String titleToHtml()
     {
         String s = "";
@@ -340,6 +347,7 @@ public class Requirement
         return s;
     }
     
+    @Deprecated
     public String descriptionToHtml()
     {
         String s = "";
