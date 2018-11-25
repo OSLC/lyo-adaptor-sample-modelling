@@ -33,7 +33,7 @@ import org.eclipse.lyo.client.oslc.resources.OslcQuery;
 import org.eclipse.lyo.client.oslc.resources.OslcQueryParameters;
 import org.eclipse.lyo.client.oslc.resources.OslcQueryResult;
 
-import com.sample.testing.resources.Oslc_rmConstants;
+import com.sample.testing.resources.Oslc_rmDomainConstants;
 // End of user code
 
 
@@ -63,7 +63,7 @@ public class RequirementsAdaptorClient
 		ServiceProvider sp = catalog.getServiceProviders()[0];
 		
 		//Find the QCBase that deals with SecondOT
-		String queryBaseUri = client.lookupQueryCapability(sp.getAbout().toString(), Oslc_rmConstants.REQUIREMENTS_MANAGEMENT_DOMAIN, Oslc_rmConstants.TYPE_REQUIREMENT);
+		String queryBaseUri = client.lookupQueryCapability(sp.getAbout().toString(), Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_DOMAIN, Oslc_rmDomainConstants.REQUIREMENT_TYPE);
         URI queryBase = new URI(queryBaseUri);
 
         String where = "";

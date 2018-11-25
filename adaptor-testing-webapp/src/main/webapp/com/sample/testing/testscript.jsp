@@ -73,7 +73,7 @@ To revert to the default generated content, delete all content in this file, and
 <!-- Begin page content -->
 <div class="container">
     <div class="page-header">
-        <h1>Test Script resource</h1>
+        <h1>TestScript resource</h1>
         <p class="lead">URI:&nbsp;
       <a href="<%= aTestScript.getAbout() %>"><%= aTestScript.getAbout() %></a>
         </p>
