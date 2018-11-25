@@ -77,18 +77,6 @@ To revert to the default generated content, delete all content in this file, and
           <%= resources.size()%>
       </div>
     </div>
-		<div class="alert alert-primary" role="alert">
-			<h4 class="alert-heading">Sample data!</h4>
-			<hr>
-			<p>
-				A sample set of Requirement resources is presented here. Modify the
-				method
-				<code>queryRequirements()</code>
-				in the class
-				<code>RMToolManager</code>
-				, to return the expected set of Requirement resources.
-			</p>
-		</div>
         <% for (Requirement aResource : resources) { %>
         <p><%= aResource.toHtml() %><br /></p>
         <% } %>

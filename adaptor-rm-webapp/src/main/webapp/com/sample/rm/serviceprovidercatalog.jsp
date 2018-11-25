@@ -68,18 +68,6 @@ ServiceProviderCatalog catalog = (ServiceProviderCatalog)request.getAttribute("c
     <div class="page-header">
       <h1>RM Tool Service Provider Catalogue</h1>
     </div>
-		<div class="alert alert-primary" role="alert">
-			<h4 class="alert-heading">Sample data!</h4>
-			<hr>
-			<p>
-				A sample list of Service Providers are listed here. Modify the
-				method
-				<code>getServiceProviderInfos()</code>
-				in the class
-				<code>RMToolManager</code>
-				, to return the expected set of ServiceProvider resources.
-			</p>
-		</div>
 
   	<h2>Service Providers</h2>
     <% for (ServiceProvider s : catalog.getServiceProviders()) { %>
