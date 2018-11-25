@@ -28,9 +28,9 @@
   </adaptorInterfaces>
   <specification>
     <domainSpecifications name="Quality Management" namespaceURI="http://open-services.net/ns/qm#" namespacePrefix="//@specification/@domainPrefixes.1">
-      <resources name="Test Plan" resourceProperties="//@specification/@domainSpecifications.0/@resourceProperties.2 //@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.0"/>
-      <resources name="Test Script" resourceProperties="//@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.0/@resourceProperties.3 //@specification/@domainSpecifications.2/@resourceProperties.2"/>
-      <resources name="Test Case" resourceProperties="//@specification/@domainSpecifications.0/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.0"/>
+      <resources name="TestPlan" resourceProperties="//@specification/@domainSpecifications.0/@resourceProperties.2 //@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.0"/>
+      <resources name="TestScript" resourceProperties="//@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.0/@resourceProperties.3 //@specification/@domainSpecifications.2/@resourceProperties.2"/>
+      <resources name="TestCase" resourceProperties="//@specification/@domainSpecifications.0/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.0"/>
       <resourceProperties name="Reports On" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.2"/>
       <resourceProperties name="uses" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.1"/>
       <resourceProperties name="uses" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.2"/>
