@@ -79,6 +79,7 @@ import com.sample.testing.resources.IRequirement;
 public interface ITestScript
 {
 
+    public void addValidatesRequirement(final Link validatesRequirement );
 
     @OslcName("title")
     @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "title")
@@ -89,11 +90,11 @@ public interface ITestScript
 
     @OslcName("validatesRequirement")
     @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "validatesRequirement")
-    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcOccurs(Occurs.ZeroOrMany)
     @OslcValueType(ValueType.Resource)
     @OslcRange({Oslc_rmDomainConstants.REQUIREMENT_TYPE})
     @OslcReadOnly(false)
-    public Link getValidatesRequirement();
+    public Set<Link> getValidatesRequirement();
 
     @OslcName("description")
     @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "description")
@@ -104,7 +105,7 @@ public interface ITestScript
 
 
     public void setTitle(final String title );
-    public void setValidatesRequirement(final Link validatesRequirement );
+    public void setValidatesRequirement(final Set<Link> validatesRequirement );
     public void setDescription(final String description );
 }
 

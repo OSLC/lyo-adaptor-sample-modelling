@@ -109,6 +109,15 @@ public class ServiceProviderService1
         super();
     }
 
+    private void addCORSHeaders (final HttpServletResponse httpServletResponse) {
+        //UI preview can be blocked by CORS policy.
+        //add select CORS headers to every response that is embedded in an iframe.
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
+        httpServletResponse.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
+        httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
+    }
+
     @OslcQueryCapability
     (
         title = "QueryCapability",
@@ -119,7 +128,7 @@ public class ServiceProviderService1
     )
     @GET
     @Path("query")
-    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
+    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
     @ApiOperation(
         value = "Query capability for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
         notes = "Query capability for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
@@ -213,8 +222,8 @@ public class ServiceProviderService1
     )
     @POST
     @Path("create")
-    @Consumes({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
-    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
+    @Consumes({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON })
+    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
     @ApiOperation(
         value = "Creation factory for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
         notes = "Creation factory for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
@@ -238,7 +247,7 @@ public class ServiceProviderService1
 
     @GET
     @Path("{testScriptId}")
-    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
+    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
     @ApiOperation(
         value = "GET for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
         notes = "GET for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
@@ -341,6 +350,7 @@ public class ServiceProviderService1
             compact.setLargePreview(largePreview);
 
             httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
+            addCORSHeaders(httpServletResponse);
             return compact;
         }
         throw new WebApplicationException(Status.NOT_FOUND);
@@ -365,6 +375,7 @@ public class ServiceProviderService1
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/testscriptsmallpreview.jsp");
             httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
+            addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
         }
 
@@ -390,6 +401,7 @@ public class ServiceProviderService1
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/testscriptlargepreview.jsp");
             httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
+            addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
         }
 

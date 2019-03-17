@@ -1355,7 +1355,7 @@
           </ownedStyle>
           <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.eclipse.lyo.tools.toolchain.design/description/ToolChainModel.odesign#//@ownedViewpoints[name='ToolchainViewpoint']/@ownedRepresentations[name='SpecificationDiagram']/@defaultLayer/@containerMappings[name='Specification.DomainSpecification']/@subContainerMappings[name='Specification.DomainSpecification.PropertiesList']/@subNodeMappings[name='Specification.DomainSpecification.PropertiesList.Property']"/>
         </ownedElements>
-        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_iriTgCpyEeerItxm84RqzQ" name="validatesRequirement: Requirement">
+        <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_iriTgCpyEeerItxm84RqzQ" name="validatesRequirement: Requirement []">
           <target xmi:type="oslc4j_ai:ResourceProperty" href="My.toolchain#//@specification/@domainSpecifications.0/@resourceProperties.3"/>
           <semanticElements xmi:type="oslc4j_ai:ResourceProperty" href="My.toolchain#//@specification/@domainSpecifications.0/@resourceProperties.3"/>
           <ownedStyle xmi:type="diagram:BundledImage" xmi:id="_wZK5wOpNEei3DvjTOKQ5Zw" labelSize="9" showIcon="false" labelAlignment="LEFT" labelPosition="node">
@@ -1564,7 +1564,7 @@
       </ownedStyle>
       <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.eclipse.lyo.tools.toolchain.design/description/ToolChainModel.odesign#//@ownedViewpoints[name='ToolchainViewpoint']/@ownedRepresentations[name='SpecificationDiagram']/@defaultLayer/@edgeMappings[name='Specification.ResourceToReferenceProperty']"/>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_itATICpyEeerItxm84RqzQ" name="[validatesRequirement]" sourceNode="_ipazoCpyEeerItxm84RqzQ" targetNode="_irvu4CpyEeerItxm84RqzQ" endLabel="[1]">
+    <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_itATICpyEeerItxm84RqzQ" name="[validatesRequirement]" sourceNode="_ipazoCpyEeerItxm84RqzQ" targetNode="_irvu4CpyEeerItxm84RqzQ" endLabel="[0..*]">
       <target xmi:type="oslc4j_ai:Resource" href="My.toolchain#//@specification/@domainSpecifications.0/@resources.1"/>
       <semanticElements xmi:type="oslc4j_ai:ResourceProperty" href="My.toolchain#//@specification/@domainSpecifications.0/@resourceProperties.3"/>
       <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_waRF8OpNEei3DvjTOKQ5Zw" size="2" strokeColor="0,0,0">

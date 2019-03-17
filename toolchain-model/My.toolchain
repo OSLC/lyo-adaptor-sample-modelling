@@ -34,7 +34,7 @@
       <resourceProperties name="Reports On" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.2"/>
       <resourceProperties name="uses" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.1"/>
       <resourceProperties name="uses" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.2"/>
-      <resourceProperties name="validatesRequirement" valueType="Resource" range="//@specification/@domainSpecifications.3/@resources.0"/>
+      <resourceProperties name="validatesRequirement" occurs="zeroOrMany" valueType="Resource" range="//@specification/@domainSpecifications.3/@resources.0"/>
     </domainSpecifications>
     <domainSpecifications name=" foaf" namespaceURI="http://xmlns.com/foaf/0.1/" namespacePrefix="//@specification/@domainPrefixes.5">
       <resources name="Person" resourceProperties="//@specification/@domainSpecifications.1/@resourceProperties.0 //@specification/@domainSpecifications.1/@resourceProperties.1 //@specification/@domainSpecifications.1/@resourceProperties.2"/>

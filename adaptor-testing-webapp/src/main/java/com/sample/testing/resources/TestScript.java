@@ -98,7 +98,7 @@ public class TestScript
     private String title;
     // Start of user code attributeAnnotation:validatesRequirement
     // End of user code
-    private Link validatesRequirement = new Link();
+    private Set<Link> validatesRequirement = new HashSet<Link>();
     // Start of user code attributeAnnotation:description
     // End of user code
     private String description;
@@ -233,6 +233,11 @@ public class TestScript
         return result;
     }
     
+    public void addValidatesRequirement(final Link validatesRequirement)
+    {
+        this.validatesRequirement.add(validatesRequirement);
+    }
+    
     
     // Start of user code getterAnnotation:title
     // End of user code
@@ -252,11 +257,11 @@ public class TestScript
     // End of user code
     @OslcName("validatesRequirement")
     @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "validatesRequirement")
-    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcOccurs(Occurs.ZeroOrMany)
     @OslcValueType(ValueType.Resource)
     @OslcRange({Oslc_rmDomainConstants.REQUIREMENT_TYPE})
     @OslcReadOnly(false)
-    public Link getValidatesRequirement()
+    public Set<Link> getValidatesRequirement()
     {
         // Start of user code getterInit:validatesRequirement
         // End of user code
@@ -292,11 +297,15 @@ public class TestScript
     
     // Start of user code setterAnnotation:validatesRequirement
     // End of user code
-    public void setValidatesRequirement(final Link validatesRequirement )
+    public void setValidatesRequirement(final Set<Link> validatesRequirement )
     {
         // Start of user code setterInit:validatesRequirement
         // End of user code
-        this.validatesRequirement = validatesRequirement;
+        this.validatesRequirement.clear();
+        if (validatesRequirement != null)
+        {
+            this.validatesRequirement.addAll(validatesRequirement);
+        }
     
         // Start of user code setterFinalize:validatesRequirement
         // End of user code
@@ -409,12 +418,13 @@ public class TestScript
         // End of user code
     
         try {
-            if ((validatesRequirement == null) || (validatesRequirement.getValue() == null)) {
-                s = s + "<em>null</em>";
+            s = s + "<ul>";
+            for(Link next : validatesRequirement) {
+                s = s + "<li>";
+                s = s + (new Requirement (next.getValue())).toHtml(false);
+                s = s + "</li>";
             }
-            else {
-                s = s + (new Requirement (validatesRequirement.getValue())).toHtml(false);
-            }
+            s = s + "</ul>";
         } catch (Exception e) {
             e.printStackTrace();
         }

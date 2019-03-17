@@ -80,7 +80,10 @@ public class TestingToolManager {
 			r = TestingToolResourcesFactory.createTestScript(serviceProviderId, id);
 			r.setTitle("A sample TestScript with id:" + id);
 			r.setDescription("A sample TestScript with id:" + id);
-			r.setValidatesRequirement(queryForRandomRequirementLink());
+			int size = randomNumber(1, 3);
+			for (int i = 0; i < size; i++) {
+				r.addValidatesRequirement(queryForRandomRequirementLink());
+			}
 		} catch (URISyntaxException e) {
             log.error("Failed to create resource", e);
 		}

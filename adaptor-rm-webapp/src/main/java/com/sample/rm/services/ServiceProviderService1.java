@@ -108,6 +108,15 @@ public class ServiceProviderService1
         super();
     }
 
+    private void addCORSHeaders (final HttpServletResponse httpServletResponse) {
+        //UI preview can be blocked by CORS policy.
+        //add select CORS headers to every response that is embedded in an iframe.
+        httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
+        httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
+        httpServletResponse.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
+        httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
+    }
+
     @OslcQueryCapability
     (
         title = "QueryCapability",
@@ -118,7 +127,7 @@ public class ServiceProviderService1
     )
     @GET
     @Path("query")
-    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
+    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
     @ApiOperation(
         value = "Query capability for resources of type {" + Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "}",
         notes = "Query capability for resources of type {" + "<a href=\"" + Oslc_rmDomainConstants.REQUIREMENT_TYPE + "\">" + Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "</a>" + "}" +
@@ -248,7 +257,7 @@ public class ServiceProviderService1
 
     @GET
     @Path("{requirementId}")
-    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON, OslcMediaType.TEXT_TURTLE})
+    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
     @ApiOperation(
         value = "GET for resources of type {" + Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "}",
         notes = "GET for resources of type {" + "<a href=\"" + Oslc_rmDomainConstants.REQUIREMENT_TYPE + "\">" + Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "</a>" + "}" +
@@ -351,6 +360,7 @@ public class ServiceProviderService1
             compact.setLargePreview(largePreview);
 
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
+            addCORSHeaders(httpServletResponse);
             return compact;
         }
         throw new WebApplicationException(Status.NOT_FOUND);
@@ -375,6 +385,7 @@ public class ServiceProviderService1
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementsmallpreview.jsp");
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
+            addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
         }
 
@@ -400,6 +411,7 @@ public class ServiceProviderService1
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementlargepreview.jsp");
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
+            addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
         }
 

@@ -19,7 +19,7 @@
 
 package com.sample.testing.clients;
 
-import org.apache.wink.client.ClientResponse;
+import javax.ws.rs.core.Response;
 import org.eclipse.lyo.client.oslc.OSLCConstants;
 import org.eclipse.lyo.client.oslc.OslcClient;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
@@ -50,13 +50,13 @@ public class RequirementsAdaptorClient
 	public static String[] queryRequirements() throws Exception 
 	{	
         OslcClient client = new OslcClient();
-        ClientResponse response = null;
+        Response response = null;
         ServiceProviderCatalog catalog = null;
 
         //Get the SPC
         response = client.getResource(serviceProviderCatalogURI,OSLCConstants.CT_RDF);
         if (response != null) {
-            catalog = response.getEntity(ServiceProviderCatalog.class);
+            catalog = response.readEntity(ServiceProviderCatalog.class);
         }
 		
         //Get first SP.
@@ -81,7 +81,7 @@ public class RequirementsAdaptorClient
 
     public static ServiceProviderCatalog getServiceProviderCatalog() throws Exception {
         OslcClient client = new OslcClient();
-        ClientResponse response = null;
+        Response response = null;
         ServiceProviderCatalog catalog = null;
 
         // Start of user code getServiceProviderCatalog_init
@@ -89,7 +89,7 @@ public class RequirementsAdaptorClient
 
         response = client.getResource(serviceProviderCatalogURI,OSLCConstants.CT_RDF);
         if (response != null) {
-            catalog = response.getEntity(ServiceProviderCatalog.class);
+            catalog = response.readEntity(ServiceProviderCatalog.class);
         }
         // Start of user code getServiceProviderCatalog_final
         // End of user code
@@ -98,7 +98,7 @@ public class RequirementsAdaptorClient
 
     public static Requirement getRequirement(String resourceURI) throws Exception {
         OslcClient client = new OslcClient();
-        ClientResponse response = null;
+        Response response = null;
         Requirement resource = null;
 
         // Start of user code getRequirement_init
@@ -106,7 +106,7 @@ public class RequirementsAdaptorClient
 
         response = client.getResource(resourceURI, OSLCConstants.CT_RDF);
         if (response != null) {
-            resource = response.getEntity(Requirement.class);
+            resource = response.readEntity(Requirement.class);
         }
         // Start of user code getRequirement_final
         // End of user code
