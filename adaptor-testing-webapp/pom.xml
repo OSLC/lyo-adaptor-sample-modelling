@@ -11,7 +11,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<version.jersey>2.27</version.jersey>
+        <!-- This jersey version is the one supported by the latest Swagger 1.5 -->
+        <version.jersey>2.25.1</version.jersey>
+        <version.swagger>1.5.22</version.swagger>
 		<version.lyo>4.0.0-SNAPSHOT</version.lyo>
 	</properties>
 	<repositories>
@@ -43,7 +45,7 @@
   		<dependency>
 		  <groupId>io.swagger</groupId>
 		  <artifactId>swagger-jersey2-jaxrs</artifactId>
-		  <version>1.5.22</version>
+		  <version>${version.swagger}</version>
  		</dependency>
 		<!-- Lyo dependencies -->
 		<dependency>
@@ -88,11 +90,6 @@
 			<artifactId>jersey-container-servlet</artifactId>
 			<version>${version.jersey}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.inject</groupId>
-			<artifactId>jersey-hk2</artifactId>
-			<version>${version.jersey}</version>
-		</dependency>
 		<!-- Test dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -101,15 +98,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.glassfish.jersey.containers</groupId>
-				<artifactId>jersey-container-servlet-core</artifactId>
-				<version>2.27</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 	<build>
 		<plugins>
 			<plugin>
