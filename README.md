@@ -10,8 +10,8 @@ This is the repository with the sources of the finished [Lyo Toolchain Modelling
 
 The repository contains 
  * **toolchain-model** - A Lyo Designer modelling project that models 2 communicating OSLC Servers, together with their relevant domain specifications. 
- * **adaptor-rm-webapp** - an OSLC server that serves Requirement resources. You can explore the server starting with its [Service Provider Catalog on localhost:8081](http://localhost:8081/adaptor-rm/services/catalog/singleton). 
- * **adaptor-testing-webapp** - an OSLC server that serves TestScript resources, while consuming resources from the *adaptor-rm-webapp* server. You can explore the server starting with its [Service Provider Catalog on localhost:8082](http://localhost:8082/adaptor-testing/services/catalog/singleton).
+ * **adaptor-rm-webapp** - an OSLC server that serves Requirement resources. See the project [Read Me](https://github.com/OSLC/lyo-adaptor-sample-modelling/tree/master/adaptor-rm-webapp) for instructions on how to run. 
+ * **adaptor-testing-webapp** - an OSLC server that serves TestScript resources, while consuming resources from the *adaptor-rm-webapp* server. See the project [Read Me](https://github.com/OSLC/lyo-adaptor-sample-modelling/tree/master/adaptor-testing-webapp) for instructions on how to run.
 
 ![Toolchain Model](img/ToolchainDiagram.png)
 
