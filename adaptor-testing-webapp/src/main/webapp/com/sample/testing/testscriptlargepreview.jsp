@@ -33,8 +33,13 @@ To revert to the default generated content, delete all content in this file, and
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<%@page import="org.eclipse.lyo.oslc4j.core.model.Link" %>
 <%@page import="org.eclipse.lyo.oslc4j.core.model.ServiceProvider"%>
-<%@page import="java.util.List" %>
+<%@page import="java.net.URI"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.HashSet"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Iterator"%>
 <%@page import="com.sample.testing.resources.TestScript"%>
 
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
@@ -49,7 +54,7 @@ To revert to the default generated content, delete all content in this file, and
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><%= aTestScript.toString(false) %></title>
+  <title><%= aTestScript.toString() %></title>
 
   <link href="<c:url value="/static/css/bootstrap-4.0.0-beta.min.css"/>" rel="stylesheet">
   <link href="<c:url value="/static/css/adaptor.css"/>" rel="stylesheet">
@@ -66,15 +71,55 @@ To revert to the default generated content, delete all content in this file, and
         <div>
           <dl class="dl-horizontal">
             <dt>title</dt>
-            <dd><%= aTestScript.titleToHtml()%></dd>
+            <dd>
+            <%
+            if (aTestScript.getTitle() == null) {
+                out.write("<em>null</em>");
+            }
+            else {
+                out.write(aTestScript.getTitle().toString());
+            }
+            %>
+            
+            </dd>
           </dl>
           <dl class="dl-horizontal">
             <dt>validatesRequirement</dt>
-            <dd><%= aTestScript.validatesRequirementToHtml()%></dd>
+            <dd>
+            <ul>
+            <%
+            for(Link next : aTestScript.getValidatesRequirement()) {
+                if (next.getValue() == null) {
+                    out.write("<li>" + "<em>null</em>" + "</li>");
+                }
+                else {
+                    %>
+                    <li>
+                    <jsp:include page="/com/sample/testing/requirementtohtml.jsp">
+                        <jsp:param name="resourceUri" value="<%=next.getValue()%>"/> 
+                        </jsp:include>
+                    </li>
+                    <%
+                }
+            }
+            %>
+            </ul>
+            
+            </dd>
           </dl>
           <dl class="dl-horizontal">
             <dt>description</dt>
-            <dd><%= aTestScript.descriptionToHtml()%></dd>
+            <dd>
+            <%
+            if (aTestScript.getDescription() == null) {
+                out.write("<em>null</em>");
+            }
+            else {
+                out.write(aTestScript.getDescription().toString());
+            }
+            %>
+            
+            </dd>
           </dl>
         </div>
       </div>
