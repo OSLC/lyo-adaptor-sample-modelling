@@ -13,7 +13,7 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<!-- This jersey version is the one supported by the latest Swagger 1.5 -->
 		<version.jersey>2.25.1</version.jersey>
-        <version.swagger>1.5.22</version.swagger>
+		<version.swagger>1.5.22</version.swagger>
 		<version.lyo>4.0.0-SNAPSHOT</version.lyo>
 	</properties>
 	<repositories>
@@ -46,6 +46,16 @@
 		  <groupId>io.swagger</groupId>
 		  <artifactId>swagger-jersey2-jaxrs</artifactId>
 		  <version>${version.swagger}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.glassfish.jersey.containers</groupId>
+						<artifactId>jersey-container-servlet-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.glassfish.jersey.media</groupId>
+						<artifactId>jersey-media-multipart</artifactId>
+					</exclusion>
+				</exclusions>
  		</dependency>
 		<!-- Lyo dependencies -->
 		<dependency>
@@ -80,21 +90,32 @@
 			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>javax.enterprise</groupId>
-			<artifactId>cdi-api</artifactId>
-			<version>1.2</version>
-			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>javax.el</groupId>
-					<artifactId>javax.el-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+		<!--		<dependency>
+          <groupId>javax.enterprise</groupId>
+          <artifactId>cdi-api</artifactId>
+          <version>1.2</version>
+          <scope>provided</scope>
+          <exclusions>
+            <exclusion>
+                <groupId>javax.el</groupId>
+                <artifactId>javax.el-api</artifactId>
+            </exclusion>
+          </exclusions>
+        </dependency>-->
+<!--		<dependency>
+			<groupId>org.jboss.weld.servlet</groupId>
+			<artifactId>weld-servlet-core</artifactId>
+			&lt;!&ndash;			because Jersey CDI2 is stuck on 3.0.0 &ndash;&gt;
+			<version>3.0.0.Final</version>
+		</dependency>-->
 		<dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-server</artifactId>
+			<version>${version.jersey}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-common</artifactId>
 			<version>${version.jersey}</version>
 		</dependency>
 		<dependency>
@@ -102,7 +123,35 @@
 			<artifactId>jersey-container-servlet</artifactId>
 			<version>${version.jersey}</version>
 		</dependency>
-		<!-- Test dependencies -->
+		<!--
+        <dependency>
+          <groupId>org.glassfish.jersey.ext.cdi</groupId>
+          <artifactId>jersey-cdi1x</artifactId>
+          <version>2.25.1</version>
+        </dependency>
+    -->
+		<!--		<dependency>
+          <groupId>org.glassfish.jersey.ext.cdi</groupId>
+          <artifactId>jersey-cdi1x-servlet</artifactId>
+          <version>2.25.1</version>
+        </dependency>-->
+		<!--
+
+        <dependency>
+          <groupId>org.glassfish.jersey.containers.glassfish</groupId>
+          <artifactId>jersey-gf-cdi</artifactId>
+          <version>2.14</version>
+        </dependency>
+    -->
+		<!--
+            <dependency>
+              <groupId>org.glassfish.jersey.containers.glassfish</groupId>
+              <artifactId>jersey-gf-cdi-ban-custom-hk2-binding</artifactId>
+              <version>2.14</version>
+            </dependency>
+    -->
+
+<!--		 Test dependencies-->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -112,31 +161,73 @@
 	</dependencies>
 	<build>
 		<plugins>
+<!--			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>2.0.1.Final</version>
+				<configuration></configuration>
+			</plugin>-->
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.27.v20190418</version>
+				<version>9.4.17.v20190418</version>
 				<configuration>
-					<webAppConfig>
+					<stopKey>alpha</stopKey>
+					<stopPort>9099</stopPort>
+					<!--					<jettyBase>/my/existing/jetty-base</jettyBase>-->
+					<!--					<contextXml>/some/existing/context.xml</contextXml>-->
+					<!--					<webAppXml></webAppXml>-->
+					<useTestClasspath>true</useTestClasspath>
+					<httpConnector>
+						<port>8081</port>
+					</httpConnector>
+<!--
+					<modules>
+						<module>apache-jsp</module>
+						<module>jsp</module>
+						<module>apache-jstl</module>
+						<module>jstl</module>
+						<module>cdi2</module>
+					</modules>
+-->
+					<jettyProperties>
+						<jettyProperty>jetty.server.dumpAfterStart=true</jettyProperty>
+					</jettyProperties>
+					<jvmArgs>-Dorg.eclipse.jetty.webapp.LEVEL=INFO</jvmArgs>
+					<webApp>
 						<contextPath>/adaptor-rm</contextPath>
-					</webAppConfig>
-					<reload>automatic</reload>
-					<scanIntervalSeconds>5</scanIntervalSeconds>
-					<systemProperties>
-						<systemProperty>
-							<name>jetty.port</name>
-							<value>8081</value>
-						</systemProperty>
-					</systemProperties>
-					<stopKey />
-					<stopPort />
+					</webApp>
 				</configuration>
+				<!--
+                <configuration>
+                  <webAppConfig>
+                    <contextPath>/adaptor-rm</contextPath>
+                  </webAppConfig>
+                  <reload>automatic</reload>
+                  <scanIntervalSeconds>5</scanIntervalSeconds>
+                  <systemProperties>
+                    <systemProperty>
+                      <name>jetty.port</name>
+                      <value>8081</value>
+                    </systemProperty>
+                  </systemProperties>
+                  <stopKey />
+                  <stopPort />
+                </configuration>
+        -->
 				<dependencies>
-					<dependency>
-						<groupId>org.jboss.weld.servlet</groupId>
-						<artifactId>weld-servlet</artifactId>
-						<version>2.4.8.Final</version>
-					</dependency>
+					<!--
+                    <dependency>
+                      <groupId>org.jboss.weld.servlet</groupId>
+                      <artifactId>weld-servlet</artifactId>
+                      <version>2.4.8.Final</version>
+                    </dependency>
+          -->
+					<!--					<dependency>
+                      <groupId>org.jboss.weld.servlet</groupId>
+                      <artifactId>weld-servlet-core</artifactId>
+                      <version>3.1.0.Final</version>
+                    </dependency>-->
 				</dependencies>
 			</plugin>
 		</plugins>

@@ -23,12 +23,17 @@
 
 package com.sample.rm.servlet;
 
+import com.google.common.collect.Sets;
+import com.sample.rm.StoreBean;
+import com.sample.rm.StoredBeanImpl;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Singleton;
+import jdk.nashorn.internal.runtime.StoredScript;
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.model.AllowedValues;
 import org.eclipse.lyo.oslc4j.core.model.Compact;
@@ -59,6 +64,7 @@ import com.sample.rm.resources.Requirement;
 import com.sample.rm.resources.DctermsDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.services.ServiceProviderService1;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 // Start of user code imports
 // End of user code
@@ -125,7 +131,19 @@ public class Application extends javax.ws.rs.core.Application {
         }
     }
 
-    @Override 
+    @Override
+    public Set<Object> getSingletons() {
+        final Set<Object> singletons = new HashSet<>();
+        singletons.add((new AbstractBinder() {
+            @Override
+            protected void configure() {
+                bind(StoredBeanImpl.class).to(StoreBean.class).in(Singleton.class);
+            }
+        }));
+        return singletons;
+    }
+
+    @Override
     public Set<Class<?>> getClasses() { 
         return RESOURCE_CLASSES; 
     }

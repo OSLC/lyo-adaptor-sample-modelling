@@ -23,11 +23,13 @@
 
 package com.sample.rm.servlet;
 
+import com.sample.rm.StoreBean;
 import java.net.MalformedURLException;
 import java.util.NoSuchElementException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

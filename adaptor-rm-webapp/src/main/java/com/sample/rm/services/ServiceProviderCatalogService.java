@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +58,7 @@ import com.sample.rm.RMToolManager;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 
 // Start of user code imports
+import com.sample.rm.StoreBean;
 // End of user code
 
 @OslcService(OslcConstants.OSLC_CORE_DOMAIN)
@@ -66,6 +68,7 @@ public class ServiceProviderCatalogService
     @Context private HttpServletRequest httpServletRequest;
     @Context private HttpServletResponse httpServletResponse;
     @Context private UriInfo uriInfo;
+    @Inject private StoreBean storeBean;
 
     /**
      * Redirect requests to /catalog to /catalog/singleton
@@ -141,6 +144,7 @@ public class ServiceProviderCatalogService
         {
             httpServletRequest.setAttribute("catalog",catalog);
             // Start of user code getHtmlServiceProvider_setAttributes
+            System.out.println(storeBean.toString() + ": " + storeBean.sayHello());
             // End of user code
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/serviceprovidercatalog.jsp");
