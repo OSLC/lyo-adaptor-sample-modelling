@@ -20,8 +20,11 @@
 package com.sample.testing.clients;
 
 import javax.ws.rs.core.Response;
-import org.eclipse.lyo.client.oslc.OSLCConstants;
-import org.eclipse.lyo.client.oslc.OslcClient;
+import org.eclipse.lyo.oslc4j.client.OSLCConstants;
+import org.eclipse.lyo.oslc4j.client.OslcClient;
+import org.eclipse.lyo.oslc4j.client.resources.OslcQuery;
+import org.eclipse.lyo.oslc4j.client.resources.OslcQueryParameters;
+import org.eclipse.lyo.oslc4j.client.resources.OslcQueryResult;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import com.sample.testing.resources.Requirement;
 
@@ -29,9 +32,6 @@ import com.sample.testing.resources.Requirement;
 import java.net.URI;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
-import org.eclipse.lyo.client.oslc.resources.OslcQuery;
-import org.eclipse.lyo.client.oslc.resources.OslcQueryParameters;
-import org.eclipse.lyo.client.oslc.resources.OslcQueryResult;
 
 import com.sample.testing.resources.Oslc_rmDomainConstants;
 // End of user code
@@ -54,7 +54,7 @@ public class RequirementsAdaptorClient
         ServiceProviderCatalog catalog = null;
 
         //Get the SPC
-        response = client.getResource(serviceProviderCatalogURI,OSLCConstants.CT_RDF);
+        response = client.getResource(serviceProviderCatalogURI, OSLCConstants.CT_RDF);
         if (response != null) {
             catalog = response.readEntity(ServiceProviderCatalog.class);
         }
@@ -71,7 +71,7 @@ public class RequirementsAdaptorClient
         OslcQueryParameters queryParameters = new OslcQueryParameters();
         queryParameters.setWhere(where);
         OslcQuery query = new OslcQuery(client, queryBase.toString(), queryParameters);
-        OslcQueryResult queryResults = query.submit();    
+        OslcQueryResult queryResults = query.submit();
         String[] urls = queryResults.getMembersUrls();
         return urls;
 	}
