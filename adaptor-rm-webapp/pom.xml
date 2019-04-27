@@ -132,7 +132,7 @@
             <port>8081</port>
           </httpConnector>
           <jettyProperties>
-            <jettyProperty>jetty.server.dumpAfterStart=true</jettyProperty>
+            <jettyProperty>jetty.server.dumpAfterStart=false</jettyProperty>
           </jettyProperties>
           <jvmArgs>-Dorg.eclipse.jetty.webapp.LEVEL=INFO</jvmArgs>
           <webApp>
