@@ -41,10 +41,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Iterator;
-import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
@@ -125,52 +121,6 @@ public class TestScript
         // End of user code
     }
     
-    /**
-    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
-    */
-    @Deprecated
-    public TestScript(final String serviceProviderId, final String testScriptId)
-           throws URISyntaxException
-    {
-        this (constructURI(serviceProviderId, testScriptId));
-        // Start of user code constructor3
-        // End of user code
-    }
-    
-    /**
-    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
-    */
-    @Deprecated
-    public static URI constructURI(final String serviceProviderId, final String testScriptId)
-    {
-        String basePath = OSLC4JUtils.getServletURI();
-        Map<String, Object> pathParameters = new HashMap<String, Object>();
-        pathParameters.put("serviceProviderId", serviceProviderId);
-        pathParameters.put("testScriptId", testScriptId);
-        String instanceURI = "serviceProviders/{serviceProviderId}/testScripts/{testScriptId}";
-    
-        final UriBuilder builder = UriBuilder.fromUri(basePath);
-        return builder.path(instanceURI).buildFromMap(pathParameters);
-    }
-    
-    /**
-    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
-    */
-    @Deprecated
-    public static Link constructLink(final String serviceProviderId, final String testScriptId , final String label)
-    {
-        return new Link(constructURI(serviceProviderId, testScriptId), label);
-    }
-    
-    /**
-    * @deprecated Use the methods in class {@link com.sample.testing.TestingToolResourcesFactory} instead.
-    */
-    @Deprecated
-    public static Link constructLink(final String serviceProviderId, final String testScriptId)
-    {
-        return new Link(constructURI(serviceProviderId, testScriptId));
-    }
-    
     public static ResourceShape createResourceShape() throws OslcCoreApplicationException, URISyntaxException {
         return ResourceShapeFactory.createResourceShape(OSLC4JUtils.getServletURI(),
         OslcConstants.PATH_RESOURCE_SHAPES,
@@ -200,34 +150,6 @@ public class TestScript
         }
     
         // Start of user code toString_finalize
-        // End of user code
-    
-        return result;
-    }
-    
-    @Deprecated
-    public String toHtml()
-    {
-        return toHtml(false);
-    }
-    
-    @Deprecated
-    public String toHtml(boolean asLocalResource)
-    {
-        String result = "";
-        // Start of user code toHtml_init
-        // End of user code
-    
-        if (asLocalResource) {
-            result = toString(true);
-            // Start of user code toHtml_bodyForLocalResource
-            // End of user code
-        }
-        else {
-            result = "<a href=\"" + getAbout() + "\" class=\"oslc-resource-link\">" + toString() + "</a>";
-        }
-    
-        // Start of user code toHtml_finalize
         // End of user code
     
         return result;
@@ -321,143 +243,6 @@ public class TestScript
     
         // Start of user code setterFinalize:description
         // End of user code
-    }
-    
-    
-    @Deprecated
-    static public String titleToHtmlForCreation (final HttpServletRequest httpServletRequest)
-    {
-        String s = "";
-    
-        // Start of user code "Init:titleToHtmlForCreation(...)"
-        // End of user code
-    
-        s = s + "<label for=\"title\">title: </LABEL>";
-    
-        // Start of user code "Mid:titleToHtmlForCreation(...)"
-        // End of user code
-    
-        s= s + "<input name=\"title\" type=\"text\" style=\"width: 400px\" id=\"title\" >";
-        // Start of user code "Finalize:titleToHtmlForCreation(...)"
-        // End of user code
-    
-        return s;
-    }
-    
-    @Deprecated
-    static public String validatesRequirementToHtmlForCreation (final HttpServletRequest httpServletRequest)
-    {
-        String s = "";
-    
-        // Start of user code "Init:validatesRequirementToHtmlForCreation(...)"
-        // End of user code
-    
-        s = s + "<label for=\"validatesRequirement\">validatesRequirement: </LABEL>";
-    
-        // Start of user code "Mid:validatesRequirementToHtmlForCreation(...)"
-        // End of user code
-    
-        // Start of user code "Finalize:validatesRequirementToHtmlForCreation(...)"
-        // End of user code
-    
-        return s;
-    }
-    
-    @Deprecated
-    static public String descriptionToHtmlForCreation (final HttpServletRequest httpServletRequest)
-    {
-        String s = "";
-    
-        // Start of user code "Init:descriptionToHtmlForCreation(...)"
-        // End of user code
-    
-        s = s + "<label for=\"description\">description: </LABEL>";
-    
-        // Start of user code "Mid:descriptionToHtmlForCreation(...)"
-        // End of user code
-    
-        s= s + "<input name=\"description\" type=\"text\" style=\"width: 400px\" id=\"description\" >";
-        // Start of user code "Finalize:descriptionToHtmlForCreation(...)"
-        // End of user code
-    
-        return s;
-    }
-    
-    
-    @Deprecated
-    public String titleToHtml()
-    {
-        String s = "";
-    
-        // Start of user code titletoHtml_mid
-        // End of user code
-    
-        try {
-            if (title == null) {
-                s = s + "<em>null</em>";
-            }
-            else {
-                s = s + title.toString();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    
-        // Start of user code titletoHtml_finalize
-        // End of user code
-    
-        return s;
-    }
-    
-    @Deprecated
-    public String validatesRequirementToHtml()
-    {
-        String s = "";
-    
-        // Start of user code validatesRequirementtoHtml_mid
-        // End of user code
-    
-        try {
-            s = s + "<ul>";
-            for(Link next : validatesRequirement) {
-                s = s + "<li>";
-                s = s + (new Requirement (next.getValue())).toHtml(false);
-                s = s + "</li>";
-            }
-            s = s + "</ul>";
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    
-        // Start of user code validatesRequirementtoHtml_finalize
-        // End of user code
-    
-        return s;
-    }
-    
-    @Deprecated
-    public String descriptionToHtml()
-    {
-        String s = "";
-    
-        // Start of user code descriptiontoHtml_mid
-        // End of user code
-    
-        try {
-            if (description == null) {
-                s = s + "<em>null</em>";
-            }
-            else {
-                s = s + description.toString();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    
-        // Start of user code descriptiontoHtml_finalize
-        // End of user code
-    
-        return s;
     }
     
     

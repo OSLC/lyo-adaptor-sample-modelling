@@ -11,9 +11,9 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-        <!-- This jersey version is the one supported by the latest Swagger 1.5 -->
-        <version.jersey>2.25.1</version.jersey>
-        <version.swagger>1.5.22</version.swagger>
+		<!-- This jersey version is the one supported by the latest Swagger 1.5 -->
+		<version.jersey>2.25.1</version.jersey>
+		<version.swagger>1.5.22</version.swagger>
 		<version.lyo>4.0.0-SNAPSHOT</version.lyo>
 	</properties>
 	<repositories>
@@ -94,7 +94,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -103,7 +103,7 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.9.v20160517</version>
+				<version>9.3.25.v20180904</version>
 				<configuration>
 					<webAppConfig>
 						<contextPath>/adaptor-testing</contextPath>

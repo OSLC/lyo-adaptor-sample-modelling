@@ -20,11 +20,13 @@
 package com.sample.rm.clients;
 
 import javax.ws.rs.core.Response;
-import org.eclipse.lyo.client.oslc.OSLCConstants;
-import org.eclipse.lyo.client.oslc.OslcClient;
+//import org.eclipse.lyo.client.oslc.OSLCConstants;
+//import org.eclipse.lyo.client.oslc.OslcClient;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 
 // Start of user code imports
+import org.eclipse.lyo.oslc4j.client.OSLCConstants;
+import org.eclipse.lyo.oslc4j.client.OslcClient;
 // End of user code
 
 
@@ -50,7 +52,7 @@ public class GenericRequiredAdaptorClient
         // Start of user code getServiceProviderCatalog_init
         // End of user code
 
-        response = client.getResource(serviceProviderCatalogURI,OSLCConstants.CT_RDF);
+        response = client.getResource(serviceProviderCatalogURI, OSLCConstants.CT_RDF);
         if (response != null) {
             catalog = response.readEntity(ServiceProviderCatalog.class);
         }

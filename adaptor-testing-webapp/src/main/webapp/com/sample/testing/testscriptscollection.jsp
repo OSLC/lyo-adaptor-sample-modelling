@@ -90,7 +90,7 @@ To revert to the default generated content, delete all content in this file, and
 			</p>
 		</div>
         <% for (TestScript aResource : resources) { %>
-        <p><%= aResource.toHtml() %><br /></p>
+        <p><a href="<%= aResource.getAbout() %>" class="oslc-resource-link"><%=aResource.getAbout().toString()%></a><br /></p>
         <% } %>
         <% if (nextPageUri != null) { %><a href="<%= nextPageUri %>">Next Page</a><% } %>
       </div>
