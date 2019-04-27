@@ -1,5 +1,5 @@
 package com.sample.rm;
 
-public interface StoreBean {
+public interface AdaptorFactory {
     public String sayHello();
 }
