@@ -23,6 +23,8 @@
 
 package com.sample.rm.servlet;
 
+import com.sample.rm.RequirementsManager;
+import com.sample.rm.ServiceProviderManager;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -64,8 +66,6 @@ import com.sample.rm.services.ServiceProviderService1;
 import javax.inject.Singleton;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import com.sample.rm.RMToolManagerBean;
-import com.sample.rm.StoreBean;
-import com.sample.rm.StoredBeanImpl;
 // End of user code
 
 // Start of user code pre_class_code
@@ -136,8 +136,9 @@ public class Application extends javax.ws.rs.core.Application {
         singletons.add((new AbstractBinder() {
             @Override
             protected void configure() {
-                bind(RmAdaptorFactoryImpl.class).to(AdaptorFactory.class).in(Singleton.class);
-                bind(RMToolManagerBean.class).to(RMToolManagerBean.class).in(Singleton.class);
+                bind(RMToolManagerBean.class).to(RequirementsManager.class)
+                        .to(ServiceProviderManager.class)
+                        .in(Singleton.class);
             }
         }));
         return singletons;

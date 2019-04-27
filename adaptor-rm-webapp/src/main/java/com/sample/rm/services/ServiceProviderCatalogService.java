@@ -26,10 +26,12 @@
 package com.sample.rm.services;
 
 
+import com.sample.rm.ServiceProviderManager;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
@@ -66,6 +68,7 @@ public class ServiceProviderCatalogService
     @Context private HttpServletRequest httpServletRequest;
     @Context private HttpServletResponse httpServletResponse;
     @Context private UriInfo uriInfo;
+    @Inject private ServiceProviderManager providerManager;
 
     /**
      * Redirect requests to /catalog to /catalog/singleton

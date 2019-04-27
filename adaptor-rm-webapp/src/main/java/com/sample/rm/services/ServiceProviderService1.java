@@ -22,6 +22,7 @@
 
 package com.sample.rm.services;
 
+import com.sample.rm.RequirementsManager;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
@@ -85,7 +86,6 @@ import io.swagger.annotations.ApiOperation;
 
 // Start of user code imports
 import javax.inject.Inject;
-import com.sample.rm.RMToolManagerBean;
 // End of user code
 
 // Start of user code pre_class_code
@@ -100,7 +100,7 @@ public class ServiceProviderService1
     @Context private UriInfo uriInfo;
 
     // Start of user code class_attributes
-    @Inject private RMToolManagerBean toolManager;
+    @Inject private RequirementsManager toolManager;
     // End of user code
 
     // Start of user code class_methods
