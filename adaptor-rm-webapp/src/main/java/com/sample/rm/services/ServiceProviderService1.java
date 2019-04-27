@@ -84,6 +84,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 // Start of user code imports
+import javax.inject.Inject;
+import com.sample.rm.RMToolManagerBean;
 // End of user code
 
 // Start of user code pre_class_code
@@ -98,6 +100,7 @@ public class ServiceProviderService1
     @Context private UriInfo uriInfo;
 
     // Start of user code class_attributes
+    @Inject private RMToolManagerBean toolManager;
     // End of user code
 
     // Start of user code class_methods
@@ -271,7 +274,7 @@ public class ServiceProviderService1
         // Start of user code getResource_init
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = toolManager.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             // Start of user code getRequirement
@@ -299,7 +302,7 @@ public class ServiceProviderService1
         // Start of user code getRequirementAsHtml_init
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = toolManager.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             httpServletRequest.setAttribute("aRequirement", aRequirement);
@@ -336,7 +339,7 @@ public class ServiceProviderService1
         //TODO: adjust the preview height & width values from the default values provided above.
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = toolManager.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             final Compact compact = new Compact();
@@ -376,7 +379,7 @@ public class ServiceProviderService1
         // Start of user code getRequirementAsHtmlSmallPreview_init
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = toolManager.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             httpServletRequest.setAttribute("aRequirement", aRequirement);
@@ -402,7 +405,7 @@ public class ServiceProviderService1
         // Start of user code getRequirementAsHtmlLargePreview_init
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = toolManager.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             httpServletRequest.setAttribute("aRequirement", aRequirement);

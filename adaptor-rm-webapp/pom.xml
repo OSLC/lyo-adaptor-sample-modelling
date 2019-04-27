@@ -86,6 +86,11 @@
 			<version>${version.jersey}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-common</artifactId>
+			<version>${version.jersey}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>
 			<version>${version.jersey}</version>
@@ -103,21 +108,21 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.9.v20160517</version>
+				<version>9.4.17.v20190418</version>
 				<configuration>
-					<webAppConfig>
+					<stopKey>alpha</stopKey>
+					<stopPort>9099</stopPort>
+					<useTestClasspath>true</useTestClasspath>
+					<httpConnector>
+						<port>8081</port>
+					</httpConnector>
+					<jettyProperties>
+						<jettyProperty>jetty.server.dumpAfterStart=false</jettyProperty>
+					</jettyProperties>
+					<jvmArgs>-Dorg.eclipse.jetty.webapp.LEVEL=INFO</jvmArgs>
+					<webApp>
 						<contextPath>/adaptor-rm</contextPath>
-					</webAppConfig>
-					<reload>automatic</reload>
-					<scanIntervalSeconds>5</scanIntervalSeconds>
-					<systemProperties>
-						<systemProperty>
-							<name>jetty.port</name>
-							<value>8081</value>
-						</systemProperty>
-					</systemProperties>
-					<stopKey />
-					<stopPort />
+					</webApp>
 				</configuration>
 			</plugin>
 		</plugins>

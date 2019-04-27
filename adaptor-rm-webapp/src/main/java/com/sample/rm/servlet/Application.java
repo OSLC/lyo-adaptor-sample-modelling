@@ -61,6 +61,11 @@ import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.services.ServiceProviderService1;
 
 // Start of user code imports
+import javax.inject.Singleton;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import com.sample.rm.RMToolManagerBean;
+import com.sample.rm.StoreBean;
+import com.sample.rm.StoredBeanImpl;
 // End of user code
 
 // Start of user code pre_class_code
@@ -125,7 +130,20 @@ public class Application extends javax.ws.rs.core.Application {
         }
     }
 
-    @Override 
+    @Override
+    public Set<Object> getSingletons() {
+        final Set<Object> singletons = new HashSet<>();
+        singletons.add((new AbstractBinder() {
+            @Override
+            protected void configure() {
+                bind(RmAdaptorFactoryImpl.class).to(AdaptorFactory.class).in(Singleton.class);
+                bind(RMToolManagerBean.class).to(RMToolManagerBean.class).in(Singleton.class);
+            }
+        }));
+        return singletons;
+    }
+
+    @Override
     public Set<Class<?>> getClasses() { 
         return RESOURCE_CLASSES; 
     }
