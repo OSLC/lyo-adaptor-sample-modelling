@@ -1,9 +1,9 @@
 # lyo-adaptor-sample-modelling
 
 [![Build Status](https://travis-ci.org/OSLC/lyo-adaptor-sample-modelling.svg?branch=master)](https://travis-ci.org/OSLC/lyo-adaptor-sample-modelling)
+[![CircleCI](https://circleci.com/gh/OSLC/lyo-adaptor-sample-modelling/tree/master.svg?style=svg)](https://circleci.com/gh/OSLC/lyo-adaptor-sample-modelling/tree/master)
 [![Discourse status](https://img.shields.io/discourse/https/meta.discourse.org/status.svg)](https://forum.open-services.net/)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/OSLC/chat)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOSLC%2Flyo-adaptor-sample-modelling.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FOSLC%2Flyo-adaptor-sample-modelling?ref=badge_shield)
 
 This is the repository with the sources of the finished [Lyo Toolchain Modelling and Code Generation Workshop](https://wiki.eclipse.org/Lyo/ToolchainModellingAndCodeGenerationWorkshop).
 
@@ -18,7 +18,3 @@ The repository contains
 
 ![Domain Specification Model](img/SpecificationDiagram.png)
 
-
-
-## License
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FOSLC%2Flyo-adaptor-sample-modelling.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FOSLC%2Flyo-adaptor-sample-modelling?ref=badge_large)
