@@ -61,9 +61,10 @@ import com.sample.rm.services.ResourceShapeService;
 import com.sample.rm.resources.Requirement;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.services.ServiceProviderService1;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 // Start of user code imports
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import com.sample.rm.RMToolManagerBean;
 // End of user code
 
 // Start of user code pre_class_code
@@ -135,6 +136,7 @@ public class Application extends javax.ws.rs.core.Application {
             @Override
             protected void configure() {
                 bind(RmAdaptorFactoryImpl.class).to(AdaptorFactory.class).in(Singleton.class);
+                bind(RMToolManagerBean.class).to(RMToolManagerBean.class).in(Singleton.class);
             }
         }));
         return singletons;
