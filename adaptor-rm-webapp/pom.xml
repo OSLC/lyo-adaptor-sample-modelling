@@ -1,141 +1,141 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.eclipse.lyo.sample</groupId>
-	<artifactId>adaptor-rm-webapp</artifactId>
-	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>adaptor-rm-webapp Maven Webapp</name>
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<!-- This jersey version is the one supported by the latest Swagger 1.5 -->
-		<version.jersey>2.25.1</version.jersey>
-		<version.swagger>1.5.22</version.swagger>
-		<version.lyo>4.0.0-SNAPSHOT</version.lyo>
-	</properties>
-	<repositories>
-		<repository>
-			<id>lyo-releases</id>
-			<name>Eclipse Lyo Releases</name>
-			<url>https://repo.eclipse.org/content/repositories/lyo-releases/</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-		<repository>
-			<id>lyo-snapshots</id>
-			<name>Eclipse Lyo Snapshots</name>
-			<url>https://repo.eclipse.org/content/repositories/lyo-snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-		</repository>
-	</repositories>
-	<dependencies>
-		<!-- Adaptor-specific dependencies -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.21</version>
-			<scope>runtime</scope>
-		</dependency>
-  		<dependency>
-		  <groupId>io.swagger</groupId>
-		  <artifactId>swagger-jersey2-jaxrs</artifactId>
-		  <version>${version.swagger}</version>
-				<exclusions>
-					<!--					<exclusion>
-                      <groupId>org.glassfish.jersey.containers</groupId>
-                      <artifactId>jersey-container-servlet-core</artifactId>
-                    </exclusion>-->
-					<!--			<exclusion>
-                  <groupId>org.glassfish.jersey.media</groupId>
-                  <artifactId>jersey-media-multipart</artifactId>
-                </exclusion>-->
-				</exclusions>
- 		</dependency>
-		<!-- Lyo dependencies -->
-		<dependency>
-			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
-			<artifactId>oslc4j-core</artifactId>
-			<version>${version.lyo}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
-			<artifactId>oslc4j-jena-provider</artifactId>
-			<version>${version.lyo}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.lyo.oslc4j.core</groupId>
-			<artifactId>oslc4j-json4j-provider</artifactId>
-			<version>${version.lyo}</version>
-		</dependency>
- 		<dependency>
-			<groupId>org.eclipse.lyo.clients</groupId>
-			<artifactId>oslc4j-client</artifactId>
-			<version>${version.lyo}</version>
-		</dependency>
-		<!-- Servlet-related dependencies -->
-		<dependency>
-			<groupId>javax.servlet.jsp.jstl</groupId>
-			<artifactId>javax.servlet.jsp.jstl-api</artifactId>
-			<version>1.2.2</version>
-		</dependency>
- 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>${version.jersey}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-common</artifactId>
-			<version>${version.jersey}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-servlet</artifactId>
-			<version>${version.jersey}</version>
-		</dependency>
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.eclipse.lyo.sample</groupId>
+  <artifactId>adaptor-rm-webapp</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>adaptor-rm-webapp Maven Webapp</name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- This jersey version is the one supported by the latest Swagger 1.5 -->
+    <version.jersey>2.25.1</version.jersey>
+    <version.swagger>1.5.22</version.swagger>
+    <version.lyo>4.0.0-SNAPSHOT</version.lyo>
+  </properties>
+  <repositories>
+    <repository>
+      <id>lyo-releases</id>
+      <name>Eclipse Lyo Releases</name>
+      <url>https://repo.eclipse.org/content/repositories/lyo-releases/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
+      <id>lyo-snapshots</id>
+      <name>Eclipse Lyo Snapshots</name>
+      <url>https://repo.eclipse.org/content/repositories/lyo-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+    </repository>
+  </repositories>
+  <dependencies>
+    <!-- Adaptor-specific dependencies -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.7.21</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger</groupId>
+      <artifactId>swagger-jersey2-jaxrs</artifactId>
+      <version>${version.swagger}</version>
+      <exclusions>
+        <!--					<exclusion>
+                    <groupId>org.glassfish.jersey.containers</groupId>
+                    <artifactId>jersey-container-servlet-core</artifactId>
+                  </exclusion>-->
+        <!--			<exclusion>
+                <groupId>org.glassfish.jersey.media</groupId>
+                <artifactId>jersey-media-multipart</artifactId>
+              </exclusion>-->
+      </exclusions>
+    </dependency>
+    <!-- Lyo dependencies -->
+    <dependency>
+      <groupId>org.eclipse.lyo.oslc4j.core</groupId>
+      <artifactId>oslc4j-core</artifactId>
+      <version>${version.lyo}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.lyo.oslc4j.core</groupId>
+      <artifactId>oslc4j-jena-provider</artifactId>
+      <version>${version.lyo}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.lyo.oslc4j.core</groupId>
+      <artifactId>oslc4j-json4j-provider</artifactId>
+      <version>${version.lyo}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.lyo.clients</groupId>
+      <artifactId>oslc4j-client</artifactId>
+      <version>${version.lyo}</version>
+    </dependency>
+    <!-- Servlet-related dependencies -->
+    <dependency>
+      <groupId>javax.servlet.jsp.jstl</groupId>
+      <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+      <version>1.2.2</version>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>3.1.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-server</artifactId>
+      <version>${version.jersey}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
+      <version>${version.jersey}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.containers</groupId>
+      <artifactId>jersey-container-servlet</artifactId>
+      <version>${version.jersey}</version>
+    </dependency>
 
-<!--		 Test dependencies-->
+    <!--		 Test dependencies-->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.4.17.v20190418</version>
-				<configuration>
-					<stopKey>alpha</stopKey>
-					<stopPort>9099</stopPort>
-					<useTestClasspath>true</useTestClasspath>
-					<httpConnector>
-						<port>8081</port>
-					</httpConnector>
-					<jettyProperties>
-						<jettyProperty>jetty.server.dumpAfterStart=true</jettyProperty>
-					</jettyProperties>
-					<jvmArgs>-Dorg.eclipse.jetty.webapp.LEVEL=INFO</jvmArgs>
-					<webApp>
-						<contextPath>/adaptor-rm</contextPath>
-					</webApp>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.4.17.v20190418</version>
+        <configuration>
+          <stopKey>alpha</stopKey>
+          <stopPort>9099</stopPort>
+          <useTestClasspath>true</useTestClasspath>
+          <httpConnector>
+            <port>8081</port>
+          </httpConnector>
+          <jettyProperties>
+            <jettyProperty>jetty.server.dumpAfterStart=true</jettyProperty>
+          </jettyProperties>
+          <jvmArgs>-Dorg.eclipse.jetty.webapp.LEVEL=INFO</jvmArgs>
+          <webApp>
+            <contextPath>/adaptor-rm</contextPath>
+          </webApp>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
