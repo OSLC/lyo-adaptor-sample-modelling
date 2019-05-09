@@ -22,9 +22,6 @@ package com.sample.testing.clients;
 import javax.ws.rs.core.Response;
 import org.eclipse.lyo.oslc4j.client.OSLCConstants;
 import org.eclipse.lyo.oslc4j.client.OslcClient;
-import org.eclipse.lyo.oslc4j.client.resources.OslcQuery;
-import org.eclipse.lyo.oslc4j.client.resources.OslcQueryParameters;
-import org.eclipse.lyo.oslc4j.client.resources.OslcQueryResult;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import com.sample.testing.resources.Requirement;
 
