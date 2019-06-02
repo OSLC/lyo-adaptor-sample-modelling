@@ -29,8 +29,6 @@ package com.sample.rm.servlet;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -41,8 +39,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
-import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
-import org.eclipse.lyo.oslc4j.core.model.Publisher;
 import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
@@ -132,26 +128,6 @@ public class ServiceProviderCatalogSingleton
         }
 
         throw new WebApplicationException(Status.NOT_FOUND);
-    }
-
-    public static ServiceProvider createServiceProvider(final ServiceProviderInfo serviceProviderInfo)
-            throws OslcCoreApplicationException, URISyntaxException, IllegalArgumentException {
-        String basePath = OSLC4JUtils.getServletURI();
-        String identifier = ServiceProvidersFactory.serviceProviderIdentifier(serviceProviderInfo.serviceProviderId);
-        if (containsServiceProvider(serviceProviderInfo.serviceProviderId)) {
-            throw new IllegalArgumentException(String.format("The SP '%s' was already registered", identifier));
-        }
-
-        String serviceProviderName = serviceProviderInfo.name;
-        String title = String.format("Service Provider '%s'", serviceProviderName);
-        String description = String.format("%s (id: %s; kind: %s)",
-            "",
-            identifier,
-            "Service Provider");
-        Publisher publisher = null;
-        Map<String, Object> parameterMap = new HashMap<String, Object>();
-        parameterMap.put("serviceProviderId", serviceProviderInfo.serviceProviderId);
-        return ServiceProvidersFactory.createServiceProvider(identifier, basePath, title, description, publisher, parameterMap);
     }
 
     public static ServiceProvider registerServiceProvider(final HttpServletRequest httpServletRequest,
@@ -262,7 +238,7 @@ public class ServiceProviderCatalogSingleton
             //Register each service provider
             for (ServiceProviderInfo serviceProviderInfo : serviceProviderInfos) {
                 if (!containsServiceProvider(serviceProviderInfo.serviceProviderId)) {
-                    ServiceProvider aServiceProvider = createServiceProvider(serviceProviderInfo);
+                    ServiceProvider aServiceProvider = ServiceProvidersFactory.createServiceProvider(serviceProviderInfo);
                     registerServiceProvider(aServiceProvider, serviceProviderInfo.serviceProviderId);
                 }
             }

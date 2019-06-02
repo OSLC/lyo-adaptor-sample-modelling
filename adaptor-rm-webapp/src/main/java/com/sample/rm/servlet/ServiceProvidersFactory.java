@@ -27,6 +27,7 @@
 
 package com.sample.rm.servlet;
 
+import com.sample.rm.ServiceProviderInfo;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
@@ -93,6 +94,26 @@ public class ServiceProvidersFactory
         serviceProvider.setPrefixDefinitions(prefixDefinitions);
 
         return serviceProvider;
+    }
+
+    public static ServiceProvider createServiceProvider(final ServiceProviderInfo serviceProviderInfo)
+            throws OslcCoreApplicationException, URISyntaxException, IllegalArgumentException {
+        String basePath = OSLC4JUtils.getServletURI();
+        String identifier = serviceProviderIdentifier(serviceProviderInfo.serviceProviderId);
+        if (ServiceProviderCatalogSingleton.containsServiceProvider(serviceProviderInfo.serviceProviderId)) {
+            throw new IllegalArgumentException(String.format("The SP '%s' was already registered", identifier));
+        }
+
+        String serviceProviderName = serviceProviderInfo.name;
+        String title = String.format("Service Provider '%s'", serviceProviderName);
+        String description = String.format("%s (id: %s; kind: %s)",
+            "",
+            identifier,
+            "Service Provider");
+        Publisher publisher = null;
+        Map<String, Object> parameterMap = new HashMap<String, Object>();
+        parameterMap.put("serviceProviderId", serviceProviderInfo.serviceProviderId);
+        return createServiceProvider(identifier, basePath, title, description, publisher, parameterMap);
     }
 
     static URI constructServiceProviderURI(final String serviceProviderId)
