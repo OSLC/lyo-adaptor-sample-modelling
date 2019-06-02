@@ -29,7 +29,6 @@ package com.sample.rm.servlet;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -106,26 +105,8 @@ public class ServiceProviderCatalogSingleton
         }
     }
 
-
-    private static URI constructServiceProviderURI(final String serviceProviderId)
-    {
-        String basePath = OSLC4JUtils.getServletURI();
-        Map<String, Object> pathParameters = new HashMap<String, Object>();
-        pathParameters.put("serviceProviderId", serviceProviderId);
-        String instanceURI = "serviceProviders/{serviceProviderId}";
-
-        final UriBuilder builder = UriBuilder.fromUri(basePath);
-        return builder.path(instanceURI).buildFromMap(pathParameters);
-    }
-
-    private static String serviceProviderIdentifier(final String serviceProviderId)
-    {
-        String identifier = "/" + serviceProviderId;
-        return identifier;
-    }
-
     public static boolean containsServiceProvider(final String serviceProviderId) {
-        return serviceProviders.containsKey(serviceProviderIdentifier(serviceProviderId));
+        return serviceProviders.containsKey(ServiceProvidersFactory.serviceProviderIdentifier(serviceProviderId));
     }
 
     public static ServiceProvider getServiceProvider(HttpServletRequest httpServletRequest, final String serviceProviderId)
@@ -134,7 +115,7 @@ public class ServiceProviderCatalogSingleton
 
         synchronized(serviceProviders)
         {
-            String identifier = serviceProviderIdentifier(serviceProviderId);
+            String identifier = ServiceProvidersFactory.serviceProviderIdentifier(serviceProviderId);
             serviceProvider = serviceProviders.get(identifier);
 
             //One retry refreshing the service providers
@@ -153,10 +134,10 @@ public class ServiceProviderCatalogSingleton
         throw new WebApplicationException(Status.NOT_FOUND);
     }
 
-    public static ServiceProvider createServiceProvider(final ServiceProviderInfo serviceProviderInfo) 
+    public static ServiceProvider createServiceProvider(final ServiceProviderInfo serviceProviderInfo)
             throws OslcCoreApplicationException, URISyntaxException, IllegalArgumentException {
         String basePath = OSLC4JUtils.getServletURI();
-        String identifier = serviceProviderIdentifier(serviceProviderInfo.serviceProviderId);
+        String identifier = ServiceProvidersFactory.serviceProviderIdentifier(serviceProviderInfo.serviceProviderId);
         if (containsServiceProvider(serviceProviderInfo.serviceProviderId)) {
             throw new IllegalArgumentException(String.format("The SP '%s' was already registered", identifier));
         }
@@ -170,7 +151,7 @@ public class ServiceProviderCatalogSingleton
         Publisher publisher = null;
         Map<String, Object> parameterMap = new HashMap<String, Object>();
         parameterMap.put("serviceProviderId", serviceProviderInfo.serviceProviderId);
-        return ServiceProvidersFactory.createServiceProvider(basePath, title, description, publisher, parameterMap);
+        return ServiceProvidersFactory.createServiceProvider(identifier, basePath, title, description, publisher, parameterMap);
     }
 
     public static ServiceProvider registerServiceProvider(final HttpServletRequest httpServletRequest,
@@ -180,7 +161,7 @@ public class ServiceProviderCatalogSingleton
     {
         synchronized(serviceProviders)
         {
-            final URI serviceProviderURI = constructServiceProviderURI(serviceProviderId);
+            final URI serviceProviderURI = ServiceProvidersFactory.constructServiceProviderURI(serviceProviderId);
             return registerServiceProviderNoSync(serviceProviderURI,
                                                  serviceProvider,
                                                  serviceProviderId);
@@ -197,11 +178,7 @@ public class ServiceProviderCatalogSingleton
     {
         final SortedSet<URI> serviceProviderDomains = getServiceProviderDomains(serviceProvider);
 
-        String identifier = serviceProviderIdentifier(serviceProviderId);
-        serviceProvider.setAbout(serviceProviderURI);
-        serviceProvider.setIdentifier(identifier);
-        serviceProvider.setCreated(new Date());
-        serviceProvider.setDetails(new URI[] {serviceProviderURI});
+        String identifier = ServiceProvidersFactory.serviceProviderIdentifier(serviceProviderId);
 
         serviceProviderCatalog.addServiceProvider(serviceProvider);
         serviceProviderCatalog.addDomains(serviceProviderDomains);
@@ -217,7 +194,7 @@ public class ServiceProviderCatalogSingleton
     {
         synchronized(serviceProviders)
         {
-            final URI serviceProviderURI = constructServiceProviderURI(serviceProviderId);
+            final URI serviceProviderURI = ServiceProvidersFactory.constructServiceProviderURI(serviceProviderId);
 
             return registerServiceProviderNoSync(serviceProviderURI, serviceProvider, serviceProviderId);
         }
@@ -228,7 +205,7 @@ public class ServiceProviderCatalogSingleton
         synchronized(serviceProviders)
         {
             final ServiceProvider deregisteredServiceProvider =
-                serviceProviders.remove(serviceProviderIdentifier(serviceProviderId));
+                serviceProviders.remove(ServiceProvidersFactory.serviceProviderIdentifier(serviceProviderId));
 
             if (deregisteredServiceProvider != null)
             {
@@ -272,7 +249,7 @@ public class ServiceProviderCatalogSingleton
     * Retrieve the set of initial ServiceProviders as returned from the Manager.getServiceProviderInfos() method, and construct a service provider for each.
     *
     * Each ServiceProvider ID is added to the parameter map which will be used during service provider
-    * creation to create unique URI paths for each ServiceProvider. 
+    * creation to create unique URI paths for each ServiceProvider.
     *
     */
     protected static void initServiceProviders (HttpServletRequest httpServletRequest)

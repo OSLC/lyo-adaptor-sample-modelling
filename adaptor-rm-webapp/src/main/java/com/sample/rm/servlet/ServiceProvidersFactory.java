@@ -5,7 +5,7 @@
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * and Eclipse Distribution License v. 1.0 which accompanies this distribution.
- *  
+ *
  * The Eclipse Public License is available at http://www.eclipse.org/legal/epl-v10.html
  * and the Eclipse Distribution License is available at
  * http://www.eclipse.org/org/documents/edl-v10.php.
@@ -29,8 +29,12 @@ package com.sample.rm.servlet;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.ws.rs.core.UriBuilder;
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.PrefixDefinition;
@@ -57,7 +61,7 @@ public class ServiceProvidersFactory
         super();
     }
 
-    public static ServiceProvider createServiceProvider(final String baseURI, final String title, final String description, final Publisher publisher, final Map<String,Object> parameterValueMap)
+    public static ServiceProvider createServiceProvider(final String identifier, final String baseURI, final String title, final String description, final Publisher publisher, final Map<String,Object> parameterValueMap)
            throws OslcCoreApplicationException, URISyntaxException
     {
         final ServiceProvider serviceProvider = ServiceProviderFactory.createServiceProvider(baseURI,
@@ -67,6 +71,10 @@ public class ServiceProvidersFactory
                                                     publisher,
                                                     RESOURCE_CLASSES,
                                                     parameterValueMap);
+        serviceProvider.setAbout(constructServiceProviderURI(identifier));
+        serviceProvider.setIdentifier(identifier);
+        serviceProvider.setCreated(new Date());
+
         URI detailsURIs[] = {new URI(baseURI)};
         serviceProvider.setDetails(detailsURIs);
 
@@ -85,5 +93,22 @@ public class ServiceProvidersFactory
         serviceProvider.setPrefixDefinitions(prefixDefinitions);
 
         return serviceProvider;
+    }
+
+    static URI constructServiceProviderURI(final String serviceProviderId)
+    {
+        String basePath = OSLC4JUtils.getServletURI();
+        Map<String, Object> pathParameters = new HashMap<String, Object>();
+        pathParameters.put("serviceProviderId", serviceProviderId);
+        String instanceURI = "serviceProviders/{serviceProviderId}";
+
+        final UriBuilder builder = UriBuilder.fromUri(basePath);
+        return builder.path(instanceURI).buildFromMap(pathParameters);
+    }
+
+    static String serviceProviderIdentifier(final String serviceProviderId)
+    {
+        String identifier = "/" + serviceProviderId;
+        return identifier;
     }
 }
