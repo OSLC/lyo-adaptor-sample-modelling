@@ -101,6 +101,44 @@ public class ServiceProviderService1
     // End of user code
 
     // Start of user code class_methods
+    @OslcQueryCapability(title = "QueryCapability", label = "QueryCapability", resourceShape =
+            OslcConstants.PATH_RESOURCE_SHAPES + "/" +
+                    Oslc_rmDomainConstants.REQUIREMENT_PATH, resourceTypes = {
+            Oslc_rmDomainConstants.REQUIREMENT_TYPE}, usages = {})
+    @GET
+    @Path("query_list")
+    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD,
+            OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML,
+            OslcMediaType.APPLICATION_JSON})
+    @ApiOperation(value = "Query capability for resources of type {" +
+            Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "}", notes =
+            "Query capability for resources of type {" + "<a href=\"" +
+                    Oslc_rmDomainConstants.REQUIREMENT_TYPE + "\">" +
+                    Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "</a>" + "}" +
+                    ", with respective resource shapes {" + "<a href=\"" + "../services/" +
+                    OslcConstants.PATH_RESOURCE_SHAPES + "/" +
+                    Oslc_rmDomainConstants.REQUIREMENT_PATH + "\">" +
+                    Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "</a>" + "}", produces =
+            OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " +
+                    OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " +
+                    MediaType.TEXT_HTML)
+    public List<Requirement> queryRequirementsList(
+
+            @QueryParam("oslc.where") final String where,
+            @QueryParam("page") final String pageString,
+            @QueryParam("limit") final String limitString) throws IOException, ServletException {
+        int page = 0;
+        int limit = 20;
+        if (null != pageString) {
+            page = Integer.parseInt(pageString);
+        }
+        if (null != limitString) {
+            limit = Integer.parseInt(limitString);
+        }
+        final List<Requirement> resources = RMToolManager.queryRequirements(httpServletRequest,
+                where, page, limit);
+        return resources;
+    }
     // End of user code
 
     public ServiceProviderService1()
@@ -135,7 +173,7 @@ public class ServiceProviderService1
         produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML
     )
     public Requirement[] queryRequirements(
-                                                    
+
                                                      @QueryParam("oslc.where") final String where,
                                                      @QueryParam("page") final String pageString,
                                                     @QueryParam("limit") final String limitString) throws IOException, ServletException
@@ -167,7 +205,7 @@ public class ServiceProviderService1
         produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML
     )
     public Response queryRequirementsAsHtml(
-                                    
+
                                        @QueryParam("oslc.where") final String where,
                                        @QueryParam("page") final String pageString,
                                     @QueryParam("limit") final String limitString) throws ServletException, IOException
@@ -220,7 +258,7 @@ public class ServiceProviderService1
     @Consumes({ MediaType.TEXT_HTML, MediaType.WILDCARD })
     public void RequirementSelector(
         @QueryParam("terms") final String terms
-        
+
         ) throws ServletException, IOException
     {
         try {
