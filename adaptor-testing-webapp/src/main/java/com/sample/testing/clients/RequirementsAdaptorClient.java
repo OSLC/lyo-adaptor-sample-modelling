@@ -29,6 +29,9 @@ import com.sample.testing.resources.Requirement;
 import java.net.URI;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
+import org.eclipse.lyo.oslc4j.client.resources.OslcQuery;
+import org.eclipse.lyo.oslc4j.client.resources.OslcQueryParameters;
+import org.eclipse.lyo.oslc4j.client.resources.OslcQueryResult;
 
 import com.sample.testing.resources.Oslc_rmDomainConstants;
 // End of user code
