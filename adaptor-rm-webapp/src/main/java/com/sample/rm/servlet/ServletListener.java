@@ -25,27 +25,39 @@ package com.sample.rm.servlet;
 
 import java.net.MalformedURLException;
 import java.util.NoSuchElementException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
+import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletRegistration;
-import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
+import javax.ws.rs.core.UriBuilder;
 
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import com.sample.rm.RMToolManager;
 
 // Start of user code imports
 // End of user code
 
+/**
+ * During the initialization of this ServletListener, the base URI for the OSLC resources produced by this server is configured through the OSLC4J method setPublicURI().
+ * A number of approaches can be used to set this base URI:
+ * 1. Set a system environment property of name "LYO_BASE".
+ * 2. In the web.xml file, set a "context-param" property, with name "com.sample.rm.servlet.baseurl"
+ * 3. Override the value of the DEFAULT_BASE constant.
+ */
 public class ServletListener implements ServletContextListener  {
-    private static final String DEFAULT_BASE = "http://localhost:8080";
-    private static final String PROPERTY_BASE = servletContextParameterName("baseurl");
-    private static final Logger logger = Logger.getLogger(ServletListener.class.getName());
 
-    //If you are using another servletName in your web.xml configuration file, modify this variable early in the method contextInitialized below
+    //These are default names. You can modify any of these "constants" early in the contextInitialized() method.
+    private static String BASE_PATH_ENV_KEY = "LYO_BASE";
+    private static String DEFAULT_BASE = "http://localhost:8080";
+    private static String PROPERTY_BASE = servletContextParameterName("baseurl");
     private static String servletName = "JAX-RS Servlet";
+
+    private static final Logger logger = LoggerFactory.getLogger(ServletListener.class);
 
     // Start of user code class_attributes
     // End of user code
@@ -58,6 +70,7 @@ public class ServletListener implements ServletContextListener  {
     public void contextInitialized(final ServletContextEvent servletContextEvent)
     {
         // Start of user code contextInitialized_init
+    	PROPERTY_BASE = servletContextParameterName("baseursl");
         // End of user code
 
         String baseUrl = generateBasePath(servletContextEvent);
@@ -65,7 +78,7 @@ public class ServletListener implements ServletContextListener  {
         try {
             servletUrlPattern = getServletUrlPattern(servletContextEvent);
         } catch (Exception e1) {
-            logger.log(Level.SEVERE, "servletListner encountered problems identifying the servlet URL pattern.", e1);
+            logger.error("servletListner encountered problems identifying the servlet URL pattern.", e1);
         }
         try {
             logger.info("Setting public URI: " + baseUrl);
@@ -73,12 +86,12 @@ public class ServletListener implements ServletContextListener  {
             logger.info("Setting servlet path: " + servletUrlPattern);
             OSLC4JUtils.setServletPath(servletUrlPattern);
         } catch (MalformedURLException e) {
-            logger.log(Level.SEVERE, "servletListner encountered MalformedURLException.", e);
+            logger.error("servletListner encountered MalformedURLException.", e);
         } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "servletListner encountered IllegalArgumentException.", e);
+            logger.error("servletListner encountered IllegalArgumentException.", e);
         }
 
-        logger.log(Level.INFO, "servletListner contextInitialized.");
+        logger.info("servletListner contextInitialized.");
 
         // Establish connection to data backbone etc ...
         RMToolManager.contextInitializeServletListener(servletContextEvent);
@@ -108,17 +121,27 @@ public class ServletListener implements ServletContextListener  {
     }
 
     private static String generateBasePath(final ServletContextEvent servletContextEvent) {
-        final ServletContext servletContext = servletContextEvent.getServletContext();
-        String base = getInitParameterOrDefault(servletContext, PROPERTY_BASE, DEFAULT_BASE);
-        return base + servletContext.getContextPath();
+        String base = getBasePathFromEnvironment().orElseGet(() -> getBasePathFromContext(servletContextEvent).orElseGet(() -> DEFAULT_BASE));
+        UriBuilder builder = UriBuilder.fromUri(base);
+        return builder.path(servletContextEvent.getServletContext().getContextPath()).build().toString();
     }
 
-    private static String getInitParameterOrDefault(ServletContext context, String propertyName, String defaultValue) {
-        String base = context.getInitParameter(propertyName);
-        if (base == null || base.trim().isEmpty()) {
-            base = defaultValue;
+    private static Optional<String> getBasePathFromEnvironment() {
+        final Map<String, String> env = System.getenv();
+        if(env.containsKey(BASE_PATH_ENV_KEY)) {
+            logger.info("Found {} env variable", BASE_PATH_ENV_KEY);
+            return Optional.of(env.get(BASE_PATH_ENV_KEY));
         }
-        return base;
+        return Optional.empty();
+    }
+
+    private static Optional<String> getBasePathFromContext(final ServletContextEvent servletContextEvent) {
+		final ServletContext servletContext = servletContextEvent.getServletContext();
+        String base = servletContext.getInitParameter(PROPERTY_BASE);
+        if (base == null || base.trim().isEmpty()) {
+	        return Optional.empty();
+        }
+        return Optional.of(base);
     }
 
     private static String getServletUrlPattern(final ServletContextEvent servletContextEvent) throws Exception {
