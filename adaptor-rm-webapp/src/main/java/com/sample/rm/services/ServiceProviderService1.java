@@ -173,7 +173,7 @@ public class ServiceProviderService1
         produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML
     )
     public Requirement[] queryRequirements(
-
+                                                    
                                                      @QueryParam("oslc.where") final String where,
                                                      @QueryParam("page") final String pageString,
                                                     @QueryParam("limit") final String limitString) throws IOException, ServletException
@@ -205,7 +205,7 @@ public class ServiceProviderService1
         produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML
     )
     public Response queryRequirementsAsHtml(
-
+                                    
                                        @QueryParam("oslc.where") final String where,
                                        @QueryParam("page") final String pageString,
                                     @QueryParam("limit") final String limitString) throws ServletException, IOException
@@ -258,7 +258,7 @@ public class ServiceProviderService1
     @Consumes({ MediaType.TEXT_HTML, MediaType.WILDCARD })
     public void RequirementSelector(
         @QueryParam("terms") final String terms
-
+        
         ) throws ServletException, IOException
     {
         try {
