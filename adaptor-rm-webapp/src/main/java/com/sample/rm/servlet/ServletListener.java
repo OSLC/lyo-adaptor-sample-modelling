@@ -42,21 +42,18 @@ import com.sample.rm.RMToolManager;
 // Start of user code imports
 // End of user code
 
+
 /**
  * During the initialization of this ServletListener, the base URI for the OSLC resources produced by this server is configured through the OSLC4J method setPublicURI().
+ * <p>
  * A number of approaches can be used to set this base URI:
- * 1. Set a system environment property of name "LYO_BASE".
- * 2. In the web.xml file, set a "context-param" property, with name "com.sample.rm.servlet.baseurl"
- * 3. Override the value of the DEFAULT_BASE constant.
+ * <ol>
+ * <li>Set a system environment property of name "LYO_BASE".</li>
+ * <li>In the web.xml file, set a {@code context-param} property, with name "com.sample.rm.servlet.baseurl}</li>
+ * <li>Override the value of the DEFAULT_BASE constant.</li>
+ * </ol>
  */
 public class ServletListener implements ServletContextListener  {
-
-    //These are default names. You can modify any of these "constants" early in the contextInitialized() method.
-    private static String BASE_PATH_ENV_KEY = "LYO_BASE";
-    private static String DEFAULT_BASE = "http://localhost:8080";
-    private static String PROPERTY_BASE = servletContextParameterName("baseurl");
-    private static String servletName = "JAX-RS Servlet";
-
     private static final Logger logger = LoggerFactory.getLogger(ServletListener.class);
 
     // Start of user code class_attributes
@@ -69,14 +66,19 @@ public class ServletListener implements ServletContextListener  {
     @Override
     public void contextInitialized(final ServletContextEvent servletContextEvent)
     {
+        //These are default values. You can modify any of them early in this method.
+        String basePathEnvKey = "LYO_BASE";
+        String basePathContextPropertyKey = servletContextParameterName("baseurl");
+        String fallbackBase = "http://localhost:8080";
+        String servletName = "JAX-RS Servlet";
+
         // Start of user code contextInitialized_init
-    	PROPERTY_BASE = servletContextParameterName("baseursl");
         // End of user code
 
-        String baseUrl = generateBasePath(servletContextEvent);
+        String baseUrl = generateBasePath(servletContextEvent, basePathEnvKey, basePathContextPropertyKey, fallbackBase);
         String servletUrlPattern = "services/";
         try {
-            servletUrlPattern = getServletUrlPattern(servletContextEvent);
+            servletUrlPattern = getServletUrlPattern(servletContextEvent, servletName);
         } catch (Exception e1) {
             logger.error("servletListner encountered problems identifying the servlet URL pattern.", e1);
         }
@@ -120,31 +122,31 @@ public class ServletListener implements ServletContextListener  {
         return String.format("%s.%s", ServletListener.class.getPackage().getName(), parameter);
     }
 
-    private static String generateBasePath(final ServletContextEvent servletContextEvent) {
-        String base = getBasePathFromEnvironment().orElseGet(() -> getBasePathFromContext(servletContextEvent).orElseGet(() -> DEFAULT_BASE));
+    private static String generateBasePath(final ServletContextEvent servletContextEvent, String basePathEnvKey, String basePathContextPropertyKey, String fallbackBase) {
+        String base = getBasePathFromEnvironment(basePathEnvKey).orElseGet(() -> getBasePathFromContext(servletContextEvent, basePathContextPropertyKey).orElseGet(() -> fallbackBase));
         UriBuilder builder = UriBuilder.fromUri(base);
         return builder.path(servletContextEvent.getServletContext().getContextPath()).build().toString();
     }
 
-    private static Optional<String> getBasePathFromEnvironment() {
+    private static Optional<String> getBasePathFromEnvironment(String basePathEnvKey) {
         final Map<String, String> env = System.getenv();
-        if(env.containsKey(BASE_PATH_ENV_KEY)) {
-            logger.info("Found {} env variable", BASE_PATH_ENV_KEY);
-            return Optional.of(env.get(BASE_PATH_ENV_KEY));
+        if(env.containsKey(basePathEnvKey)) {
+            logger.info("Found {} env variable", basePathEnvKey);
+            return Optional.of(env.get(basePathEnvKey));
         }
         return Optional.empty();
     }
 
-    private static Optional<String> getBasePathFromContext(final ServletContextEvent servletContextEvent) {
-		final ServletContext servletContext = servletContextEvent.getServletContext();
-        String base = servletContext.getInitParameter(PROPERTY_BASE);
+    private static Optional<String> getBasePathFromContext(final ServletContextEvent servletContextEvent, String basePathContextPropertyKey) {
+        final ServletContext servletContext = servletContextEvent.getServletContext();
+        String base = servletContext.getInitParameter(basePathContextPropertyKey);
         if (base == null || base.trim().isEmpty()) {
-	        return Optional.empty();
+            return Optional.empty();
         }
         return Optional.of(base);
     }
 
-    private static String getServletUrlPattern(final ServletContextEvent servletContextEvent) throws Exception {
+    private static String getServletUrlPattern(final ServletContextEvent servletContextEvent, String servletName) throws Exception {
         final ServletContext servletContext = servletContextEvent.getServletContext();
 
         ServletRegistration servletRegistration = servletContext.getServletRegistration(servletName);
