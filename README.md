@@ -21,4 +21,4 @@ The repository contains
 
 ## License
 
-The code and models in this repository are dual-licensed under EPL or EDL. See [LICENSE](LICENSE) and [LICENSE.EPL](LICENSE.EPL) for the details.
+This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 and Eclipse Distribution License v. 1.0 which accompanies this distribution ([LICENSE](LICENSE) and [LICENSE.EPL](LICENSE.EPL)).
