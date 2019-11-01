@@ -25,7 +25,10 @@
 
 package com.sample.testing.services;
 
+import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
@@ -115,7 +118,7 @@ public class ServiceProviderService
     @GET
     @Path("{serviceProviderId}")
     @Produces(MediaType.TEXT_HTML)
-    public void getHtmlServiceProvider(@PathParam("serviceProviderId") final String serviceProviderId)
+    public void getHtmlServiceProvider(@PathParam("serviceProviderId") final String serviceProviderId) throws ServletException, IOException
     {
         ServiceProvider serviceProvider = ServiceProviderCatalogSingleton.getServiceProvider(httpServletRequest, serviceProviderId);
         Service [] services = serviceProvider.getServices();
@@ -126,12 +129,7 @@ public class ServiceProviderService
         // End of user code
 
         RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/serviceprovider.jsp");
-        try {
-            rd.forward(httpServletRequest, httpServletResponse);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new WebApplicationException(e);
-        }
+        rd.forward(httpServletRequest, httpServletResponse);
     }
 }
 

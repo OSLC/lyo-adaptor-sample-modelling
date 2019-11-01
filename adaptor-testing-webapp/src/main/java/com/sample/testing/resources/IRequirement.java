@@ -73,6 +73,13 @@ public interface IRequirement
 {
 
 
+    @OslcName("identifier")
+    @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "identifier")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getIdentifier();
+
     @OslcName("title")
     @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "title")
     @OslcOccurs(Occurs.ExactlyOne)
@@ -88,6 +95,7 @@ public interface IRequirement
     public String getDescription();
 
 
+    public void setIdentifier(final String identifier );
     public void setTitle(final String title );
     public void setDescription(final String description );
 }
