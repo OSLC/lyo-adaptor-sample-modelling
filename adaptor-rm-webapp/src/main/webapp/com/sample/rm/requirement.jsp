@@ -98,6 +98,20 @@ To revert to the default generated content, delete all content in this file, and
 
         <div>
           <dl class="row">
+            <dt  class="col-sm-2 text-right">identifier</dt>
+            <dd class="col-sm-9">
+            <%
+            if (aRequirement.getIdentifier() == null) {
+                out.write("<em>null</em>");
+            }
+            else {
+                out.write(aRequirement.getIdentifier().toString());
+            }
+            %>
+            
+            </dd>
+          </dl>
+          <dl class="row">
             <dt  class="col-sm-2 text-right">title</dt>
             <dd class="col-sm-9">
             <%
