@@ -96,11 +96,13 @@ public class RMToolManager {
             URI uri = RMToolResourcesFactory.constructURIForRequirement(id);
             aResource.setAbout(uri);
             requirements.put(id, aResource);
+			InmemPagedTrsSingleton.getInmemPagedTrs().onCreated(aResource);
         }
         else {
             URI uri = RMToolResourcesFactory.constructURIForRequirement(aResource.getIdentifier());
             aResource.setAbout(uri);
             requirements.put(aResource.getIdentifier(), aResource);
+			InmemPagedTrsSingleton.getInmemPagedTrs().onModified(aResource);
         }
         return aResource;
     }

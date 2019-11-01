@@ -53,6 +53,14 @@ To revert to the default generated content, delete all content in this file, and
         <table style="clear: both;">
           <tr>
             <td>
+            <label for="identifier">identifier: </LABEL>
+            <%
+            out.write("<input name=\"identifier\" type=\"text\" style=\"width: 400px\" id=\"identifier\" >");
+            %>
+            </td>
+          </tr>
+          <tr>
+            <td>
             <label for="title">title: </LABEL>
             <%
             out.write("<input name=\"title\" type=\"text\" style=\"width: 400px\" id=\"title\" >");

@@ -70,6 +70,20 @@ To revert to the default generated content, delete all content in this file, and
 <div>
         <div>
           <dl class="dl-horizontal">
+            <dt>identifier</dt>
+            <dd>
+            <%
+            if (aRequirement.getIdentifier() == null) {
+                out.write("<em>null</em>");
+            }
+            else {
+                out.write(aRequirement.getIdentifier().toString());
+            }
+            %>
+            
+            </dd>
+          </dl>
+          <dl class="dl-horizontal">
             <dt>title</dt>
             <dd>
             <%
