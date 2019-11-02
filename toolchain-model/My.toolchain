@@ -3,23 +3,25 @@
   <adaptorInterfaces name="Testing Tool" javaClassBaseNamespace="com.sample.testing" javaFilesBasePath="../adaptor-testing-webapp/src/main/java/" jspFilesBasePath="../adaptor-testing-webapp/src/main/webapp/" javascriptFilesBasePath="../adaptor-testing-webapp/src/main/webapp/" swaggerDocumentation="true" backendCodeTemplate_servletListenerInitialize="" backendCodeTemplate_servletListenerDestroy="" backendCodeTemplate_getResources="" backendCodeTemplate_searchResources="">
     <serviceProviderCatalog title="Service Provider Catalog">
       <serviceProviders title="Service Provider" serviceNamespace="">
-        <services domainSpecification="//@specification/@domainSpecifications.0">
-          <creationFactories title="CreationFactory" creationURI="create" resourceTypes="//@specification/@domainSpecifications.0/@resources.1"/>
-          <queryCapabilities title="QueryCapability" label="QueryCapability" queryBaseURI="query" resourceTypes="//@specification/@domainSpecifications.0/@resources.1"/>
-          <basicCapabilities resourceTypes="//@specification/@domainSpecifications.0/@resources.1"/>
+        <services domainSpecification="//@specification/@domainSpecifications[name='Quality%20Management']">
+          <creationFactories title="CreationFactory" creationURI="create" resourceTypes="//@specification/@domainSpecifications[name='Quality%20Management']/@resources[name='TestScript']"/>
+          <queryCapabilities title="QueryCapability" label="QueryCapability" queryBaseURI="query" resourceTypes="//@specification/@domainSpecifications[name='Quality%20Management']/@resources[name='TestScript']"/>
+          <basicCapabilities resourceTypes="//@specification/@domainSpecifications[name='Quality%20Management']/@resources[name='TestScript']"/>
         </services>
       </serviceProviders>
     </serviceProviderCatalog>
     <specification/>
-    <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://localhost:8081/adaptor-rm/services/catalog/singleton" name="RequirementsAdaptor" servicedResources="//@specification/@domainSpecifications.3/@resources.0"/>
+    <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://localhost:8081/adaptor-rm/services/catalog/singleton" name="RequirementsAdaptor" servicedResources="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']"/>
   </adaptorInterfaces>
   <adaptorInterfaces name="RM Tool" javaClassBaseNamespace="com.sample.rm" javaFilesBasePath="../adaptor-rm-webapp/src/main/java/" jspFilesBasePath="../adaptor-rm-webapp/src/main/webapp/" javascriptFilesBasePath="../adaptor-rm-webapp/src/main/webapp/" swaggerDocumentation="true" backendCodeTemplate_getServiceProviders="" backendCodeTemplate_getResource="">
     <serviceProviderCatalog title="Service Provider Catalog">
       <serviceProviders title="Service Provider">
-        <services domainSpecification="//@specification/@domainSpecifications.3" serviceNamespace="independantOfServiceProvider">
-          <queryCapabilities title="QueryCapability" label="QueryCapability" queryBaseURI="query" resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
-          <selectionDialogs title="SelectionDialog1" label="SelectionDialog1" dialogURI="selector" resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
-          <basicCapabilities resourceTypes="//@specification/@domainSpecifications.3/@resources.0"/>
+        <services domainSpecification="//@specification/@domainSpecifications[name='Requirements%20Management']" serviceNamespace="independantOfServiceProvider">
+          <creationFactories title="CreationFactory1" label="CreationFactory1" creationURI="create" resourceTypes="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']"/>
+          <queryCapabilities title="QueryCapability" label="QueryCapability" queryBaseURI="query" resourceTypes="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']"/>
+          <selectionDialogs title="SelectionDialog1" label="SelectionDialog1" dialogURI="selector" resourceTypes="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']"/>
+          <creationDialogs title="CreationDialog1" label="CreationDialog1" dialogURI="creator" resourceTypes="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']"/>
+          <basicCapabilities resourceTypes="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']" delete="true" update="true"/>
         </services>
       </serviceProviders>
     </serviceProviderCatalog>
@@ -27,28 +29,29 @@
     <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://your.host/adaptor/services/catalog/singleton" name="GenericRequiredAdaptor"/>
   </adaptorInterfaces>
   <specification>
-    <domainSpecifications name="Quality Management" namespaceURI="http://open-services.net/ns/qm#" namespacePrefix="//@specification/@domainPrefixes.1">
-      <resources name="TestPlan" resourceProperties="//@specification/@domainSpecifications.0/@resourceProperties.2 //@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.0"/>
-      <resources name="TestScript" resourceProperties="//@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.0/@resourceProperties.3 //@specification/@domainSpecifications.2/@resourceProperties.2"/>
-      <resources name="TestCase" resourceProperties="//@specification/@domainSpecifications.0/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.0"/>
-      <resourceProperties name="Reports On" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.2"/>
-      <resourceProperties name="uses" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.1"/>
-      <resourceProperties name="uses" valueType="Resource" range="//@specification/@domainSpecifications.0/@resources.2"/>
-      <resourceProperties name="validatesRequirement" occurs="zeroOrMany" valueType="Resource" range="//@specification/@domainSpecifications.3/@resources.0"/>
+    <domainSpecifications name="Quality Management" namespaceURI="http://open-services.net/ns/qm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_qm']">
+      <resources name="TestPlan" resourceProperties="//@specification/@domainSpecifications[name='Quality%20Management']/@resourceProperties[name='uses'] //@specification/@domainSpecifications[name='Dublin%20Core']/@resourceProperties[name='title'] //@specification/@domainSpecifications[name='Dublin%20Core']/@resourceProperties[name='contributor']"/>
+      <resources name="TestScript" resourceProperties="//@specification/@domainSpecifications[name='Dublin%20Core']/@resourceProperties[name='title'] //@specification/@domainSpecifications[name='Quality%20Management']/@resourceProperties[name='validatesRequirement'] //@specification/@domainSpecifications[name='Dublin%20Core']/@resourceProperties[name='description']"/>
+      <resources name="TestCase" resourceProperties="//@specification/@domainSpecifications[name='Quality%20Management']/@resourceProperties[name='uses'] //@specification/@domainSpecifications[name='Dublin%20Core']/@resourceProperties[name='title'] //@specification/@domainSpecifications[name='Dublin%20Core']/@resourceProperties[name='contributor']"/>
+      <resourceProperties name="Reports On" valueType="Resource" range="//@specification/@domainSpecifications[name='Quality%20Management']/@resources[name='TestCase']"/>
+      <resourceProperties name="uses" valueType="Resource" range="//@specification/@domainSpecifications[name='Quality%20Management']/@resources[name='TestScript']"/>
+      <resourceProperties name="uses" valueType="Resource" range="//@specification/@domainSpecifications[name='Quality%20Management']/@resources[name='TestCase']"/>
+      <resourceProperties name="validatesRequirement" occurs="zeroOrMany" valueType="Resource" range="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']"/>
     </domainSpecifications>
-    <domainSpecifications name=" foaf" namespaceURI="http://xmlns.com/foaf/0.1/" namespacePrefix="//@specification/@domainPrefixes.5">
-      <resources name="Person" resourceProperties="//@specification/@domainSpecifications.1/@resourceProperties.0 //@specification/@domainSpecifications.1/@resourceProperties.1 //@specification/@domainSpecifications.1/@resourceProperties.2"/>
+    <domainSpecifications name=" foaf" namespaceURI="http://xmlns.com/foaf/0.1/" namespacePrefix="//@specification/@domainPrefixes[name='foaf']">
+      <resources name="Person" resourceProperties="//@specification/@domainSpecifications[name='%20foaf']/@resourceProperties[name='name'] //@specification/@domainSpecifications[name='%20foaf']/@resourceProperties[name='givenName'] //@specification/@domainSpecifications[name='%20foaf']/@resourceProperties[name='familyName']"/>
       <resourceProperties name="name" valueType="String"/>
       <resourceProperties name="givenName" valueType="String"/>
       <resourceProperties name="familyName" valueType="String"/>
     </domainSpecifications>
-    <domainSpecifications name="Dublin Core" namespaceURI="http://purl.org/dc/terms/" namespacePrefix="//@specification/@domainPrefixes.4">
-      <resourceProperties name="contributor" valueType="Resource" range="//@specification/@domainSpecifications.1/@resources.0"/>
+    <domainSpecifications name="Dublin Core" namespaceURI="http://purl.org/dc/terms/" namespacePrefix="//@specification/@domainPrefixes[name='dcterms']">
+      <resourceProperties name="contributor" valueType="Resource" range="//@specification/@domainSpecifications[name='%20foaf']/@resources[name='Person']"/>
       <resourceProperties name="title" valueType="String"/>
       <resourceProperties name="description" valueType="String"/>
+      <resourceProperties name="identifier" valueType="String"/>
     </domainSpecifications>
-    <domainSpecifications name="Requirements Management" namespaceURI="http://open-services.net/ns/rm#" namespacePrefix="//@specification/@domainPrefixes.0">
-      <resources name="Requirement" resourceProperties="//@specification/@domainSpecifications.2/@resourceProperties.1 //@specification/@domainSpecifications.2/@resourceProperties.2"/>
+    <domainSpecifications name="Requirements Management" namespaceURI="http://open-services.net/ns/rm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_rm']">
+      <resources name="Requirement" resourceProperties="//@specification/@domainSpecifications[name='Dublin%20Core']/@resourceProperties[name='identifier'] //@specification/@domainSpecifications[name='Dublin%20Core']/@resourceProperties[name='title'] //@specification/@domainSpecifications[name='Dublin%20Core']/@resourceProperties[name='description']"/>
     </domainSpecifications>
     <domainPrefixes name="oslc_rm"/>
     <domainPrefixes name="oslc_qm"/>

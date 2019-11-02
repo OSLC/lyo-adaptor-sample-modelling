@@ -86,6 +86,9 @@ public class Requirement
     extends AbstractResource
     implements IRequirement
 {
+    // Start of user code attributeAnnotation:identifier
+    // End of user code
+    private String identifier;
     // Start of user code attributeAnnotation:title
     // End of user code
     private String title;
@@ -98,7 +101,6 @@ public class Requirement
     // Start of user code classMethods
     // End of user code
     public Requirement()
-           throws URISyntaxException
     {
         super();
     
@@ -107,7 +109,6 @@ public class Requirement
     }
     
     public Requirement(final URI about)
-           throws URISyntaxException
     {
         super(about);
     
@@ -150,6 +151,20 @@ public class Requirement
     }
     
     
+    // Start of user code getterAnnotation:identifier
+    // End of user code
+    @OslcName("identifier")
+    @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "identifier")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getIdentifier()
+    {
+        // Start of user code getterInit:identifier
+        // End of user code
+        return identifier;
+    }
+    
     // Start of user code getterAnnotation:title
     // End of user code
     @OslcName("title")
@@ -178,6 +193,18 @@ public class Requirement
         return description;
     }
     
+    
+    // Start of user code setterAnnotation:identifier
+    // End of user code
+    public void setIdentifier(final String identifier )
+    {
+        // Start of user code setterInit:identifier
+        // End of user code
+        this.identifier = identifier;
+    
+        // Start of user code setterFinalize:identifier
+        // End of user code
+    }
     
     // Start of user code setterAnnotation:title
     // End of user code

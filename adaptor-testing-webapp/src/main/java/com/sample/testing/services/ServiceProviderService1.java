@@ -53,13 +53,17 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.core.UriBuilder;
 
+import org.apache.wink.json4j.JSONException;
 import org.apache.wink.json4j.JSONObject;
 import org.eclipse.lyo.oslc4j.provider.json4j.JsonHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcCreationFactory;
 import org.eclipse.lyo.oslc4j.core.annotation.OslcDialog;
@@ -97,6 +101,8 @@ public class ServiceProviderService1
     @Context private HttpServletRequest httpServletRequest;
     @Context private HttpServletResponse httpServletResponse;
     @Context private UriInfo uriInfo;
+
+    private static final Logger log = LoggerFactory.getLogger(ServiceProviderService1.class);
 
     // Start of user code class_attributes
     // End of user code
@@ -235,14 +241,9 @@ public class ServiceProviderService1
             final TestScript aResource
         ) throws IOException, ServletException
     {
-        try {
-            TestScript newResource = TestingToolManager.createTestScript(httpServletRequest, aResource, serviceProviderId);
-            httpServletResponse.setHeader("ETag", TestingToolManager.getETagFromTestScript(newResource));
-            return Response.created(newResource.getAbout()).entity(newResource).header(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2).build();
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new WebApplicationException(e);
-        }
+        TestScript newResource = TestingToolManager.createTestScript(httpServletRequest, aResource, serviceProviderId);
+        httpServletResponse.setHeader("ETag", TestingToolManager.getETagFromTestScript(newResource));
+        return Response.created(newResource.getAbout()).entity(newResource).header(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2).build();
     }
 
     @GET

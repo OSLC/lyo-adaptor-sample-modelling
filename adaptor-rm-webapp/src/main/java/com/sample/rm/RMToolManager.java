@@ -37,10 +37,13 @@ import com.sample.rm.resources.Requirement;
 
 // Start of user code imports
 import java.util.concurrent.ThreadLocalRandom;
+import java.net.URI;
 import java.net.URISyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 // End of user code
 
 // Start of user code pre_class_code
@@ -50,6 +53,8 @@ public class RMToolManager {
 
     // Start of user code class_attributes
 	private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
+    private static Map<String, Requirement> requirements = new HashMap<String, Requirement>(1000);
+    private static int nextRequirementId;
     // End of user code
     
     
@@ -58,26 +63,46 @@ public class RMToolManager {
 		return ThreadLocalRandom.current().nextInt(origin, bound);
 	}
 
-	private static Requirement createRandomRequirement(String id) {
-		Requirement r = null;
-		try {
-			r = RMToolResourcesFactory.createRequirement(id);
-			r.setTitle("A sample Requirement with id:" + id);
-			r.setDescription("A sample Requirement with id:" + id);
-		} catch (URISyntaxException e) {
-            log.error("Failed to create resource", e);
-		}
-		return r;
-	}
+    public static ArrayList<Requirement> getRequirements() {
+        return new ArrayList<Requirement>(requirements.values());
+    }
 
-	private static List<Requirement> createRandomRequirements(int min, int max, int minId, int maxId)
-    {
-		int size = randomNumber(min, max);
-		List<Requirement> resources = new ArrayList<Requirement>(size);
-		for (int i = 0; i < size; i++) {
-	    	resources.add(createRandomRequirement(Integer.toString(randomNumber(minId, maxId))));
-		}
-        return resources;
+    private static Requirement produceRandomRequirement(String id) {
+        Requirement r = null;
+        try {
+            r = RMToolResourcesFactory.createRequirement(id);
+            r.setIdentifier(id);
+            r.setTitle("aTitle with id:" + id);
+            r.setDescription("A sample Requirement with id:" + id);
+        } catch (URISyntaxException e) {
+            log.error("Failed to create resource", e);
+        }
+        return r;
+    }
+
+    private static void initializeRequirements(int size) {
+        for (int i = 0; i < size; i++) {
+            nextRequirementId++;
+            String id = Integer.toString(nextRequirementId);
+            Requirement r = produceRandomRequirement(id);
+            requirements.put(id, r);
+        }
+    }
+
+    public static Requirement createOrUpdateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource) {
+        if (!requirements.containsKey(aResource.getIdentifier())) {
+            nextRequirementId++;
+            String id = Integer.toString(nextRequirementId);
+            URI uri = RMToolResourcesFactory.constructURIForRequirement(id);
+            aResource.setAbout(uri);
+            requirements.put(id, aResource);
+        }
+        else {
+            URI uri = RMToolResourcesFactory.constructURIForRequirement(aResource.getIdentifier());
+            aResource.setAbout(uri);
+            requirements.put(aResource.getIdentifier(), aResource);
+        }
+        return aResource;
     }
     // End of user code
 
@@ -85,7 +110,7 @@ public class RMToolManager {
     {
         
         // Start of user code contextInitializeServletListener
-        // TODO Implement code to establish connection to data backbone etc ...
+        initializeRequirements(37);
         // End of user code
     }
 
@@ -122,7 +147,7 @@ public class RMToolManager {
         List<Requirement> resources = null;
         
         // Start of user code queryRequirements
-    	resources = createRandomRequirements(1,  30, 1,  10000);
+        resources = new ArrayList<>(requirements.values());
         // End of user code
         return resources;
     }
@@ -131,23 +156,56 @@ public class RMToolManager {
         List<Requirement> resources = null;
         
         // Start of user code RequirementSelector
-    	resources = createRandomRequirements(1,  30, 1,  10000);
+        resources = new ArrayList<>(requirements.values());
         // End of user code
         return resources;
     }
+    public static Requirement createRequirement(HttpServletRequest httpServletRequest, final Requirement aResource)
+    {
+        Requirement newResource = null;
+        
+        // Start of user code createRequirement
+        newResource = createOrUpdateRequirement(httpServletRequest, aResource);
+        // End of user code
+        return newResource;
+    }
 
+    public static Requirement createRequirementFromDialog(HttpServletRequest httpServletRequest, final Requirement aResource)
+    {
+        Requirement newResource = null;
+        
+        // Start of user code createRequirementFromDialog
+        newResource = createOrUpdateRequirement(httpServletRequest, aResource);
+        // End of user code
+        return newResource;
+    }
 
     public static Requirement getRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
         Requirement aResource = null;
         
         // Start of user code getRequirement
-    	aResource = createRandomRequirement(requirementId);
+        aResource = requirements.get(requirementId);
         // End of user code
         return aResource;
     }
 
+    public static Boolean deleteRequirement(HttpServletRequest httpServletRequest, final String requirementId)
+    {
+        Boolean deleted = false;
+        // Start of user code deleteRequirement
+        // TODO Implement code to delete a resource
+        // End of user code
+        return deleted;
+    }
 
+    public static Requirement updateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource, final String requirementId) {
+        Requirement updatedResource = null;
+        // Start of user code updateRequirement
+        updatedResource = createOrUpdateRequirement(httpServletRequest, aResource);
+        // End of user code
+        return updatedResource;
+    }
 
 
     public static String getETagFromRequirement(final Requirement aResource)
