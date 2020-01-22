@@ -62,4 +62,5 @@
     <domainPrefixes name="nsp7"/>
     <domainPrefixes name="nsp8"/>
   </specification>
+  <vocabularies/>
 </oslc4j_tc:Toolchain>
