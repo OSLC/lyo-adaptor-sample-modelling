@@ -176,6 +176,7 @@ public class TestingToolManager {
 
 
 
+
     public static String getETagFromTestScript(final TestScript aResource)
     {
         String eTag = null;

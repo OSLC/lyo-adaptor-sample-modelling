@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -172,7 +173,7 @@ public class ServiceProviderService1
             ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_rmDomainConstants.REQUIREMENT_PATH + "\">" + Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "</a>" + "}",
         produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML
     )
-    public Response queryRequirementsAsHtml(
+    public void queryRequirementsAsHtml(
                                     
                                        @QueryParam("oslc.where") final String where,
                                        @QueryParam("page") final String pageString,
@@ -206,6 +207,7 @@ public class ServiceProviderService1
             }
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementscollection.jsp");
             rd.forward(httpServletRequest,httpServletResponse);
+            return;
         }
 
         throw new WebApplicationException(Status.NOT_FOUND);
@@ -243,6 +245,7 @@ public class ServiceProviderService1
                         httpServletRequest.setAttribute("resources", resources);
                         RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementselectorresults.jsp");
                         rd.forward(httpServletRequest, httpServletResponse);
+                        return;
             }
             log.error("A empty search should return an empty list and not NULL!");
             throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
@@ -250,6 +253,7 @@ public class ServiceProviderService1
         } else {
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementselector.jsp");
             rd.forward(httpServletRequest, httpServletResponse);
+            return;
         }
     }
 
@@ -329,7 +333,7 @@ public class ServiceProviderService1
     @Consumes({ MediaType.APPLICATION_FORM_URLENCODED})
     public void createRequirementFromDialog(MultivaluedMap<String, String> formParams
             
-        ) {
+        ) throws URISyntaxException, ParseException {
         Requirement newResource = null;
 
         Requirement aResource = new Requirement();
@@ -429,7 +433,7 @@ public class ServiceProviderService1
             ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_rmDomainConstants.REQUIREMENT_PATH + "\">" + Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "</a>" + "}",
         produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML + ", " + OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML
     )
-    public Response getRequirementAsHtml(
+    public void getRequirementAsHtml(
         @PathParam("requirementId") final String requirementId
         ) throws ServletException, IOException, URISyntaxException
     {
@@ -445,6 +449,7 @@ public class ServiceProviderService1
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirement.jsp");
             rd.forward(httpServletRequest,httpServletResponse);
+            return;
         }
 
         throw new WebApplicationException(Status.NOT_FOUND);
@@ -524,6 +529,7 @@ public class ServiceProviderService1
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
+            return;
         }
 
         throw new WebApplicationException(Status.NOT_FOUND);
@@ -550,6 +556,7 @@ public class ServiceProviderService1
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
+            return;
         }
 
         throw new WebApplicationException(Status.NOT_FOUND);

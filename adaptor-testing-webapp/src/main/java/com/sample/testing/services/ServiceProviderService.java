@@ -85,7 +85,7 @@ public class ServiceProviderService
          usages = {OslcConstants.OSLC_USAGE_DEFAULT}
     )
     @GET
-    
+    @Path("")
     @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
     public ServiceProvider[] getServiceProviders()
     {
@@ -130,6 +130,7 @@ public class ServiceProviderService
 
         RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/serviceprovider.jsp");
         rd.forward(httpServletRequest, httpServletResponse);
+        return;
     }
 }
 

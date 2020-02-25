@@ -145,6 +145,7 @@ public class ServiceProviderCatalogService
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/serviceprovidercatalog.jsp");
             try {
                 rd.forward(httpServletRequest, httpServletResponse);
+                return;
             } catch (Exception e) {
                 e.printStackTrace();
                 throw new WebApplicationException(e);

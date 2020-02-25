@@ -208,6 +208,7 @@ public class RMToolManager {
     }
 
 
+
     public static String getETagFromRequirement(final Requirement aResource)
     {
         String eTag = null;
