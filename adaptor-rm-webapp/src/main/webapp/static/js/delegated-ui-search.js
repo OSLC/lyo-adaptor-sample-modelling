@@ -77,7 +77,6 @@ function create(baseUrl){
 
   xmlhttp.open("POST", baseUrl, true);
   xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xmlhttp.setRequestHeader("Content-length",postData.length);
   xmlhttp.send(postData);
 }
 
