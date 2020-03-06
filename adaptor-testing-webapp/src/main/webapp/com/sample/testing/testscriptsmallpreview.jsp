@@ -26,12 +26,23 @@
 
 <%@page import="org.eclipse.lyo.oslc4j.core.model.Link" %>
 <%@page import="org.eclipse.lyo.oslc4j.core.model.ServiceProvider"%>
+<%@page import="org.eclipse.lyo.oslc4j.core.model.OslcConstants"%>
+<%@page import="org.eclipse.lyo.oslc4j.core.OSLC4JUtils"%>
+<%@page import="org.eclipse.lyo.oslc4j.core.annotation.OslcPropertyDefinition"%>
+<%@page import="org.eclipse.lyo.oslc4j.core.annotation.OslcName"%>
+<%@page import="java.lang.reflect.Method"%>
 <%@page import="java.net.URI"%>
+<%@page import="java.util.Collection"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.HashSet"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="java.util.Map"%>
+<%@page import="javax.xml.namespace.QName"%>
+<%@page import="javax.ws.rs.core.UriBuilder"%>
+
 <%@page import="com.sample.testing.resources.TestScript"%>
+<%@page import="com.sample.testing.resources.Oslc_qmDomainConstants"%>
 
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 
@@ -59,60 +70,84 @@
 
 <!-- Begin page content -->
 <div>
-        <div>
-          <dl class="dl-horizontal">
-            <dt>title</dt>
-            <dd>
-            <%
-            if (aTestScript.getTitle() == null) {
-                out.write("<em>null</em>");
+    <% Method method = null; %>
+    <dl class="dl-horizontal">
+        <% method = TestScript.class.getMethod("getTitle"); %>
+        <dt><a href="<%=method.getAnnotation(OslcPropertyDefinition.class).value() %>"><%=method.getAnnotation(OslcName.class).value()%></a></dt>
+        <dd>
+        <%
+        if (aTestScript.getTitle() == null) {
+            out.write("<em>null</em>");
+        }
+        else {
+            out.write(aTestScript.getTitle().toString());
+        }
+        %>
+        
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <% method = TestScript.class.getMethod("getValidatesRequirement"); %>
+        <dt><a href="<%=method.getAnnotation(OslcPropertyDefinition.class).value() %>"><%=method.getAnnotation(OslcName.class).value()%></a></dt>
+        <dd>
+        <ul>
+        <%
+        for(Link next : aTestScript.getValidatesRequirement()) {
+            if (next.getValue() == null) {
+                out.write("<li>" + "<em>null</em>" + "</li>");
             }
             else {
-                out.write(aTestScript.getTitle().toString());
+                %>
+                <li>
+                <jsp:include page="/com/sample/testing/requirementtohtml.jsp">
+                    <jsp:param name="resourceUri" value="<%=next.getValue()%>"/> 
+                    </jsp:include>
+                </li>
+                <%
             }
-            %>
-            
-            </dd>
-          </dl>
-          <dl class="dl-horizontal">
-            <dt>validatesRequirement</dt>
-            <dd>
-            <ul>
-            <%
-            for(Link next : aTestScript.getValidatesRequirement()) {
-                if (next.getValue() == null) {
-                    out.write("<li>" + "<em>null</em>" + "</li>");
-                }
-                else {
-                    %>
-                    <li>
-                    <jsp:include page="/com/sample/testing/requirementtohtml.jsp">
-                        <jsp:param name="resourceUri" value="<%=next.getValue()%>"/> 
-                        </jsp:include>
-                    </li>
-                    <%
-                }
-            }
-            %>
-            </ul>
-            
-            </dd>
-          </dl>
-          <dl class="dl-horizontal">
-            <dt>description</dt>
-            <dd>
-            <%
-            if (aTestScript.getDescription() == null) {
-                out.write("<em>null</em>");
-            }
-            else {
-                out.write(aTestScript.getDescription().toString());
-            }
-            %>
-            
-            </dd>
-          </dl>
-        </div>
-      </div>
+        }
+        %>
+        </ul>
+        
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <% method = TestScript.class.getMethod("getDescription"); %>
+        <dt><a href="<%=method.getAnnotation(OslcPropertyDefinition.class).value() %>"><%=method.getAnnotation(OslcName.class).value()%></a></dt>
+        <dd>
+        <%
+        if (aTestScript.getDescription() == null) {
+            out.write("<em>null</em>");
+        }
+        else {
+            out.write(aTestScript.getDescription().toString());
+        }
+        %>
+        
+        </dd>
+    </dl>
+</div>
+<%
+Map<QName, Object> extendedProperties = aTestScript.getExtendedProperties();
+if (!extendedProperties.isEmpty()) {
+%>
+    <div>
+    <%
+    for (Map.Entry<QName, Object> entry : extendedProperties.entrySet()) 
+    {
+        QName key = entry.getKey();
+        Object value = entry.getValue();
+    %>
+    <dl class="row">
+        <dt  class="col-sm-2 text-right"><a href="<%=key.getNamespaceURI() + key.getLocalPart() %>"><%=key.getLocalPart()%></a></dt>
+        <dd class="col-sm-9"><%= value.toString()%></dd>
+    </dl>
+    <%
+    }
+    %>
+    </div>
+<%
+}
+%>
 </body>
 </html>
