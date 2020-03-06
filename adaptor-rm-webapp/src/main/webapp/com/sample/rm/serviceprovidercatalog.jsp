@@ -48,9 +48,13 @@ ServiceProviderCatalog catalog = (ServiceProviderCatalog)request.getAttribute("c
 
   </head>
   <body>
-  <nav class="navbar sticky-top navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="<c:url value="/services/catalog/singleton"/>">RM Tool</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="<c:url value="/"/>"><%= application.getServletContextName() %></a></li>
+        <li class="nav-item"><a class="nav-link" href="<c:url value="/services/catalog/singleton"/>">Service Provider Catalog</a></li>
+        <li class="nav-item"><a class="nav-link" href="<c:url value="/swagger-ui/index.jsp"/>">Swagger UI</a></li>
+      </ul>
     </div>
   </nav>
 
@@ -58,18 +62,6 @@ ServiceProviderCatalog catalog = (ServiceProviderCatalog)request.getAttribute("c
     <div class="page-header">
       <h1>RM Tool Service Provider Catalogue</h1>
     </div>
-		<div class="alert alert-primary" role="alert">
-			<h4 class="alert-heading">Sample data!</h4>
-			<hr>
-			<p>
-				A sample list of Service Providers are listed here. Modify the
-				method
-				<code>getServiceProviderInfos()</code>
-				in the class
-				<code>RMToolManager</code>
-				, to return the expected set of ServiceProvider resources.
-			</p>
-		</div>
 
   	<h2>Service Providers</h2>
     <% for (ServiceProvider s : catalog.getServiceProviders()) { %>
