@@ -45,7 +45,6 @@ public class RMToolResourcesFactory {
 
     //methods for Requirement resource
     public static Requirement createRequirement(final String requirementId)
-           throws URISyntaxException
     {
         return new Requirement(constructURIForRequirement(requirementId));
     }

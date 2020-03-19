@@ -46,7 +46,6 @@ public class TestingToolResourcesFactory {
 
     //methods for TestScript resource
     public static TestScript createTestScript(final String serviceProviderId, final String testScriptId)
-           throws URISyntaxException
     {
         return new TestScript(constructURIForTestScript(serviceProviderId, testScriptId));
     }
