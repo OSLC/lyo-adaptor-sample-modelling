@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <oslc4j_tc:Toolchain xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oslc4j_ai="http://org.eclipse.lyo/oslc4j/adaptorInterface" xmlns:oslc4j_tc="http://org.eclipse.lyo/oslc4j/toolChain">
-  <adaptorInterfaces name="Testing Tool" javaClassBaseNamespace="com.sample.testing" javaFilesBasePath="../adaptor-testing-webapp/src/main/java/" jspFilesBasePath="../adaptor-testing-webapp/src/main/webapp/" javascriptFilesBasePath="../adaptor-testing-webapp/src/main/webapp/" swaggerDocumentation="true" backendCodeTemplate_servletListenerInitialize="" backendCodeTemplate_servletListenerDestroy="" backendCodeTemplate_getResources="" backendCodeTemplate_searchResources="">
+  <adaptorInterfaces name="Testing Tool" swaggerDocumentation="true" backendCodeTemplate_servletListenerInitialize="" backendCodeTemplate_servletListenerDestroy="" backendCodeTemplate_getResources="" backendCodeTemplate_searchResources="">
     <serviceProviderCatalog title="Service Provider Catalog">
       <serviceProviders title="Service Provider" serviceNamespace="">
         <services domainSpecification="//@specification/@domainSpecifications[name='Quality%20Management']" serviceNamespace="relativeToServiceProvider">
@@ -12,8 +12,12 @@
     </serviceProviderCatalog>
     <specification/>
     <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://localhost:8081/adaptor-rm/services/catalog/singleton" name="RequirementsAdaptor" servicedResources="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']"/>
+    <configuration xsi:type="oslc4j_ai:MavenServerConfiguration" rootServerBaseUrl="http://localhost:8082/" applicationContextPath="/adaptor-testing" servletUrlPattern="/services/*" jettyPort="8082">
+      <generalConfiguration filesBasePath="../adaptor-testing-webapp/" javaBasePackageName="com.sample.testing"/>
+      <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="4.0.0-SNAPSHOT" groupId="com.sample.testing" artifactId="testing-tool" version="0.0.1-SNAPSHOT"/>
+    </configuration>
   </adaptorInterfaces>
-  <adaptorInterfaces name="RM Tool" javaClassBaseNamespace="com.sample.rm" javaFilesBasePath="../adaptor-rm-webapp/src/main/java/" jspFilesBasePath="../adaptor-rm-webapp/src/main/webapp/" javascriptFilesBasePath="../adaptor-rm-webapp/src/main/webapp/" swaggerDocumentation="true" backendCodeTemplate_getServiceProviders="" backendCodeTemplate_getResource="">
+  <adaptorInterfaces name="RM Tool" swaggerDocumentation="true" backendCodeTemplate_getServiceProviders="" backendCodeTemplate_getResource="">
     <serviceProviderCatalog title="Service Provider Catalog">
       <serviceProviders title="Service Provider">
         <services domainSpecification="//@specification/@domainSpecifications[name='Requirements%20Management']">
@@ -27,6 +31,10 @@
     </serviceProviderCatalog>
     <specification/>
     <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://your.host/adaptor/services/catalog/singleton" name="GenericRequiredAdaptor"/>
+    <configuration xsi:type="oslc4j_ai:MavenServerConfiguration" rootServerBaseUrl="http://localhost:8081/" applicationContextPath="/adaptor-rm" servletUrlPattern="/services/*" jettyPort="8081">
+      <generalConfiguration filesBasePath="../adaptor-rm-webapp/" javaBasePackageName="com.sample.rm"/>
+      <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="4.0.0-SNAPSHOT" groupId="com.sample.rm" artifactId="rm-tool" version="0.0.1-SNAPSHOT"/>
+    </configuration>
   </adaptorInterfaces>
   <specification>
     <domainSpecifications name="Quality Management" namespaceURI="http://open-services.net/ns/qm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_qm']">
