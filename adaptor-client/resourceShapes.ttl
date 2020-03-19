@@ -1,0 +1,64 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix oslc:  <http://open-services.net/ns/core#> .
+
+<http://localhost:8080/services/resourceShapes/requirement>
+        a               oslc:ResourceShape ;
+        oslc:describes  <http://open-services.net/ns/rm#Requirement> ;
+        oslc:property   [ a                        oslc:Property ;
+                          oslc:name                "title" ;
+                          oslc:occurs              oslc:Exactly-one ;
+                          oslc:propertyDefinition  dcterms:title ;
+                          oslc:readOnly            false ;
+                          oslc:valueType           <http://www.w3.org/2001/XMLSchema#string> ;
+                          dcterms:title            "title"^^rdf:XMLLiteral
+                        ] ;
+        oslc:property   [ a                        oslc:Property ;
+                          oslc:name                "identifier" ;
+                          oslc:occurs              oslc:Exactly-one ;
+                          oslc:propertyDefinition  dcterms:identifier ;
+                          oslc:readOnly            false ;
+                          oslc:valueType           <http://www.w3.org/2001/XMLSchema#string> ;
+                          dcterms:title            "identifier"^^rdf:XMLLiteral
+                        ] ;
+        oslc:property   [ a                        oslc:Property ;
+                          oslc:name                "description" ;
+                          oslc:occurs              oslc:Exactly-one ;
+                          oslc:propertyDefinition  dcterms:description ;
+                          oslc:readOnly            false ;
+                          oslc:valueType           <http://www.w3.org/2001/XMLSchema#string> ;
+                          dcterms:title            "description"^^rdf:XMLLiteral
+                        ] ;
+        dcterms:title   "Requirement Resource Shape"^^rdf:XMLLiteral .
+
+<http://localhost:8080/services/resourceShapes/testScript>
+        a               oslc:ResourceShape ;
+        oslc:describes  <http://open-services.net/ns/qm#TestScript> ;
+        oslc:property   [ a                        oslc:Property ;
+                          oslc:name                "title" ;
+                          oslc:occurs              oslc:Exactly-one ;
+                          oslc:propertyDefinition  dcterms:title ;
+                          oslc:readOnly            false ;
+                          oslc:valueType           <http://www.w3.org/2001/XMLSchema#string> ;
+                          dcterms:title            "title"^^rdf:XMLLiteral
+                        ] ;
+        oslc:property   [ a                        oslc:Property ;
+                          oslc:name                "description" ;
+                          oslc:occurs              oslc:Exactly-one ;
+                          oslc:propertyDefinition  dcterms:description ;
+                          oslc:readOnly            false ;
+                          oslc:valueType           <http://www.w3.org/2001/XMLSchema#string> ;
+                          dcterms:title            "description"^^rdf:XMLLiteral
+                        ] ;
+        oslc:property   [ a                        oslc:Property ;
+                          oslc:name                "validatesRequirement" ;
+                          oslc:occurs              oslc:Zero-or-many ;
+                          oslc:propertyDefinition  <http://open-services.net/ns/qm#validatesRequirement> ;
+                          oslc:range               <http://open-services.net/ns/rm#Requirement> ;
+                          oslc:readOnly            false ;
+                          oslc:representation      oslc:Reference ;
+                          oslc:valueType           oslc:Resource ;
+                          dcterms:title            "validatesRequirement"^^rdf:XMLLiteral
+                        ] ;
+        dcterms:title   "TestScript Resource Shape"^^rdf:XMLLiteral .

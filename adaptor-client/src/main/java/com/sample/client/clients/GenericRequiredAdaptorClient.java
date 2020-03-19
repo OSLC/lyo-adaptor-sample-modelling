@@ -17,64 +17,29 @@
  *******************************************************************************/
 // End of user code
 
-package com.sample.testing.clients;
+package com.sample.client.clients;
 
 import javax.ws.rs.core.Response;
 import org.eclipse.lyo.oslc4j.client.OSLCConstants;
 import org.eclipse.lyo.oslc4j.client.OslcClient;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
-import com.sample.testing.resources.Requirement;
+import com.sample.client.resources.Requirement;
+import com.sample.client.resources.TestScript;
 
 // Start of user code imports
-import java.net.URI;
-
-import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
-import org.eclipse.lyo.oslc4j.client.resources.OslcQuery;
-import org.eclipse.lyo.oslc4j.client.resources.OslcQueryParameters;
-import org.eclipse.lyo.oslc4j.client.resources.OslcQueryResult;
-
-import com.sample.testing.resources.Oslc_rmDomainConstants;
 // End of user code
 
 
 // Start of user code pre_class_code
 // End of user code
 
-public class RequirementsAdaptorClient
+public class GenericRequiredAdaptorClient
 {
 
     // Start of user code class_attributes
     // End of user code
     
     // Start of user code class_methods
-	public static String[] queryRequirements() throws Exception 
-	{	
-        OslcClient client = new OslcClient();
-        Response response = null;
-        ServiceProviderCatalog catalog = null;
-
-        //Get the SPC
-        response = client.getResource(serviceProviderCatalogURI, OSLCConstants.CT_RDF);
-        if (response != null) {
-            catalog = response.readEntity(ServiceProviderCatalog.class);
-        }
-		
-        //Get first SP.
-		ServiceProvider sp = catalog.getServiceProviders()[0];
-		
-		//Find the QCBase that deals with SecondOT
-		String queryBaseUri = client.lookupQueryCapability(sp.getAbout().toString(), Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_DOMAIN, Oslc_rmDomainConstants.REQUIREMENT_TYPE);
-        URI queryBase = new URI(queryBaseUri);
-
-        String where = "";
-
-        OslcQueryParameters queryParameters = new OslcQueryParameters();
-        queryParameters.setWhere(where);
-        OslcQuery query = new OslcQuery(client, queryBase.toString(), queryParameters);
-        OslcQueryResult queryResults = query.submit();
-        String[] urls = queryResults.getMembersUrls();
-        return urls;
-	}
     // End of user code
 
     static String serviceProviderCatalogURI = "http://localhost:8083/adaptor-rm/services/catalog/singleton";
@@ -109,6 +74,23 @@ public class RequirementsAdaptorClient
             resource = response.readEntity(Requirement.class);
         }
         // Start of user code getRequirement_final
+        // End of user code
+        return resource;
+    }
+
+    public static TestScript getTestScript(String resourceURI) throws Exception {
+        OslcClient client = new OslcClient();
+        Response response = null;
+        TestScript resource = null;
+
+        // Start of user code getTestScript_init
+        // End of user code
+
+        response = client.getResource(resourceURI, OSLCConstants.CT_RDF);
+        if (response != null) {
+            resource = response.readEntity(TestScript.class);
+        }
+        // Start of user code getTestScript_final
         // End of user code
         return resource;
     }

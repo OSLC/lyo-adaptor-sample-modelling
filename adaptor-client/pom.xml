@@ -8,11 +8,11 @@
     <!-- TODO: Add additional header properties here to avoid them be overrriden upon future re-generation -->
     <!-- End of user code
     -->
-    <groupId>com.sample.rm</groupId>
-    <artifactId>rm-tool</artifactId>
+    <groupId>com.sample.client</groupId>
+    <artifactId>client-only-application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>RM Tool</name>
+    <name>ClientOnlyApplication</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -115,7 +115,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>rm-tool</finalName>
+        <finalName>client-only-application</finalName>
             <plugins>
             <!-- Start of user code plugins
             -->
@@ -128,14 +128,14 @@
                 <version>9.4.18.v20190429</version>
                 <configuration>
                     <webAppConfig>
-                        <contextPath>/adaptor-rm</contextPath>
+                        <contextPath>/adaptorinterface3</contextPath>
                     </webAppConfig>
                     <reload>automatic</reload>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
                     <systemProperties>
                         <systemProperty>
                             <name>jetty.port</name>
-                            <value>8083</value>
+                            <value>8080</value>
                         </systemProperty>
                     </systemProperties>
                     <stopKey />

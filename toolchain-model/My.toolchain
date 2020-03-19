@@ -11,7 +11,7 @@
       </serviceProviders>
     </serviceProviderCatalog>
     <specification/>
-    <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://localhost:8081/adaptor-rm/services/catalog/singleton" name="RequirementsAdaptor" servicedResources="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']"/>
+    <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://localhost:8083/adaptor-rm/services/catalog/singleton" name="RequirementsAdaptor" servicedResources="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement']"/>
     <configuration xsi:type="oslc4j_ai:MavenServerConfiguration" rootServerBaseUrl="http://localhost:8082/" applicationContextPath="/adaptor-testing" servletUrlPattern="/services/*" jettyPort="8082">
       <generalConfiguration filesBasePath="../adaptor-testing-webapp/" javaBasePackageName="com.sample.testing"/>
       <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="4.0.0-SNAPSHOT" groupId="com.sample.testing" artifactId="testing-tool" version="0.0.1-SNAPSHOT"/>
@@ -31,9 +31,17 @@
     </serviceProviderCatalog>
     <specification/>
     <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://your.host/adaptor/services/catalog/singleton" name="GenericRequiredAdaptor"/>
-    <configuration xsi:type="oslc4j_ai:MavenServerConfiguration" rootServerBaseUrl="http://localhost:8081/" applicationContextPath="/adaptor-rm" servletUrlPattern="/services/*" jettyPort="8081">
+    <configuration xsi:type="oslc4j_ai:MavenServerConfiguration" rootServerBaseUrl="http://localhost:8083/" applicationContextPath="/adaptor-rm" servletUrlPattern="/services/*" jettyPort="8083">
       <generalConfiguration filesBasePath="../adaptor-rm-webapp/" javaBasePackageName="com.sample.rm"/>
       <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="4.0.0-SNAPSHOT" groupId="com.sample.rm" artifactId="rm-tool" version="0.0.1-SNAPSHOT"/>
+    </configuration>
+  </adaptorInterfaces>
+  <adaptorInterfaces name="ClientOnlyApplication">
+    <specification/>
+    <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://localhost:8083/adaptor-rm/services/catalog/singleton" name="GenericRequiredAdaptor" servicedResources="//@specification/@domainSpecifications[name='Requirements%20Management']/@resources[name='Requirement'] //@specification/@domainSpecifications[name='Quality%20Management']/@resources[name='TestScript']"/>
+    <configuration xsi:type="oslc4j_ai:MavenServerConfiguration" rootServerBaseUrl="http://localhost:8080/" applicationContextPath="/adaptorinterface3" servletUrlPattern="/services/*" jettyPort="8080">
+      <generalConfiguration filesBasePath="../adaptor-client/" javaBasePackageName="com.sample.client"/>
+      <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="4.0.0-SNAPSHOT" groupId="com.sample.client" artifactId="client-only-application" version="0.0.1-SNAPSHOT"/>
     </configuration>
   </adaptorInterfaces>
   <specification>
