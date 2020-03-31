@@ -218,8 +218,8 @@ public class ServiceProviderService1
          title = "SelectionDialog1",
          label = "SelectionDialog1",
          uri = "requirements/selector",
-         hintWidth = "0px",
-         hintHeight = "0px",
+         hintWidth = "700px",
+         hintHeight = "700px",
          resourceTypes = {Oslc_rmDomainConstants.REQUIREMENT_TYPE},
          usages = {}
     )

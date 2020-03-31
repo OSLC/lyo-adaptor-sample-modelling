@@ -34,6 +34,7 @@
     <configuration xsi:type="oslc4j_ai:MavenServerConfiguration" rootServerBaseUrl="http://localhost:8083/" applicationContextPath="/adaptor-rm" servletUrlPattern="/services/*" jettyPort="8083">
       <generalConfiguration filesBasePath="../adaptor-rm-webapp/" javaBasePackageName="com.sample.rm"/>
       <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="4.0.0-SNAPSHOT" groupId="com.sample.rm" artifactId="rm-tool" version="0.0.1-SNAPSHOT"/>
+      <authenticationConfiguration applicationName="RM Tool" oauthRealm="RM Tool"/>
     </configuration>
   </adaptorInterfaces>
   <adaptorInterfaces name="ClientOnlyApplication">

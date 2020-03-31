@@ -69,14 +69,10 @@ public class RMToolManager {
 
     private static Requirement produceRandomRequirement(String id) {
         Requirement r = null;
-        try {
-            r = RMToolResourcesFactory.createRequirement(id);
-            r.setIdentifier(id);
-            r.setTitle("aTitle with id:" + id);
-            r.setDescription("A sample Requirement with id:" + id);
-        } catch (URISyntaxException e) {
-            log.error("Failed to create resource", e);
-        }
+        r = RMToolResourcesFactory.createRequirement(id);
+        r.setIdentifier(id);
+        r.setTitle("aTitle with id:" + id);
+        r.setDescription("A sample Requirement with id:" + id);
         return r;
     }
 

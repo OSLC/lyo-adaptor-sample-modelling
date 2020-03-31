@@ -48,6 +48,10 @@
             </releases>
         </repository>
     </repositories>
+    <!-- Start of user code pre_dependencies
+    -->
+    <!-- End of user code
+    -->
     <dependencies>
         <!-- Specific dependencies -->
         <!-- Start of user code dependencies
@@ -106,6 +110,22 @@
             <artifactId>oslc4j-client</artifactId>
             <version>${version.lyo}</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.lyo.server</groupId>
+            <artifactId>oauth-core</artifactId>
+            <version>${version.lyo}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.lyo.server</groupId>
+            <artifactId>oauth-consumer-store</artifactId>
+            <version>${version.lyo}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.lyo.server</groupId>
+            <artifactId>oauth-webapp</artifactId>
+            <version>${version.lyo}</version>
+            <type>war</type>
+        </dependency>
         
         <!-- Swagger dependencies -->
         <dependency>
@@ -114,6 +134,10 @@
             <version>1.5.22</version>
         </dependency>
     </dependencies>
+    <!-- Start of user code post_dependencies
+    -->
+    <!-- End of user code
+    -->
     <build>
         <finalName>rm-tool</finalName>
             <plugins>
@@ -144,4 +168,8 @@
             </plugin>
         </plugins>
     </build>
+    <!-- Start of user code post_build
+    -->
+    <!-- End of user code
+    -->
 </project>
