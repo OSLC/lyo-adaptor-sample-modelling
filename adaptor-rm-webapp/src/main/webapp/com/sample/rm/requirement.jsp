@@ -100,17 +100,6 @@
         <%}%>
         </ul>
     </div>
-		<div class="alert alert-primary" role="alert">
-			<h4 class="alert-heading">Sample data!</h4>
-			<hr>
-			<p>
-				A sample Requirement resource is presented here. Modify the method
-				<code>getRequirement()</code>
-				in the class
-				<code>RMToolManager</code>
-				, to return the expected Requirement resource.
-			</p>
-		</div>
         <h2>Properties</h2>
         <div>
           <% Method method = null; %>

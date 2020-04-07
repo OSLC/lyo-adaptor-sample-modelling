@@ -72,18 +72,6 @@
           <% if (nextPageUri != null) { %><p><a href="<%= nextPageUri %>">Next Page</a></p><% } %>
       </div>
     </div>
-		<div class="alert alert-primary" role="alert">
-			<h4 class="alert-heading">Sample data!</h4>
-			<hr>
-			<p>
-				A sample set of Requirement resources is presented here. Modify the
-				method
-				<code>queryRequirements()</code>
-				in the class
-				<code>RMToolManager</code>
-				, to return the expected set of Requirement resources.
-			</p>
-		</div>
         <% for (Requirement aResource : resources) { %>
         <p><a href="<%= aResource.getAbout() %>" class="oslc-resource-link"><%=aResource.getAbout().toString()%></a><br /></p>
         <% } %>
