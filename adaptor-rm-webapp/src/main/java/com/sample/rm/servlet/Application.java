@@ -60,6 +60,11 @@ import com.sample.rm.resources.DctermsDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.services.ServiceProviderService1;
 
+import java.util.Collections;
+import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
+import org.eclipse.lyo.oslc4j.trs.server.service.TrackedResourceSetService;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import com.sample.rm.PagedTrsSingleton;
 
 // Start of user code imports
 // End of user code
@@ -81,6 +86,15 @@ public class Application extends javax.ws.rs.core.Application {
     // Start of user code class_methods
     // End of user code
 
+    @Override
+    public Set<Object> getSingletons() {
+        return Collections.singleton(new AbstractBinder() {
+            @Override
+            protected void configure() {
+                bindFactory(new PagedTrsSingleton()).to(PagedTrs.class);
+            }
+        });
+    }
 
     static
     {
@@ -97,6 +111,8 @@ public class Application extends javax.ws.rs.core.Application {
         RESOURCE_CLASSES.add(io.swagger.jaxrs.listing.ApiListingResource.class);
         RESOURCE_CLASSES.add(io.swagger.jaxrs.listing.SwaggerSerializers.class);
 
+        // TRS Server resources
+        RESOURCE_CLASSES.add(TrackedResourceSetService.class);
 
         // Start of user code Custom Resource Classes
             // End of user code

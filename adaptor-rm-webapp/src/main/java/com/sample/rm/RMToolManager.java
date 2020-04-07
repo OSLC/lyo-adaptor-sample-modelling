@@ -33,7 +33,8 @@ import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
 import com.sample.rm.resources.Requirement;
-
+import org.eclipse.lyo.oslc4j.trs.server.ResourceEventHandler;
+import com.sample.rm.PagedTrsSingleton;
 
 // Start of user code imports
 import java.util.concurrent.ThreadLocalRandom;
@@ -69,14 +70,10 @@ public class RMToolManager {
 
     private static Requirement produceRandomRequirement(String id) {
         Requirement r = null;
-        try {
-            r = RMToolResourcesFactory.createRequirement(id);
-            r.setIdentifier(id);
-            r.setTitle("aTitle with id:" + id);
-            r.setDescription("A sample Requirement with id:" + id);
-        } catch (URISyntaxException e) {
-            log.error("Failed to create resource", e);
-        }
+        r = RMToolResourcesFactory.createRequirement(id);
+        r.setIdentifier(id);
+        r.setTitle("aTitle with id:" + id);
+        r.setDescription("A sample Requirement with id:" + id);
         return r;
     }
 
@@ -96,14 +93,21 @@ public class RMToolManager {
             URI uri = RMToolResourcesFactory.constructURIForRequirement(id);
             aResource.setAbout(uri);
             requirements.put(id, aResource);
+            PagedTrsSingleton.getResourceEventHandler().onCreated(aResource);
         }
         else {
             URI uri = RMToolResourcesFactory.constructURIForRequirement(aResource.getIdentifier());
             aResource.setAbout(uri);
             requirements.put(aResource.getIdentifier(), aResource);
+            PagedTrsSingleton.getResourceEventHandler().onModified(aResource);
         }
         return aResource;
     }
+    // End of user code
+
+    // Start of user code trsMethods
+    // TODO Use one of these methods to update the PagedTrs service, when appropriate.
+    // PagedTrsSingleton.getResourceEventHandler().[onCreated|onModified|onDeleted]();
     // End of user code
 
     public static void contextInitializeServletListener(final ServletContextEvent servletContextEvent)
