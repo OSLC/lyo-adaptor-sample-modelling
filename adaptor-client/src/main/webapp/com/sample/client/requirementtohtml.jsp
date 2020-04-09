@@ -22,12 +22,12 @@
 <%
 String asLocalResource = request.getParameter("asLocalResource");
 Requirement aResource = null;
-if (request.getAttribute("aRequirement") != null) {
-    aResource = (Requirement) request.getAttribute("aRequirement");
+if (request.getParameter("resourceUri") != null) {
+    aResource = new Requirement (new URI(request.getParameter("resourceUri")));
 }
 else {
-    if (request.getParameter("resourceUri") != null) {
-        aResource = new Requirement (new URI(request.getParameter("resourceUri")));
+    if (request.getAttribute("aRequirement") != null) {
+        aResource = (Requirement) request.getAttribute("aRequirement");
     }
 }
 

@@ -22,12 +22,12 @@
 <%
 String asLocalResource = request.getParameter("asLocalResource");
 TestScript aResource = null;
-if (request.getAttribute("aTestScript") != null) {
-    aResource = (TestScript) request.getAttribute("aTestScript");
+if (request.getParameter("resourceUri") != null) {
+    aResource = new TestScript (new URI(request.getParameter("resourceUri")));
 }
 else {
-    if (request.getParameter("resourceUri") != null) {
-        aResource = new TestScript (new URI(request.getParameter("resourceUri")));
+    if (request.getAttribute("aTestScript") != null) {
+        aResource = (TestScript) request.getAttribute("aTestScript");
     }
 }
 

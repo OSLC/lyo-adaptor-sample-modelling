@@ -151,13 +151,9 @@ public class TestingToolManager {
         TestScript newResource = null;
         
         // Start of user code createTestScript
-		try {
-			int id = randomNumber(1, 500);
-			newResource = TestingToolResourcesFactory.createTestScript(serviceProviderId, Integer.toString(id));
-			newResource.setTitle("A sample TestScriot with id:" + id);
-		} catch (URISyntaxException e) {
-            log.error("Failed to create resource", e);
-		}
+		int id = randomNumber(1, 500);
+		newResource = TestingToolResourcesFactory.createTestScript(serviceProviderId, Integer.toString(id));
+		newResource.setTitle("A sample TestScriot with id:" + id);
         // End of user code
         return newResource;
     }

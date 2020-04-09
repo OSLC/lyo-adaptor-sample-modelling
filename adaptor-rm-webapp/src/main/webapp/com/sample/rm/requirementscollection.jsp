@@ -57,11 +57,15 @@
 </head>
 <body>
 <!-- Fixed navbar -->
-<nav class="navbar sticky-top navbar-light bg-light">
-  <div class="container">
-    <a class="navbar-brand" href="<c:url value="/services/catalog/singleton"/>">RM Tool</a>
-  </div>
-</nav>
+  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+    <div class="container">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="<c:url value="/"/>"><%= application.getServletContextName() %></a></li>
+        <li class="nav-item"><a class="nav-link" href="<c:url value="/services/catalog/singleton"/>">Service Provider Catalog</a></li>
+        <li class="nav-item"><a class="nav-link" href="<c:url value="/swagger-ui/index.jsp"/>">Swagger UI</a></li>
+      </ul>
+    </div>
+  </nav>
   <!-- Begin page content -->
   <div class="container">
     <div class="page-header">

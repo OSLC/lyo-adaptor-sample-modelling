@@ -22,6 +22,8 @@
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <%@ page import="java.net.URI" %>
 <%@ page import="java.net.URLEncoder" %>
 <%@ page import="org.eclipse.lyo.oslc4j.core.model.Service" %>
@@ -68,6 +70,17 @@ Service[] services = (Service[])request.getAttribute("services");
 
 
     </div>
+    <%!
+    String listResourceTypes(URI[] resourceTypes) {
+        List<String> rs = new ArrayList<String>();
+        for(URI resourceType : resourceTypes) {
+            String[] split = resourceType.toString().split("[#/]+");
+            String shortName = (split.length > 1) ? split[split.length -1] : resourceType.toString();
+            rs.add("<a href=\"" + resourceType + "\">" + shortName + "</a>");
+        }
+        return String.join(", ", rs);
+    }         
+    %>
     <%for (int serviceIndex = 0; serviceIndex < services.length; serviceIndex++) {%>
     <% 
     URI domain = services[serviceIndex].getDomain();
@@ -84,13 +97,13 @@ Service[] services = (Service[])request.getAttribute("services");
         for (int selectionDialogIndex = 0; selectionDialogIndex < selectionDialogs.length; selectionDialogIndex++) {
             String selectionDialog = selectionDialogs[selectionDialogIndex].getDialog().toString();
     %>
-    <p><%=selectionDialog%> <a href="<%=request.getContextPath()%>/com/sample/testing/selectiondialogsampleclient.jsp?selectionUri=<%= URLEncoder.encode(selectionDialog.toString(), "UTF-8") %>">Sample Selector Dialog Client</a></p>
+    <p><a href="<%=request.getContextPath()%>/com/sample/testing/selectiondialogsampleclient.jsp?selectionUri=<%= URLEncoder.encode(selectionDialog.toString(), "UTF-8") %>">Sample Selector Dialog Client</a> For {<%= listResourceTypes(selectionDialogs[selectionDialogIndex].getResourceTypes()) %>}</p>
     <%}%>
     <%
         for (int creationDialogIndex = 0; creationDialogIndex < creationDialogs.length; creationDialogIndex++) {
             String creationDialog = creationDialogs[creationDialogIndex].getDialog().toString();
     %>
-    <p><%=creationDialog%> <a href="<%=request.getContextPath()%>/com/sample/testing/creationdialogsampleclient.jsp?creationUri=<%= URLEncoder.encode(creationDialog.toString(), "UTF-8") %>">Sample Creation Dialog Client</a></p>
+    <p><a href="<%=request.getContextPath()%>/com/sample/testing/creationdialogsampleclient.jsp?creationUri=<%= URLEncoder.encode(creationDialog.toString(), "UTF-8") %>">Sample Creation Dialog Client</a> For {<%= listResourceTypes(creationDialogs[creationDialogIndex].getResourceTypes()) %>}</p>
     <%}%>
     </div>
 
@@ -103,7 +116,7 @@ Service[] services = (Service[])request.getAttribute("services");
         for (int selectionDialogIndex = 0; selectionDialogIndex < selectionDialogs.length; selectionDialogIndex++) {
             String selectionDialog = selectionDialogs[selectionDialogIndex].getDialog().toString();
     %>
-    <p><a href="<%= selectionDialog %>"><%= selectionDialog %></a></p>
+    <p><a href="<%= selectionDialog %>">Selection Dialog</a> For {<%= listResourceTypes(selectionDialogs[selectionDialogIndex].getResourceTypes()) %>}</p>
     <%}%>
     </div>
     <%}%>
@@ -114,7 +127,7 @@ Service[] services = (Service[])request.getAttribute("services");
         for (int creationDialogIndex = 0; creationDialogIndex < creationDialogs.length; creationDialogIndex++) {
             String creationDialog = creationDialogs[creationDialogIndex].getDialog().toString();
     %>
-    <p><a href="<%= creationDialog %>"><%= creationDialog %></a></p>
+    <p><a href="<%= creationDialog %>">Creation Dialog</a> For {<%= listResourceTypes(creationDialogs[creationDialogIndex].getResourceTypes()) %>}</p>
     <%}%>
     </div>
     <%}%>
@@ -125,7 +138,7 @@ Service[] services = (Service[])request.getAttribute("services");
         for (int creationFactoryIndex = 0; creationFactoryIndex < creationFactories.length; creationFactoryIndex++) {
             String creationFactory = creationFactories[creationFactoryIndex].getCreation().toString();
     %>
-    <p><a href="<%= creationFactory %>"><%= creationFactory %></a></p>
+    <p><a href="<%= creationFactory %>">Creation Factory</a> For {<%= listResourceTypes(creationFactories[creationFactoryIndex].getResourceTypes()) %>}</p>
     <%}%>
     </div>
     <%}%>
@@ -137,7 +150,7 @@ Service[] services = (Service[])request.getAttribute("services");
             QueryCapability qc = queryCapabilities[queryCapabilityIndex];
             String queryCapability = qc.getQueryBase().toString();
     %>
-    <p><a href="<%= queryCapability %>"><%= qc.getTitle() %> (<code><%= qc.getQueryBase() %></code>)</a></p>
+    <p><a href="<%= queryCapability %>">Query Capability</a> For {<%= listResourceTypes(queryCapabilities[queryCapabilityIndex].getResourceTypes()) %>}</p>
     <%}%>
     </div>
     <%}%>
