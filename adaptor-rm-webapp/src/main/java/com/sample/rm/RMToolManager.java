@@ -135,9 +135,9 @@ public class RMToolManager {
         for (Iterator iterator = requirements.iterator(); iterator.hasNext();) {
             uris.add(((Requirement) iterator.next()).getAbout());
         }
-        PagedTrs temp = new PagedTrsFactory().getInmemPagedTrs(50, 50, uris);
+        InmemPagedTrs temp = new PagedTrsFactory().getInmemPagedTrs(50, 50, uris);
         pagedTrs = temp;
-        trsEventHandler = (TrsEventHandler) temp;
+        trsEventHandler = temp;
         // End of user code
     }
 
