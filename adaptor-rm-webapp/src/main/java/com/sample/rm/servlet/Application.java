@@ -63,8 +63,9 @@ import com.sample.rm.services.ServiceProviderService1;
 import java.util.Collections;
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
 import org.eclipse.lyo.oslc4j.trs.server.service.TrackedResourceSetService;
+import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
-import com.sample.rm.PagedTrsSingleton;
+import com.sample.rm.RMToolManager;
 
 // Start of user code imports
 // End of user code
@@ -91,7 +92,17 @@ public class Application extends javax.ws.rs.core.Application {
         return Collections.singleton(new AbstractBinder() {
             @Override
             protected void configure() {
-                bindFactory(new PagedTrsSingleton()).to(PagedTrs.class);
+                bindFactory(new Factory<PagedTrs>() {
+							@Override
+							public PagedTrs provide() {
+								return RMToolManager.getPagedTrs();
+							}
+
+							@Override
+							public void dispose(PagedTrs instance) {
+							}
+                		}
+                ).to(PagedTrs.class);
             }
         });
     }
