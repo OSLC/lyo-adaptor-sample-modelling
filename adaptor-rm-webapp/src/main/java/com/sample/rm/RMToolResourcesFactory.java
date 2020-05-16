@@ -44,6 +44,7 @@ public class RMToolResourcesFactory {
     // End of user code
 
     //methods for Requirement resource
+    
     public static Requirement createRequirement(final String requirementId)
     {
         return new Requirement(constructURIForRequirement(requirementId));
@@ -69,7 +70,6 @@ public class RMToolResourcesFactory {
     {
         return new Link(constructURIForRequirement(requirementId));
     }
-    
     
 
 }

@@ -176,6 +176,8 @@ public class RMToolManager {
         return newResource;
     }
 
+
+
     public static Requirement getRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
         Requirement aResource = null;
@@ -191,6 +193,7 @@ public class RMToolManager {
         Boolean deleted = false;
         // Start of user code deleteRequirement
         // TODO Implement code to delete a resource
+        // If you encounter problems, consider throwing the runtime exception WebApplicationException(message, cause, final httpStatus)
         // End of user code
         return deleted;
     }
@@ -202,8 +205,6 @@ public class RMToolManager {
         // End of user code
         return updatedResource;
     }
-
-
 
     public static String getETagFromRequirement(final Requirement aResource)
     {

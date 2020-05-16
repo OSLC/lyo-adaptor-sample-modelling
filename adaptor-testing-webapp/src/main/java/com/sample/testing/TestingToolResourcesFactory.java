@@ -45,33 +45,32 @@ public class TestingToolResourcesFactory {
     // End of user code
 
     //methods for TestScript resource
-    public static TestScript createTestScript(final String serviceProviderId, final String testScriptId)
+    
+    public static TestScript createTestScript(final String testScriptId)
     {
-        return new TestScript(constructURIForTestScript(serviceProviderId, testScriptId));
+        return new TestScript(constructURIForTestScript(testScriptId));
     }
     
-    public static URI constructURIForTestScript(final String serviceProviderId, final String testScriptId)
+    public static URI constructURIForTestScript(final String testScriptId)
     {
         String basePath = OSLC4JUtils.getServletURI();
         Map<String, Object> pathParameters = new HashMap<String, Object>();
-        pathParameters.put("serviceProviderId", serviceProviderId);
         pathParameters.put("testScriptId", testScriptId);
-        String instanceURI = "serviceProviders/{serviceProviderId}/testScripts/{testScriptId}";
+        String instanceURI = "testScripts/{testScriptId}";
     
         final UriBuilder builder = UriBuilder.fromUri(basePath);
         return builder.path(instanceURI).buildFromMap(pathParameters);
     }
     
-    public static Link constructLinkForTestScript(final String serviceProviderId, final String testScriptId , final String label)
+    public static Link constructLinkForTestScript(final String testScriptId , final String label)
     {
-        return new Link(constructURIForTestScript(serviceProviderId, testScriptId), label);
+        return new Link(constructURIForTestScript(testScriptId), label);
     }
     
-    public static Link constructLinkForTestScript(final String serviceProviderId, final String testScriptId)
+    public static Link constructLinkForTestScript(final String testScriptId)
     {
-        return new Link(constructURIForTestScript(serviceProviderId, testScriptId));
+        return new Link(constructURIForTestScript(testScriptId));
     }
-    
     
 
 }

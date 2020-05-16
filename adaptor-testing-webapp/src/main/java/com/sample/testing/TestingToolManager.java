@@ -74,10 +74,10 @@ public class TestingToolManager {
 		}
 	}
 
-	private static TestScript createRandomTestScript(String serviceProviderId, String id) {
+	private static TestScript createRandomTestScript(String id) {
 		TestScript r = null;
 		try {
-			r = TestingToolResourcesFactory.createTestScript(serviceProviderId, id);
+			r = TestingToolResourcesFactory.createTestScript(id);
 			r.setTitle("A sample TestScript with id:" + id);
 			r.setDescription("A sample TestScript with id:" + id);
 			int size = randomNumber(1, 3);
@@ -95,7 +95,7 @@ public class TestingToolManager {
 		int size = randomNumber(min, max);
 		List<TestScript> resources = new ArrayList<TestScript>(size);
 		for (int i = 0; i < size; i++) {
-	    	resources.add(createRandomTestScript(serviceProviderId, Integer.toString(randomNumber(minId, maxId))));
+	    	resources.add(createRandomTestScript(Integer.toString(randomNumber(minId, maxId))));
 		}
         return resources;
     }
@@ -152,26 +152,43 @@ public class TestingToolManager {
         
         // Start of user code createTestScript
 		int id = randomNumber(1, 500);
-		newResource = TestingToolResourcesFactory.createTestScript(serviceProviderId, Integer.toString(id));
+		newResource = TestingToolResourcesFactory.createTestScript(Integer.toString(id));
 		newResource.setTitle("A sample TestScriot with id:" + id);
         // End of user code
         return newResource;
     }
 
 
-    public static TestScript getTestScript(HttpServletRequest httpServletRequest, final String serviceProviderId, final String testScriptId)
+
+
+    public static TestScript getTestScript(HttpServletRequest httpServletRequest, final String testScriptId)
     {
         TestScript aResource = null;
         
         // Start of user code getTestScript
-        aResource = createRandomTestScript(serviceProviderId, testScriptId);
+        aResource = createRandomTestScript(testScriptId);
         // End of user code
         return aResource;
     }
 
+    public static Boolean deleteTestScript(HttpServletRequest httpServletRequest, final String testScriptId)
+    {
+        Boolean deleted = false;
+        // Start of user code deleteTestScript
+        // TODO Implement code to delete a resource
+        // If you encounter problems, consider throwing the runtime exception WebApplicationException(message, cause, final httpStatus)
+        // End of user code
+        return deleted;
+    }
 
-
-
+    public static TestScript updateTestScript(HttpServletRequest httpServletRequest, final TestScript aResource, final String testScriptId) {
+        TestScript updatedResource = null;
+        // Start of user code updateTestScript
+        // TODO Implement code to update and return a resource
+        // If you encounter problems, consider throwing the runtime exception WebApplicationException(message, cause, final httpStatus)
+        // End of user code
+        return updatedResource;
+    }
 
     public static String getETagFromTestScript(final TestScript aResource)
     {
