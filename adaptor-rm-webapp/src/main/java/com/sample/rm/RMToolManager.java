@@ -33,6 +33,10 @@ import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
 import com.sample.rm.resources.Requirement;
+import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
+import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
+import org.eclipse.lyo.oslc4j.trs.server.PagedTrsFactory;
+import org.eclipse.lyo.oslc4j.trs.server.TrsEventHandler;
 
 
 // Start of user code imports
@@ -44,6 +48,7 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Iterator;
 // End of user code
 
 // Start of user code pre_class_code
@@ -51,12 +56,26 @@ import java.util.HashMap;
 
 public class RMToolManager {
 
+    private static PagedTrs pagedTrs;
+    private static TrsEventHandler trsEventHandler;
     // Start of user code class_attributes
 	private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
     private static Map<String, Requirement> requirements = new HashMap<String, Requirement>(1000);
     private static int nextRequirementId;
     // End of user code
     
+    public static PagedTrs getPagedTrs() {
+        return pagedTrs;
+    }
+
+    public static TrsEventHandler getTrsEventHandler() {
+        return trsEventHandler;
+    }
+
+    // Start of user code trsMethods
+    // TODO Use one of these methods to update the PagedTrs service, when appropriate.
+    // trsEventHandler.[onCreated|onModified|onDeleted]();
+    // End of user code
     
     // Start of user code class_methods
 	private static int randomNumber(int origin, int bound) {
@@ -92,11 +111,13 @@ public class RMToolManager {
             URI uri = RMToolResourcesFactory.constructURIForRequirement(id);
             aResource.setAbout(uri);
             requirements.put(id, aResource);
+            trsEventHandler.onCreated(aResource);
         }
         else {
             URI uri = RMToolResourcesFactory.constructURIForRequirement(aResource.getIdentifier());
             aResource.setAbout(uri);
             requirements.put(aResource.getIdentifier(), aResource);
+            trsEventHandler.onModified(aResource);
         }
         return aResource;
     }
@@ -107,6 +128,20 @@ public class RMToolManager {
         
         // Start of user code contextInitializeServletListener
         initializeRequirements(37);
+        // End of user code
+        // Start of user code TRSInitialise
+        // End of user code
+        ArrayList<URI> uris = new ArrayList<URI>();
+        // Start of user code TRSInitialBase
+        ArrayList<Requirement> requirements = getRequirements();
+        for (Iterator iterator = requirements.iterator(); iterator.hasNext();) {
+            uris.add(((Requirement) iterator.next()).getAbout());
+        }
+        // End of user code
+        InmemPagedTrs temp = new PagedTrsFactory().getInmemPagedTrs(50, 50, uris);
+        pagedTrs = temp;
+        trsEventHandler = temp;
+        // Start of user code TRSFinalize
         // End of user code
     }
 
