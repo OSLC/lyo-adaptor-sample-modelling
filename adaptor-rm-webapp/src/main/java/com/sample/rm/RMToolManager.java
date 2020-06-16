@@ -27,12 +27,21 @@ package com.sample.rm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContextEvent;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
 import com.sample.rm.resources.Requirement;
+import org.eclipse.lyo.store.ModelUnmarshallingException;
+import org.eclipse.lyo.store.Store;
+import org.eclipse.lyo.store.StoreAccessException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response.Status;
+
+
 import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrsFactory;
@@ -40,14 +49,9 @@ import org.eclipse.lyo.oslc4j.trs.server.TrsEventHandler;
 
 
 // Start of user code imports
-import java.util.concurrent.ThreadLocalRandom;
 import java.net.URI;
-import java.net.URISyntaxException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.NoSuchElementException;
 import java.util.Iterator;
 // End of user code
 
@@ -56,11 +60,13 @@ import java.util.Iterator;
 
 public class RMToolManager {
 
+    private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
+
+    private static StorePool storePool;
+    
     private static PagedTrs pagedTrs;
     private static TrsEventHandler trsEventHandler;
     // Start of user code class_attributes
-	private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
-    private static Map<String, Requirement> requirements = new HashMap<String, Requirement>(1000);
     private static int nextRequirementId;
     // End of user code
     
@@ -78,48 +84,32 @@ public class RMToolManager {
     // End of user code
     
     // Start of user code class_methods
-	private static int randomNumber(int origin, int bound) {
-		return ThreadLocalRandom.current().nextInt(origin, bound);
-	}
-
-    public static ArrayList<Requirement> getRequirements() {
-        return new ArrayList<Requirement>(requirements.values());
-    }
-
-    private static Requirement produceRandomRequirement(String id) {
+    private static Requirement produceRandomRequirement() {
         Requirement r = null;
-        r = RMToolResourcesFactory.createRequirement(id);
+        r = RMToolResourcesFactory.createRequirement(produceNextRequirementId());
+        String id = Integer.toString(nextRequirementId);
         r.setIdentifier(id);
         r.setTitle("aTitle with id:" + id);
         r.setDescription("A sample Requirement with id:" + id);
         return r;
     }
 
-    private static void initializeRequirements(int size) {
-        for (int i = 0; i < size; i++) {
-            nextRequirementId++;
-            String id = Integer.toString(nextRequirementId);
-            Requirement r = produceRandomRequirement(id);
-            requirements.put(id, r);
-        }
+    private static String produceNextRequirementId() {
+        nextRequirementId++;
+        return Integer.toString(nextRequirementId);
     }
 
-    public static Requirement createOrUpdateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource) {
-        if (!requirements.containsKey(aResource.getIdentifier())) {
-            nextRequirementId++;
-            String id = Integer.toString(nextRequirementId);
-            URI uri = RMToolResourcesFactory.constructURIForRequirement(id);
-            aResource.setAbout(uri);
-            requirements.put(id, aResource);
-            trsEventHandler.onCreated(aResource);
+    private static void initializeRequirements(int size) {
+        Store store = storePool.getStore();
+        for (int i = 0; i < size; i++) {
+            Requirement r = produceRandomRequirement();
+            try {
+                store.appendResource(storePool.getDefaultNamedGraphUri(), r);
+            } catch (StoreAccessException e) {
+                log.error("Failed to create resource, with uri '" + r.getAbout() + "'", e);
+            }
         }
-        else {
-            URI uri = RMToolResourcesFactory.constructURIForRequirement(aResource.getIdentifier());
-            aResource.setAbout(uri);
-            requirements.put(aResource.getIdentifier(), aResource);
-            trsEventHandler.onModified(aResource);
-        }
-        return aResource;
+        storePool.releaseStore(store);
     }
     // End of user code
 
@@ -127,15 +117,34 @@ public class RMToolManager {
     {
         
         // Start of user code contextInitializeServletListener
+        // End of user code
+        // Start of user code StoreInitialise
+        // End of user code
+        try {
+            storePool = StorePool.create("/store.properties");
+        } catch (StoreAccessException e) {
+            log.error("Failed to initialise store.", e);
+            throw new RuntimeException(e);
+        }
+        // Start of user code StoreFinalize
         initializeRequirements(37);
         // End of user code
+        
         // Start of user code TRSInitialise
         // End of user code
         ArrayList<URI> uris = new ArrayList<URI>();
         // Start of user code TRSInitialBase
-        ArrayList<Requirement> requirements = getRequirements();
-        for (Iterator iterator = requirements.iterator(); iterator.hasNext();) {
-            uris.add(((Requirement) iterator.next()).getAbout());
+        
+        Store store = storePool.getStore();
+        try {
+            ArrayList<Requirement> requirements = new ArrayList<Requirement>(store.getResources(storePool.getDefaultNamedGraphUri(), Requirement.class));
+            for (Iterator iterator = requirements.iterator(); iterator.hasNext();) {
+                uris.add(((Requirement) iterator.next()).getAbout());
+            }
+        } catch (StoreAccessException | ModelUnmarshallingException e) {
+            log.error("Failed to query all resources", e);
+        } finally {
+            storePool.releaseStore(store);
         }
         // End of user code
         InmemPagedTrs temp = new PagedTrsFactory().getInmemPagedTrs(50, 50, uris);
@@ -177,8 +186,21 @@ public class RMToolManager {
     {
         List<Requirement> resources = null;
         
+        // Start of user code queryRequirements_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        try {
+            resources = new ArrayList<Requirement>(store.getResources(storePool.getDefaultNamedGraphUri(), Requirement.class, "", "", "", limit+1, page*limit));
+        } catch (StoreAccessException | ModelUnmarshallingException e) {
+            log.error("Failed to query resources, with where-string '" + where + "'", e);
+            throw new WebApplicationException("Failed to query resources, with where-string '" + where + "'", e, Status.INTERNAL_SERVER_ERROR);
+        } finally {
+            storePool.releaseStore(store);
+        }
+        // Start of user code queryRequirements_storeFinalize
+        // End of user code
+        
         // Start of user code queryRequirements
-        resources = new ArrayList<>(requirements.values());
         // End of user code
         return resources;
     }
@@ -186,8 +208,21 @@ public class RMToolManager {
     {
         List<Requirement> resources = null;
         
+        // Start of user code RequirementSelector_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        try {
+            resources = new ArrayList<Requirement>(store.getResources(storePool.getDefaultNamedGraphUri(), Requirement.class, "", "", terms, 20, -1));
+        } catch (StoreAccessException | ModelUnmarshallingException e) {
+            log.error("Failed to search resources, with search-term '" + terms + "'", e);
+            throw new WebApplicationException("Failed to search resources, with search-term '" + terms + "'", e, Status.INTERNAL_SERVER_ERROR);
+        } finally {
+            storePool.releaseStore(store);
+        }
+        // Start of user code RequirementSelector_storeFinalize
+        // End of user code
+        
         // Start of user code RequirementSelector
-        resources = new ArrayList<>(requirements.values());
         // End of user code
         return resources;
     }
@@ -195,8 +230,34 @@ public class RMToolManager {
     {
         Requirement newResource = null;
         
+        // Start of user code createRequirement_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        try {
+            URI uri = null;
+            // Start of user code createRequirement_storeSetUri
+            uri = RMToolResourcesFactory.constructURIForRequirement(produceNextRequirementId());
+            // End of user code
+            if (store.resourceExists(storePool.getDefaultNamedGraphUri(), uri)) {
+                log.error("Cannot create a resource that already exists: '" + uri + "'");
+                throw new WebApplicationException("Cannot create a resource that already exists: '" + uri + "'", Status.SEE_OTHER);
+            }
+            aResource.setAbout(uri);
+            try {
+                store.appendResource(storePool.getDefaultNamedGraphUri(), aResource);
+            } catch (StoreAccessException e) {
+                log.error("Failed to create resource: '" + aResource.getAbout() + "'", e);            
+                throw new WebApplicationException("Failed to create resource: '" + aResource.getAbout() + "'", e, Status.INTERNAL_SERVER_ERROR);
+            }
+        } finally {
+            storePool.releaseStore(store);
+        }
+        newResource = aResource;
+        // Start of user code createRequirement_storeFinalize
+        // End of user code
+        
         // Start of user code createRequirement
-        newResource = createOrUpdateRequirement(httpServletRequest, aResource);
+        trsEventHandler.onCreated(aResource);
         // End of user code
         return newResource;
     }
@@ -205,8 +266,34 @@ public class RMToolManager {
     {
         Requirement newResource = null;
         
+        // Start of user code createRequirementFromDialog_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        try {
+            URI uri = null;
+            // Start of user code createRequirementFromDialog_storeSetUri
+            uri = RMToolResourcesFactory.constructURIForRequirement(produceNextRequirementId());
+            // End of user code
+            if (store.resourceExists(storePool.getDefaultNamedGraphUri(), uri)) {
+                log.error("Cannot create a resource that already exists: '" + uri + "'");
+                throw new WebApplicationException("Cannot create a resource that already exists: '" + uri + "'", Status.SEE_OTHER);
+            }
+            aResource.setAbout(uri);
+            try {
+                store.appendResource(storePool.getDefaultNamedGraphUri(), aResource);
+            } catch (StoreAccessException e) {
+                log.error("Failed to create resource: '" + aResource.getAbout() + "'", e);            
+                throw new WebApplicationException("Failed to create resource: '" + aResource.getAbout() + "'", e, Status.INTERNAL_SERVER_ERROR);
+            }
+        } finally {
+            storePool.releaseStore(store);
+        }
+        newResource = aResource;
+        // Start of user code createRequirementFromDialog_storeFinalize
+        // End of user code
+        
         // Start of user code createRequirementFromDialog
-        newResource = createOrUpdateRequirement(httpServletRequest, aResource);
+        trsEventHandler.onCreated(aResource);
         // End of user code
         return newResource;
     }
@@ -217,26 +304,78 @@ public class RMToolManager {
     {
         Requirement aResource = null;
         
-        // Start of user code getRequirement
-        aResource = requirements.get(requirementId);
+        // Start of user code getRequirement_storeInit
         // End of user code
+        Store store = storePool.getStore();
+        URI uri = RMToolResourcesFactory.constructURIForRequirement(requirementId);
+        try {
+            aResource = store.getResource(storePool.getDefaultNamedGraphUri(), uri, Requirement.class);
+        } catch (NoSuchElementException e) {
+            log.error("Resource: '" + uri + "' not found");
+            throw new WebApplicationException("Failed to get resource: '" + uri + "'", e, Status.NOT_FOUND);
+        } catch (StoreAccessException | ModelUnmarshallingException  e) {
+            log.error("Failed to get resource: '" + uri + "'", e);
+            throw new WebApplicationException("Failed to get resource: '" + uri + "'", e, Status.INTERNAL_SERVER_ERROR);
+        } finally {
+            storePool.releaseStore(store);
+        }
+        // Start of user code getRequirement_storeFinalize
+        // End of user code
+        
+        // Start of user code getRequirement
+       // End of user code
         return aResource;
     }
 
     public static Boolean deleteRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
         Boolean deleted = false;
+        // Start of user code deleteRequirement_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        URI uri = RMToolResourcesFactory.constructURIForRequirement(requirementId);
+        if (!store.resourceExists(storePool.getDefaultNamedGraphUri(), uri)) {
+            log.error("Cannot delete a resource that does not already exists: '" + uri + "'");
+            throw new WebApplicationException("Cannot delete a resource that does not already exists: '" + uri + "'", Status.NOT_FOUND);
+        }
+        store.deleteResources(storePool.getDefaultNamedGraphUri(), uri);
+        storePool.releaseStore(store);
+        deleted = true;
+        // Start of user code deleteRequirement_storeFinalize
+        // End of user code
+        
         // Start of user code deleteRequirement
-        // TODO Implement code to delete a resource
-        // If you encounter problems, consider throwing the runtime exception WebApplicationException(message, cause, final httpStatus)
+        trsEventHandler.onDeleted(uri);
         // End of user code
         return deleted;
     }
 
     public static Requirement updateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource, final String requirementId) {
         Requirement updatedResource = null;
+        // Start of user code updateRequirement_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        URI uri = RMToolResourcesFactory.constructURIForRequirement(requirementId);
+        if (!store.resourceExists(storePool.getDefaultNamedGraphUri(), uri)) {
+            log.error("Cannot update a resource that does not already exists: '" + uri + "'");
+            throw new WebApplicationException("Cannot update a resource that does not already exists: '" + uri + "'", Status.NOT_FOUND);
+        }
+        aResource.setAbout(uri);
+        try {
+            store.deleteResources(storePool.getDefaultNamedGraphUri(), uri);
+            store.appendResource(storePool.getDefaultNamedGraphUri(), aResource);
+        } catch (StoreAccessException e) {
+            log.error("Failed to update resource: '" + uri + "'", e);
+            throw new WebApplicationException("Failed to update resource: '" + uri + "'", e);
+        } finally {
+            storePool.releaseStore(store);
+        }
+        updatedResource = aResource;
+        // Start of user code updateRequirement_storeFinalize
+        // End of user code
+        
         // Start of user code updateRequirement
-        updatedResource = createOrUpdateRequirement(httpServletRequest, aResource);
+        trsEventHandler.onModified(aResource);
         // End of user code
         return updatedResource;
     }
@@ -245,7 +384,7 @@ public class RMToolManager {
     {
         String eTag = null;
         // Start of user code getETagFromRequirement
-        // TODO Implement code to return an ETag for a particular resource
+        eTag = aResource.getIdentifier();
         // End of user code
         return eTag;
     }

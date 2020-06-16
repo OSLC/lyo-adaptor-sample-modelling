@@ -58,6 +58,11 @@
         <!-- Specific dependencies -->
         <!-- Start of user code dependencies
         -->
+        <dependency>
+            <groupId>org.eclipse.lyo.store</groupId>
+            <artifactId>store-core</artifactId>
+            <version>${version.lyo}</version>
+        </dependency>
         <!-- TODO: Add additional dependencies here to avoid them be overrriden upon future re-generation -->
         <!-- End of user code
         -->
@@ -110,6 +115,11 @@
         <dependency>
             <groupId>org.eclipse.lyo.trs</groupId>
             <artifactId>trs-server</artifactId>
+            <version>${version.lyo}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.lyo.store</groupId>
+            <artifactId>store-core</artifactId>
             <version>${version.lyo}</version>
         </dependency>
         <dependency>
