@@ -25,7 +25,7 @@
       <generalConfiguration filesBasePath="../adaptor-testing-webapp/" javaBasePackageName="com.sample.testing"/>
       <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="4.0.0-SNAPSHOT" groupId="com.sample.testing" artifactId="testing-tool" version="0.0.1-SNAPSHOT"/>
     </configuration>
-    <stores defaultNamedGraph="urn:x-arq:DefaultGraph" queryEndpoint="http://localhost:3030/dataset/sparql" updateEndpoint="http://localhost:3030/dataset/update"/>
+    <stores defaultNamedGraph="urn:x-arq:DefaultGraph"/>
   </adaptorInterfaces>
   <adaptorInterfaces name="RM Tool" backendCodeTemplate_getServiceProviders="" backendCodeTemplate_getResource="">
     <serviceProviderCatalog title="Service Provider Catalog">
@@ -49,7 +49,7 @@
       <generalConfiguration filesBasePath="../adaptor-rm-webapp/" javaBasePackageName="com.sample.rm"/>
       <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="4.0.0-SNAPSHOT" groupId="com.sample.rm" artifactId="rm-tool" version="0.0.1-SNAPSHOT"/>
     </configuration>
-    <stores defaultNamedGraph="urn:x-arq:DefaultGraph" queryEndpoint="http://localhost:3030/rm_test/sparql" updateEndpoint="http://localhost:3030/rm_test/update"/>
+    <stores xsi:type="oslc4j_ai:StoreWithAuthentication" initialPoolSize="500" defaultNamedGraph="urn:x-arq:DefaultGraph" sparqlQueryEndpoint="http://localhost:3030/rm_test/sparql" sparqlUpdateEndpoint="http://localhost:3030/rm_test/update" username="user" password="pass"/>
   </adaptorInterfaces>
   <adaptorInterfaces name="ClientOnlyApplication">
     <specification/>

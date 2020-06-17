@@ -35,8 +35,14 @@ import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
 import com.sample.rm.resources.Requirement;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import org.eclipse.lyo.store.ModelUnmarshallingException;
 import org.eclipse.lyo.store.Store;
+import org.eclipse.lyo.store.StorePool;
 import org.eclipse.lyo.store.StoreAccessException;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
@@ -49,7 +55,6 @@ import org.eclipse.lyo.oslc4j.trs.server.TrsEventHandler;
 
 
 // Start of user code imports
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Iterator;
@@ -120,12 +125,32 @@ public class RMToolManager {
         // End of user code
         // Start of user code StoreInitialise
         // End of user code
+        Properties lyoStoreProperties = new Properties();
+        String lyoStorePropertiesFile = StorePool.class.getResource("/store.properties").getFile();
         try {
-            storePool = StorePool.create("/store.properties");
-        } catch (StoreAccessException e) {
-            log.error("Failed to initialise store.", e);
+            lyoStoreProperties.load(new FileInputStream(lyoStorePropertiesFile));
+        } catch (IOException e) {
+            log.error("Failed to initialize Store. properties file for Store configuration could not be loaded.", e);
             throw new RuntimeException(e);
         }
+        
+        int initialPoolSize = Integer.parseInt(lyoStoreProperties.getProperty("initialPoolSize"));
+        URI defaultNamedGraph;
+        URI sparqlQueryEndpoint;
+        URI sparqlUpdateEndpoint;
+        try {
+            defaultNamedGraph = new URI(lyoStoreProperties.getProperty("defaultNamedGraph"));
+            sparqlQueryEndpoint = new URI(lyoStoreProperties.getProperty("sparqlQueryEndpoint"));
+            sparqlUpdateEndpoint = new URI(lyoStoreProperties.getProperty("sparqlUpdateEndpoint"));
+        } catch (URISyntaxException e) {
+            log.error("Failed to initialize Store. One of the configuration property ('defaultNamedGraph' or 'sparqlQueryEndpoint' or 'sparqlUpdateEndpoint') is not a valid URI.", e);
+            throw new RuntimeException(e);
+        }
+        String userName = null;
+        String password = null;
+        userName = lyoStoreProperties.getProperty("username");
+        password = lyoStoreProperties.getProperty("password");
+        storePool = new StorePool(initialPoolSize, defaultNamedGraph, sparqlQueryEndpoint, sparqlUpdateEndpoint, userName, password);
         // Start of user code StoreFinalize
         initializeRequirements(37);
         // End of user code
@@ -362,8 +387,7 @@ public class RMToolManager {
         }
         aResource.setAbout(uri);
         try {
-            store.deleteResources(storePool.getDefaultNamedGraphUri(), uri);
-            store.appendResource(storePool.getDefaultNamedGraphUri(), aResource);
+            store.updateResources(storePool.getDefaultNamedGraphUri(), aResource);
         } catch (StoreAccessException e) {
             log.error("Failed to update resource: '" + uri + "'", e);
             throw new WebApplicationException("Failed to update resource: '" + uri + "'", e);
