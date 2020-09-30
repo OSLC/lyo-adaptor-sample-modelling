@@ -24,6 +24,7 @@ package com.sample.rm.services;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ import javax.ws.rs.core.UriBuilder;
 import org.apache.wink.json4j.JSONException;
 import org.apache.wink.json4j.JSONObject;
 import org.eclipse.lyo.oslc4j.provider.json4j.JsonHelper;
+import org.eclipse.lyo.oslc_ui.PreviewFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
@@ -250,6 +252,15 @@ public class RequService
         if (aRequirement != null) {
             httpServletRequest.setAttribute("aRequirement", aRequirement);
             // Start of user code getRequirementAsHtmlSmallPreview_setAttributes
+            try {
+                ArrayList<String> getterMethodNames = new ArrayList<String>(Arrays.asList("getIdentifier", "getTitle", "getDescription"));
+                String oslcPreviewDataSetAsString = PreviewFactory.getPreviewAsJsonString(aRequirement, getterMethodNames, false);
+                httpServletRequest.setAttribute("title", aRequirement.toString());
+                httpServletRequest.setAttribute("oslcPreviewDataSet", oslcPreviewDataSetAsString);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                    | NoSuchMethodException | SecurityException e) {
+                log.error("Could not handle smallPreview", e);
+            }
             // End of user code
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementsmallpreview.jsp");

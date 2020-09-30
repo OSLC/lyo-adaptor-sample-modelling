@@ -32,38 +32,21 @@
 
 <%
   String selectionUri = (String) request.getAttribute("selectionUri");
-
+  String resourceTypeLabel = (String) request.getAttribute("resourceTypeLabel");
 %>
 
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <title>SelectionDialog1</title>
-    <script src="<c:url value="/static/js/delegated-ui.js"/>"></script>
-  </head>
-  <body style="padding: 10px;">
-    <div id="selector-body">
-      <p id="searchMessage">Find a specific resource through a free-text search.</p>
-
-      <p id="loadingMessage" style="display: none;">Pondering your search. Please stand by ...</p>
-
-      <div>
-        <input type="search" style="width: 335px" id="searchTerms" placeholder="Enter search terms" autofocus>
-        <button type="button" onclick="search( '<%= selectionUri %>' )">Search</button>
-      </div>
-
-      <div style="margin-top: 5px;">
-        <select id="results" size="10" style="width: 400px" multiple="multiple"></select>
-      </div>
-
-      <div style="width: 400px; margin-top: 5px;">
-        <button style="float: right;" type="button"
-          onclick="javascript: cancel()">Cancel</button>
-        <button style="float: right;" type="button"
-          onclick="javascript: select();">OK</button>
-      </div>
-      <div style="clear: both;"></div>
-    </div>
-
-  </body>
+<html> 
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"> 
+        <link rel="stylesheet" href="<c:url value="/static/dist/oslc-ui/styles.css"/>"> 
+    </head> 
+    <body> 
+        <oslc-selector selection-uri="<%=selectionUri%>" fields='["oslc:label"]' no-data-text="No <%=resourceTypeLabel%> found" search-placeholder-text="Search for resources of type: <%=resourceTypeLabel%>"></oslc-selector>
+        <script src="<c:url value="/static/dist/oslc-ui/runtime-es2015.js"/>" type="module"></script> 
+        <script src="<c:url value="/static/dist/oslc-ui/runtime-es5.js"/>" nomodule defer></script> 
+        <script src="<c:url value="/static/dist/oslc-ui/polyfills-es5.js"/>" nomodule defer></script> 
+        <script src="<c:url value="/static/dist/oslc-ui/polyfills-es2015.js"/>" type="module"></script> 
+        <script src="<c:url value="/static/dist/oslc-ui/main-es2015.js"/>" type="module"></script> 
+        <script src="<c:url value="/static/dist/oslc-ui/main-es5.js"/>" nomodule defer></script> 
+    </body> 
 </html>

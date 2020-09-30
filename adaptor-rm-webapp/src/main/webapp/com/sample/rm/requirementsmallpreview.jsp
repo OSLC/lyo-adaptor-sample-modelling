@@ -24,30 +24,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<%@page import="org.eclipse.lyo.oslc4j.core.model.Link" %>
-<%@page import="org.eclipse.lyo.oslc4j.core.model.ServiceProvider"%>
-<%@page import="org.eclipse.lyo.oslc4j.core.model.OslcConstants"%>
-<%@page import="org.eclipse.lyo.oslc4j.core.OSLC4JUtils"%>
-<%@page import="org.eclipse.lyo.oslc4j.core.annotation.OslcPropertyDefinition"%>
-<%@page import="org.eclipse.lyo.oslc4j.core.annotation.OslcName"%>
-<%@page import="java.lang.reflect.Method"%>
-<%@page import="java.net.URI"%>
-<%@page import="java.util.Collection"%>
-<%@page import="java.util.Date"%>
-<%@page import="java.util.HashSet"%>
-<%@page import="java.util.List"%>
-<%@page import="java.util.Iterator"%>
-<%@page import="java.util.Map"%>
-<%@page import="javax.xml.namespace.QName"%>
-<%@page import="javax.ws.rs.core.UriBuilder"%>
-
-<%@page import="com.sample.rm.resources.Requirement"%>
-<%@page import="com.sample.rm.resources.Oslc_rmDomainConstants"%>
-
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 
 <%
-  Requirement aRequirement = (Requirement) request.getAttribute("aRequirement");
+  String title = (String) request.getAttribute("title");
+  String oslcPreviewDataSet = (String) request.getAttribute("oslcPreviewDataSet");
 %>
 
 <html lang="en">
@@ -56,88 +37,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title><%= aRequirement.toString() %></title>
-
-  <link href="<c:url value="/static/css/bootstrap-4.0.0-beta.min.css"/>" rel="stylesheet">
-  <link href="<c:url value="/static/css/adaptor.css"/>" rel="stylesheet">
-
-  <script src="<c:url value="/static/js/jquery-3.2.1.min.js"/>"></script>
-  <script src="<c:url value="/static/js/popper-1.11.0.min.js"/>"></script>
-  <script src="<c:url value="/static/js/bootstrap-4.0.0-beta.min.js"/>"></script>
+  <title><%= title %></title>
+  <link rel="stylesheet" href="<c:url value="/static/dist/oslc-ui/styles.css"/>">
 </head>
 
 <body>
+    <oslc-preview input-data='<%=oslcPreviewDataSet%>'></oslc-preview>
 
-<!-- Begin page content -->
-<div>
-    <% Method method = null; %>
-    <dl class="dl-horizontal">
-        <% method = Requirement.class.getMethod("getIdentifier"); %>
-        <dt><a href="<%=method.getAnnotation(OslcPropertyDefinition.class).value() %>"><%=method.getAnnotation(OslcName.class).value()%></a></dt>
-        <dd>
-        <%
-        if (aRequirement.getIdentifier() == null) {
-            out.write("<em>null</em>");
-        }
-        else {
-            out.write(aRequirement.getIdentifier().toString());
-        }
-        %>
-        
-        </dd>
-    </dl>
-    <dl class="dl-horizontal">
-        <% method = Requirement.class.getMethod("getTitle"); %>
-        <dt><a href="<%=method.getAnnotation(OslcPropertyDefinition.class).value() %>"><%=method.getAnnotation(OslcName.class).value()%></a></dt>
-        <dd>
-        <%
-        if (aRequirement.getTitle() == null) {
-            out.write("<em>null</em>");
-        }
-        else {
-            out.write(aRequirement.getTitle().toString());
-        }
-        %>
-        
-        </dd>
-    </dl>
-    <dl class="dl-horizontal">
-        <% method = Requirement.class.getMethod("getDescription"); %>
-        <dt><a href="<%=method.getAnnotation(OslcPropertyDefinition.class).value() %>"><%=method.getAnnotation(OslcName.class).value()%></a></dt>
-        <dd>
-        <%
-        if (aRequirement.getDescription() == null) {
-            out.write("<em>null</em>");
-        }
-        else {
-            out.write(aRequirement.getDescription().toString());
-        }
-        %>
-        
-        </dd>
-    </dl>
-</div>
-<%
-Map<QName, Object> extendedProperties = aRequirement.getExtendedProperties();
-if (!extendedProperties.isEmpty()) {
-%>
-    <div>
-    <%
-    for (Map.Entry<QName, Object> entry : extendedProperties.entrySet()) 
-    {
-        QName key = entry.getKey();
-        Object value = entry.getValue();
-    %>
-    <dl class="row">
-        <dt  class="col-sm-2 text-right"><a href="<%=key.getNamespaceURI() + key.getLocalPart() %>"><%=key.getLocalPart()%></a></dt>
-        <dd class="col-sm-9"><%= value.toString()%></dd>
-    </dl>
-    <%
-    }
-    %>
-    </div>
-<%
-}
-%>
+    <script src="<c:url value="/static/dist/oslc-ui/runtime-es2015.js"/>" type="module"></script> 
+    <script src="<c:url value="/static/dist/oslc-ui/runtime-es5.js"/>" nomodule defer></script> 
+    <script src="<c:url value="/static/dist/oslc-ui/polyfills-es5.js"/>" nomodule defer></script> 
+    <script src="<c:url value="/static/dist/oslc-ui/polyfills-es2015.js"/>" type="module"></script> 
+    <script src="<c:url value="/static/dist/oslc-ui/main-es2015.js"/>" type="module"></script> 
+    <script src="<c:url value="/static/dist/oslc-ui/main-es5.js"/>" nomodule defer></script> 
 </body>
 </html>

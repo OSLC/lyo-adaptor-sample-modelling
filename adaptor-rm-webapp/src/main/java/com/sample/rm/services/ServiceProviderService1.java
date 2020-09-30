@@ -236,6 +236,7 @@ public class ServiceProviderService1
 
         httpServletRequest.setAttribute("selectionUri",UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(uriInfo.getPath()).build().toString());
         // Start of user code RequirementSelector_setAttributes
+        httpServletRequest.setAttribute("resourceTypeLabel", Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME);
             // End of user code
 
         if (terms != null ) {
