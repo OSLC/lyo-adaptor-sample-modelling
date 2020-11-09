@@ -1,8 +1,7 @@
 # lyo-adaptor-sample-modelling
 
 [![CircleCI](https://circleci.com/gh/OSLC/lyo-adaptor-sample-modelling/tree/master.svg?style=svg)](https://circleci.com/gh/OSLC/lyo-adaptor-sample-modelling/tree/master)
-[![](https://img.shields.io/badge/talk-discourse-lightgrey.svg)](https://forum.open-services.net/)
-[![](https://img.shields.io/badge/talk-gitter-lightgrey.svg)](https://gitter.im/OSLC/chat)
+![Discourse users](https://img.shields.io/discourse/users?color=28bd84&server=https%3A%2F%2Fforum.open-services.net%2F)
 
 This is the repository with the sources of the finished [Lyo Toolchain Modelling and Code Generation Workshop](https://wiki.eclipse.org/Lyo/ToolchainModellingAndCodeGenerationWorkshop).
 
