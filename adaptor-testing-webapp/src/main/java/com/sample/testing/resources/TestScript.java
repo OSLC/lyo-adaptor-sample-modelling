@@ -73,8 +73,8 @@ import com.sample.testing.resources.Oslc_qmDomainConstants;
 import com.sample.testing.resources.DctermsDomainConstants;
 import com.sample.testing.resources.Oslc_qmDomainConstants;
 import com.sample.testing.resources.Oslc_rmDomainConstants;
-import com.sample.testing.resources.Requirement;
 
+import com.sample.testing.resources.Requirement;
 // Start of user code imports
 // End of user code
 

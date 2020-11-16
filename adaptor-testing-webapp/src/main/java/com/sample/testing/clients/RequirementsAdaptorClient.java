@@ -20,8 +20,8 @@
 package com.sample.testing.clients;
 
 import javax.ws.rs.core.Response;
-import org.eclipse.lyo.oslc4j.client.OSLCConstants;
-import org.eclipse.lyo.oslc4j.client.OslcClient;
+import org.eclipse.lyo.client.OSLCConstants;
+import org.eclipse.lyo.client.OslcClient;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import com.sample.testing.resources.Requirement;
 
@@ -29,9 +29,9 @@ import com.sample.testing.resources.Requirement;
 import java.net.URI;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
-import org.eclipse.lyo.oslc4j.client.resources.OslcQuery;
-import org.eclipse.lyo.oslc4j.client.resources.OslcQueryParameters;
-import org.eclipse.lyo.oslc4j.client.resources.OslcQueryResult;
+import org.eclipse.lyo.client.query.OslcQuery;
+import org.eclipse.lyo.client.query.OslcQueryParameters;
+import org.eclipse.lyo.client.query.OslcQueryResult;
 
 import com.sample.testing.resources.Oslc_rmDomainConstants;
 // End of user code

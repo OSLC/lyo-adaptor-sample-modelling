@@ -27,12 +27,16 @@ package com.sample.rm;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContextEvent;
 import java.util.List;
+import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
 import com.sample.rm.resources.Requirement;
+
 import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrsFactory;
@@ -56,10 +60,12 @@ import java.util.Iterator;
 
 public class RMToolManager {
 
+    private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
+
+    
     private static PagedTrs pagedTrs;
     private static TrsEventHandler trsEventHandler;
     // Start of user code class_attributes
-	private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
     private static Map<String, Requirement> requirements = new HashMap<String, Requirement>(1000);
     private static int nextRequirementId;
     // End of user code
@@ -129,6 +135,7 @@ public class RMToolManager {
         // Start of user code contextInitializeServletListener
         initializeRequirements(37);
         // End of user code
+        
         // Start of user code TRSInitialise
         // End of user code
         ArrayList<URI> uris = new ArrayList<URI>();
@@ -173,9 +180,10 @@ public class RMToolManager {
         return serviceProviderInfos;
     }
 
-    public static List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, int page, int limit)
+    public static List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, String prefix, int page, int limit)
     {
         List<Requirement> resources = null;
+        
         
         // Start of user code queryRequirements
         resources = new ArrayList<>(requirements.values());
@@ -186,6 +194,7 @@ public class RMToolManager {
     {
         List<Requirement> resources = null;
         
+        
         // Start of user code RequirementSelector
         resources = new ArrayList<>(requirements.values());
         // End of user code
@@ -194,6 +203,7 @@ public class RMToolManager {
     public static Requirement createRequirement(HttpServletRequest httpServletRequest, final Requirement aResource)
     {
         Requirement newResource = null;
+        
         
         // Start of user code createRequirement
         newResource = createOrUpdateRequirement(httpServletRequest, aResource);
@@ -204,6 +214,7 @@ public class RMToolManager {
     public static Requirement createRequirementFromDialog(HttpServletRequest httpServletRequest, final Requirement aResource)
     {
         Requirement newResource = null;
+        
         
         // Start of user code createRequirementFromDialog
         newResource = createOrUpdateRequirement(httpServletRequest, aResource);
@@ -217,6 +228,7 @@ public class RMToolManager {
     {
         Requirement aResource = null;
         
+        
         // Start of user code getRequirement
         aResource = requirements.get(requirementId);
         // End of user code
@@ -226,6 +238,7 @@ public class RMToolManager {
     public static Boolean deleteRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
         Boolean deleted = false;
+        
         // Start of user code deleteRequirement
         // TODO Implement code to delete a resource
         // If you encounter problems, consider throwing the runtime exception WebApplicationException(message, cause, final httpStatus)
@@ -235,6 +248,7 @@ public class RMToolManager {
 
     public static Requirement updateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource, final String requirementId) {
         Requirement updatedResource = null;
+        
         // Start of user code updateRequirement
         updatedResource = createOrUpdateRequirement(httpServletRequest, aResource);
         // End of user code

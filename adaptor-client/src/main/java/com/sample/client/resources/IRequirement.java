@@ -64,6 +64,7 @@ import org.eclipse.lyo.oslc4j.core.model.ValueType;
 import com.sample.client.resources.Oslc_rmDomainConstants;
 import com.sample.client.resources.DctermsDomainConstants;
 
+
 // Start of user code imports
 // End of user code
 

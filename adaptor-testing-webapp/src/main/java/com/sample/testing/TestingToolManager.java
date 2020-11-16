@@ -27,6 +27,9 @@ package com.sample.testing;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContextEvent;
 import java.util.List;
+import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
@@ -34,6 +37,7 @@ import com.sample.testing.servlet.ServiceProviderCatalogSingleton;
 import com.sample.testing.ServiceProviderInfo;
 import com.sample.testing.resources.Requirement;
 import com.sample.testing.resources.TestScript;
+
 
 
 // Start of user code imports
@@ -53,8 +57,10 @@ import com.sample.testing.clients.RequirementsAdaptorClient;
 
 public class TestingToolManager {
 
+    private static final Logger log = LoggerFactory.getLogger(TestingToolManager.class);
+
+    
     // Start of user code class_attributes
-	private static final Logger log = LoggerFactory.getLogger(TestingToolManager.class);
     // End of user code
     
     
@@ -107,6 +113,7 @@ public class TestingToolManager {
         // Start of user code contextInitializeServletListener
         // TODO Implement code to establish connection to data backbone etc ...
         // End of user code
+        
     }
 
     public static void contextDestroyServletListener(ServletContextEvent servletContextEvent) 
@@ -137,9 +144,10 @@ public class TestingToolManager {
         return serviceProviderInfos;
     }
 
-    public static List<TestScript> queryTestScripts(HttpServletRequest httpServletRequest, final String serviceProviderId, String where, int page, int limit)
+    public static List<TestScript> queryTestScripts(HttpServletRequest httpServletRequest, final String serviceProviderId, String where, String prefix, int page, int limit)
     {
         List<TestScript> resources = null;
+        
         
         // Start of user code queryTestScripts
         resources = createRandomTestScripts(serviceProviderId, 0, 50, 1, 5000);
@@ -149,6 +157,7 @@ public class TestingToolManager {
     public static TestScript createTestScript(HttpServletRequest httpServletRequest, final TestScript aResource, final String serviceProviderId)
     {
         TestScript newResource = null;
+        
         
         // Start of user code createTestScript
 		int id = randomNumber(1, 500);
@@ -165,6 +174,7 @@ public class TestingToolManager {
     {
         TestScript aResource = null;
         
+        
         // Start of user code getTestScript
         aResource = createRandomTestScript(testScriptId);
         // End of user code
@@ -174,6 +184,7 @@ public class TestingToolManager {
     public static Boolean deleteTestScript(HttpServletRequest httpServletRequest, final String testScriptId)
     {
         Boolean deleted = false;
+        
         // Start of user code deleteTestScript
         // TODO Implement code to delete a resource
         // If you encounter problems, consider throwing the runtime exception WebApplicationException(message, cause, final httpStatus)
@@ -183,6 +194,7 @@ public class TestingToolManager {
 
     public static TestScript updateTestScript(HttpServletRequest httpServletRequest, final TestScript aResource, final String testScriptId) {
         TestScript updatedResource = null;
+        
         // Start of user code updateTestScript
         // TODO Implement code to update and return a resource
         // If you encounter problems, consider throwing the runtime exception WebApplicationException(message, cause, final httpStatus)
