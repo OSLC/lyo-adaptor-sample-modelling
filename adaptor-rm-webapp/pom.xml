@@ -135,6 +135,17 @@
             <!-- Start of user code plugins
             -->
             <!-- TODO: Add additional plugins here to avoid them be overrriden upon future re-generation -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.7.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>      
+
             <!-- End of user code
             -->
             <plugin>
@@ -203,6 +214,25 @@
     </build>
     <!-- Start of user code post_build
     -->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>3.1.1</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>dependencies</report>
+                            <report>dependency-info</report>
+                            <report>dependency-convergence</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>      
+        </plugins>
+    </reporting>
     <!-- End of user code
     -->
 </project>
