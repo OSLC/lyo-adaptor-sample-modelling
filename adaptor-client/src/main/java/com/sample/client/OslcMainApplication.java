@@ -25,8 +25,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.net.MalformedURLException;
 
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
@@ -34,7 +32,8 @@ import org.eclipse.lyo.oslc4j.core.model.ResourceShape;
 import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import org.eclipse.lyo.oslc4j.provider.jena.JenaModelHelper;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.jena.rdf.model.Model;
 
 import com.sample.client.resources.Requirement;
@@ -51,7 +50,7 @@ public class OslcMainApplication {
 
     private static String baseUrl = "http://localhost:8080";
     private static String servletUrlPattern = "services/";
-    private static final Logger logger = Logger.getLogger(OslcMainApplication.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(OslcMainApplication.class);
 
     // Start of user code class_attributes
     // End of user code
@@ -65,15 +64,19 @@ public class OslcMainApplication {
         //TODO: Replace/adjust this default main function as necessary.
         //All manual changes in this "protected" user code area will NOT be overwritten upon subsequent code generations.
         //To revert to the default generated content, delete all content in this file, and then re-generate.
+    	logger.info("Starting OslcMainApplication client");
         try {
+        	logger.debug("Setting public URI to {}", baseUrl);
             OSLC4JUtils.setPublicURI(baseUrl);
+            logger.debug("Setting servlet path to {}", servletUrlPattern);
             OSLC4JUtils.setServletPath(servletUrlPattern);
         } catch (MalformedURLException e) {
-            logger.log(Level.SEVERE, "Application encountered MalformedURLException.", e);
+            logger.error("Application encountered MalformedURLException.", e);
         } catch (IllegalArgumentException e) {
-            logger.log(Level.SEVERE, "Application encountered IllegalArgumentException.", e);
+            logger.error("Application encountered IllegalArgumentException.", e);
         }
 
+        logger.trace("Fetching OSLC Service Provider Catalog");
         ServiceProviderCatalog genericRequiredAdaptorClientCatalog = GenericRequiredAdaptorClient.getServiceProviderCatalog();
 
         List<ResourceShape> shapes = new ArrayList<ResourceShape>();

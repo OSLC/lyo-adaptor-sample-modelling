@@ -17,3 +17,12 @@ The repository contains
 
 ![Domain Specification Model](img/SpecificationDiagram.png)
 
+## Getting started
+
+Run both adaptors in separate terminals:
+
+    mvn clean package jetty:run-exploded -f adaptor-rm-webapp/pom.xml
+    mvn clean package jetty:run-exploded -f adaptor-testing-webapp/pom.xml
+
+Navigate to http://localhost:8083/adaptor-rm/ and http://localhost:8082/adaptor-testing/ to see the landing pages.
+
