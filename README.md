@@ -1,5 +1,6 @@
 # lyo-adaptor-sample-modelling
 
+[![](https://img.shields.io/badge/project-Eclipse%20Lyo-blue?color=418eeb)](https://github.com/eclipse/lyo)
 [![CircleCI](https://circleci.com/gh/OSLC/lyo-adaptor-sample-modelling/tree/main-4.x.svg?style=svg)](https://circleci.com/gh/OSLC/lyo-adaptor-sample-modelling/tree/master)
 ![Discourse users](https://img.shields.io/discourse/users?color=28bd84&server=https%3A%2F%2Fforum.open-services.net%2F)
 
