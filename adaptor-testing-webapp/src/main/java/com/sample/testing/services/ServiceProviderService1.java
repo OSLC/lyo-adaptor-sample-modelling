@@ -62,6 +62,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.apache.wink.json4j.JSONException;
 import org.apache.wink.json4j.JSONObject;
+import org.apache.wink.json4j.JSONArray;
 import org.eclipse.lyo.oslc4j.provider.json4j.JsonHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

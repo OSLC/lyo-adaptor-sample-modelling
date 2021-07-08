@@ -62,6 +62,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.apache.wink.json4j.JSONException;
 import org.apache.wink.json4j.JSONObject;
+import org.apache.wink.json4j.JSONArray;
 import org.eclipse.lyo.oslc4j.provider.json4j.JsonHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -236,10 +237,10 @@ public class ServiceProviderService1
     @GET
     @Path("selector")
     @Consumes({ MediaType.TEXT_HTML, MediaType.WILDCARD })
-    public void RequirementSelector(
+    public Response RequirementSelector(
         @QueryParam("terms") final String terms
         
-        ) throws ServletException, IOException
+        ) throws ServletException, IOException, JSONException
     {
         // Start of user code RequirementSelector_init
             // End of user code
@@ -252,10 +253,18 @@ public class ServiceProviderService1
             httpServletRequest.setAttribute("terms", terms);
             final List<Requirement> resources = RMToolManager.RequirementSelector(httpServletRequest, terms);
             if (resources!= null) {
-                        httpServletRequest.setAttribute("resources", resources);
-                        RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementselectorresults.jsp");
-                        rd.forward(httpServletRequest, httpServletResponse);
-                        return;
+                JSONArray resourceArray = new JSONArray();
+                for (Requirement resource : resources) {
+                    JSONObject r = new JSONObject();
+                    r.put("oslc:label", resource.toString());
+                    r.put("rdf:resource", resource.getAbout().toString());
+                    // Start of user code RequirementSelector_setResponse
+                    // End of user code
+                    resourceArray.add(r);
+                }
+                JSONObject response = new JSONObject();
+                response.put("oslc:results", resourceArray);
+                return Response.ok(response.write()).build();
             }
             log.error("A empty search should return an empty list and not NULL!");
             throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
@@ -263,7 +272,7 @@ public class ServiceProviderService1
         } else {
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementselector.jsp");
             rd.forward(httpServletRequest, httpServletResponse);
-            return;
+            return null;
         }
     }
 
@@ -310,7 +319,7 @@ public class ServiceProviderService1
     @GET
     @Path("creator")
     @Consumes({MediaType.WILDCARD})
-    public void RequirementCreator(
+    public Response RequirementCreator(
                 
         ) throws IOException, ServletException
     {
@@ -321,6 +330,7 @@ public class ServiceProviderService1
 
         RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementcreator.jsp");
         rd.forward(httpServletRequest, httpServletResponse);
+        return null;
     }
 
     /**
