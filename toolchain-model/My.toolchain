@@ -26,9 +26,13 @@
           <selectionDialogs title="SelectionDialog1" label="SelectionDialog1" dialogURI="selector" resourceTypes="_e8j9oJa4EeqoX6mSFj9log"/>
           <creationDialogs title="CreationDialog1" label="CreationDialog1" dialogURI="creator" resourceTypes="_e8j9oJa4EeqoX6mSFj9log"/>
         </services>
+        <services domainSpecification="//@specification/@domainSpecifications[name='Requirements%20Management']">
+          <queryCapabilities title="QueryCapability1" label="QueryCapability1" queryBaseURI="query" resourceTypes="_5CNaMOA2Eeue358mZZTCuQ"/>
+        </services>
       </serviceProviders>
     </serviceProviderCatalog>
     <webServices name="RequService" serviceUrlPattern="requirements" resourceUrlPattern="{requirementId}" resourceTypes="_e8j9oJa4EeqoX6mSFj9log" delete="true" update="true"/>
+    <webServices name="WebService2" serviceUrlPattern="webService2" resourceUrlPattern="[ResourceType]/{id}" resourceTypes="_5CNaMOA2Eeue358mZZTCuQ"/>
     <trsService xsi:type="oslc4j_ai:InmemPagedTrsService" basePageLimit="50" changeLogPageLimit="50"/>
     <specification/>
     <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://your.host/adaptor/services/catalog/singleton" name="GenericRequiredAdaptor"/>
@@ -68,7 +72,9 @@
       <resourceProperties id="_e8u8wJa4EeqoX6mSFj9log" name="identifier" valueType="String"/>
     </domainSpecifications>
     <domainSpecifications name="Requirements Management" namespaceURI="http://open-services.net/ns/rm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_rm']">
-      <resources id="_e8j9oJa4EeqoX6mSFj9log" name="Requirement" resourceProperties="_e8u8wJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log"/>
+      <resources id="_e8j9oJa4EeqoX6mSFj9log" name="Requirement" resourceProperties="_e8u8wJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log _5CMzIOA2Eeue358mZZTCuQ"/>
+      <resources id="_5CNaMOA2Eeue358mZZTCuQ" name="Comment" resourceProperties="_e8qEQJa4EeqoX6mSFj9log"/>
+      <resourceProperties id="_5CMzIOA2Eeue358mZZTCuQ" name="comments" occurs="zeroOrMany" valueType="Resource" range="_5CNaMOA2Eeue358mZZTCuQ" representation="inline"/>
     </domainSpecifications>
     <domainPrefixes name="oslc_rm"/>
     <domainPrefixes name="oslc_qm"/>

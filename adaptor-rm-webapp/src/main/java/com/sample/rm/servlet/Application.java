@@ -55,11 +55,14 @@ import com.sample.rm.services.ServiceProviderCatalogService;
 import com.sample.rm.services.ServiceProviderService;
 import com.sample.rm.services.ResourceShapeService;
 
+import com.sample.rm.resources.Comment;
 import com.sample.rm.resources.Requirement;
 import com.sample.rm.resources.DctermsDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.services.ServiceProviderService1;
+import com.sample.rm.services.ServiceProviderService2;
 import com.sample.rm.services.RequService;
+import com.sample.rm.services.WebService2;
 import java.util.Collections;
 import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
@@ -111,7 +114,9 @@ public class Application extends javax.ws.rs.core.Application {
         RESOURCE_CLASSES.addAll(JenaProvidersRegistry.getProviders());
         RESOURCE_CLASSES.addAll(Json4JProvidersRegistry.getProviders());
         RESOURCE_CLASSES.add(ServiceProviderService1.class);
+        RESOURCE_CLASSES.add(ServiceProviderService2.class);
         RESOURCE_CLASSES.add(RequService.class);
+        RESOURCE_CLASSES.add(WebService2.class);
 
         // Catalog resources
         RESOURCE_CLASSES.add(ServiceProviderCatalogService.class);
@@ -144,6 +149,7 @@ public class Application extends javax.ws.rs.core.Application {
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE_PROVIDER,         ServiceProvider.class);
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(OslcConstants.PATH_SERVICE_PROVIDER_CATALOG, ServiceProviderCatalog.class);
 
+        RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(Oslc_rmDomainConstants.COMMENT_PATH, Comment.class);
         RESOURCE_SHAPE_PATH_TO_RESOURCE_CLASS_MAP.put(Oslc_rmDomainConstants.REQUIREMENT_PATH, Requirement.class);
     }
 

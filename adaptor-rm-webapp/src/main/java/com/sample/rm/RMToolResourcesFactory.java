@@ -27,6 +27,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
+import com.sample.rm.resources.Comment;
 import com.sample.rm.resources.Requirement;
 
 // Start of user code imports
@@ -42,6 +43,35 @@ public class RMToolResourcesFactory {
     
     // Start of user code class_methods
     // End of user code
+
+    //methods for Comment resource
+    
+    public static Comment createComment(final String id)
+    {
+        return new Comment(constructURIForComment(id));
+    }
+    
+    public static URI constructURIForComment(final String id)
+    {
+        String basePath = OSLC4JUtils.getServletURI();
+        Map<String, Object> pathParameters = new HashMap<String, Object>();
+        pathParameters.put("id", id);
+        String instanceURI = "webService2/Comment/{id}";
+    
+        final UriBuilder builder = UriBuilder.fromUri(basePath);
+        return builder.path(instanceURI).buildFromMap(pathParameters);
+    }
+    
+    public static Link constructLinkForComment(final String id , final String label)
+    {
+        return new Link(constructURIForComment(id), label);
+    }
+    
+    public static Link constructLinkForComment(final String id)
+    {
+        return new Link(constructURIForComment(id));
+    }
+    
 
     //methods for Requirement resource
     

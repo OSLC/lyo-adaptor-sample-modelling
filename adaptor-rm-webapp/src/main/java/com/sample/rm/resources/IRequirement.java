@@ -63,8 +63,9 @@ import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.Oslc_rmDomainConstants;
 
-
+import com.sample.rm.resources.IComment;
 // Start of user code imports
 // End of user code
 
@@ -74,6 +75,7 @@ import com.sample.rm.resources.DctermsDomainConstants;
 public interface IRequirement
 {
 
+    public void addComments(final Comment comments );
 
     @OslcName("identifier")
     @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "identifier")
@@ -96,9 +98,19 @@ public interface IRequirement
     @OslcReadOnly(false)
     public String getDescription();
 
+    @OslcName("comments")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "comments")
+    @OslcOccurs(Occurs.ZeroOrMany)
+    @OslcValueType(ValueType.Resource)
+    @OslcRepresentation(Representation.Inline)
+    @OslcRange({Oslc_rmDomainConstants.COMMENT_TYPE})
+    @OslcReadOnly(false)
+    public Set<Comment> getComments();
+
 
     public void setIdentifier(final String identifier );
     public void setTitle(final String title );
     public void setDescription(final String description );
+    public void setComments(final Set<Comment> comments );
 }
 

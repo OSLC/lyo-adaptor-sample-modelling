@@ -71,8 +71,9 @@ import com.sample.rm.resources.Oslc_rmDomainConstants;
 
 
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.Oslc_rmDomainConstants;
 
-
+import com.sample.rm.resources.Comment;
 // Start of user code imports
 // End of user code
 
@@ -97,6 +98,9 @@ public class Requirement
     // Start of user code attributeAnnotation:description
     // End of user code
     private String description;
+    // Start of user code attributeAnnotation:comments
+    // End of user code
+    private Set<Comment> comments = new HashSet<Comment>();
     
     // Start of user code classAttributes
     // End of user code
@@ -152,6 +156,11 @@ public class Requirement
         return result;
     }
     
+    public void addComments(final Comment comments)
+    {
+        this.comments.add(comments);
+    }
+    
     
     // Start of user code getterAnnotation:identifier
     // End of user code
@@ -195,6 +204,22 @@ public class Requirement
         return description;
     }
     
+    // Start of user code getterAnnotation:comments
+    // End of user code
+    @OslcName("comments")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "comments")
+    @OslcOccurs(Occurs.ZeroOrMany)
+    @OslcValueType(ValueType.Resource)
+    @OslcRepresentation(Representation.Inline)
+    @OslcRange({Oslc_rmDomainConstants.COMMENT_TYPE})
+    @OslcReadOnly(false)
+    public Set<Comment> getComments()
+    {
+        // Start of user code getterInit:comments
+        // End of user code
+        return comments;
+    }
+    
     
     // Start of user code setterAnnotation:identifier
     // End of user code
@@ -229,6 +254,22 @@ public class Requirement
         this.description = description;
     
         // Start of user code setterFinalize:description
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:comments
+    // End of user code
+    public void setComments(final Set<Comment> comments )
+    {
+        // Start of user code setterInit:comments
+        // End of user code
+        this.comments.clear();
+        if (comments != null)
+        {
+            this.comments.addAll(comments);
+        }
+    
+        // Start of user code setterFinalize:comments
         // End of user code
     }
     

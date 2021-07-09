@@ -86,6 +86,7 @@ import com.sample.rm.RMToolConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
+import com.sample.rm.resources.Comment;
 import com.sample.rm.resources.Requirement;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -96,7 +97,7 @@ import io.swagger.annotations.ApiOperation;
 // Start of user code pre_class_code
 // End of user code
 @OslcService(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_DOMAIN)
-@Path("requirements")
+@Path("service1/requirements")
 @Api(value = "OSLC Service for {" + Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME + "}")
 public class ServiceProviderService1
 {
@@ -228,7 +229,7 @@ public class ServiceProviderService1
     (
          title = "SelectionDialog1",
          label = "SelectionDialog1",
-         uri = "requirements/selector",
+         uri = "service1/requirements/selector",
          hintWidth = "0px",
          hintHeight = "0px",
          resourceTypes = {Oslc_rmDomainConstants.REQUIREMENT_TYPE},
@@ -342,7 +343,7 @@ public class ServiceProviderService1
     (
          title = "CreationDialog1",
          label = "CreationDialog1",
-         uri = "requirements/creator",
+         uri = "service1/requirements/creator",
          hintWidth = "0px",
          hintHeight = "0px",
          resourceTypes = {Oslc_rmDomainConstants.REQUIREMENT_TYPE},
@@ -386,6 +387,12 @@ public class ServiceProviderService1
                     // else, there is an empty value for that parameter, and hence ignore since the parameter is not actually set.
                 }
 
+        }
+        paramValues = formParams.get("comments");
+        if (paramValues != null) {
+                for(int i=0; i<paramValues.size(); i++) {
+                    aResource.addComments(new Comment(new URI(paramValues.get(i))));
+                }
         }
 
         newResource = RMToolManager.createRequirementFromDialog(httpServletRequest, aResource);

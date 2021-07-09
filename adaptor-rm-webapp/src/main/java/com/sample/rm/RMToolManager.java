@@ -35,6 +35,7 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
+import com.sample.rm.resources.Comment;
 import com.sample.rm.resources.Requirement;
 
 import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
@@ -98,6 +99,10 @@ public class RMToolManager {
         r.setIdentifier(id);
         r.setTitle("aTitle with id:" + id);
         r.setDescription("A sample Requirement with id:" + id);
+        r.addComments(getComment(null, "1"));
+        r.addComments(getComment(null, "2"));
+        r.addComments(getComment(null, "3"));
+
         return r;
     }
 
@@ -223,6 +228,25 @@ public class RMToolManager {
     }
 
 
+    public static List<Comment> queryComments(HttpServletRequest httpServletRequest, String where, String prefix, int page, int limit)
+    {
+        List<Comment> resources = null;
+        
+        
+        // Start of user code queryComments
+        resources = new ArrayList<Comment>();
+        Comment r1 = RMToolResourcesFactory.createComment("1");
+        r1.setTitle("1");
+        resources.add(r1);
+        Comment r2 = RMToolResourcesFactory.createComment("2");
+        r2.setTitle("2");
+        resources.add(r2);
+        // End of user code
+        return resources;
+    }
+
+
+
 
     public static Requirement getRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
@@ -254,7 +278,29 @@ public class RMToolManager {
         // End of user code
         return updatedResource;
     }
+    public static Comment getComment(HttpServletRequest httpServletRequest, final String id)
+    {
+        Comment aResource = null;
+        
+        
+        // Start of user code getComment
+        aResource = RMToolResourcesFactory.createComment(id);
+        aResource.setTitle(id);
+        // End of user code
+        return aResource;
+    }
 
+
+
+    public static String getETagFromComment(final Comment aResource)
+    {
+        String eTag = null;
+        // Start of user code getETagFromComment
+        // TODO Implement code to return an ETag for a particular resource
+        // If you encounter problems, consider throwing the runtime exception WebApplicationException(message, cause, final httpStatus)
+        // End of user code
+        return eTag;
+    }
     public static String getETagFromRequirement(final Requirement aResource)
     {
         String eTag = null;

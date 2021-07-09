@@ -40,6 +40,10 @@ public interface Oslc_rmDomainConstants
     public static String REQUIREMENTS_MANAGEMENT_NAMSPACE = "http://open-services.net/ns/rm#";
     public static String REQUIREMENTS_MANAGEMENT_NAMSPACE_PREFIX = "oslc_rm";
 
+    public static String COMMENT_PATH = "comment";
+    public static String COMMENT_NAMESPACE = REQUIREMENTS_MANAGEMENT_NAMSPACE; //namespace of the rdfs:class the resource describes
+    public static String COMMENT_LOCALNAME = "Comment"; //localName of the rdfs:class the resource describes
+    public static String COMMENT_TYPE = COMMENT_NAMESPACE + COMMENT_LOCALNAME; //fullname of the rdfs:class the resource describes
     public static String REQUIREMENT_PATH = "requirement";
     public static String REQUIREMENT_NAMESPACE = REQUIREMENTS_MANAGEMENT_NAMSPACE; //namespace of the rdfs:class the resource describes
     public static String REQUIREMENT_LOCALNAME = "Requirement"; //localName of the rdfs:class the resource describes
