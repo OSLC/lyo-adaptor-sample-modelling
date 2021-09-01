@@ -1,0 +1,19 @@
+ <rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:rtc_ext="http://jazz.net/xmlns/prod/jazz/rtc/ext/1.0/"
+    xmlns:oslc="http://open-services.net/ns/core#"
+    xmlns:acp="http://jazz.net/ns/acp#"
+    xmlns:oslc_cm="http://open-services.net/ns/cm#"
+    xmlns:oslc_cmx="http://open-services.net/ns/cm-x#"
+    xmlns:oslc_pl="http://open-services.net/ns/pl#"
+    xmlns:acc="http://open-services.net/ns/core/acc#"
+    xmlns:rtc_cm="http://jazz.net/xmlns/prod/jazz/rtc/cm/1.0/"
+    xmlns:process="http://jazz.net/ns/process#" >
+    <rdf:Description rdf:about="https://server:port/ccmfed/resource/itemName/com.ibm.team.workitem.WorkItem/157769">
+        <rdf:type rdf:resource="http://open-services.net/ns/cm#ChangeRequest"/>
+        <oslc:shortTitle rdf:parseType="Literal">Feature Request 157769</oslc:shortTitle>
+        <rtc_ext:reason rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">&amp;quot;reason&amp;quot;</rtc_ext:reason>
+        <dcterms:description rdf:datatype="http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral">&amp;quot;description&amp;quot;</dcterms:description>
+    </rdf:Description>
+</rdf:RDF>

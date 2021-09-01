@@ -21,6 +21,7 @@
 package com.sample.client;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,14 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 import org.eclipse.lyo.oslc4j.provider.jena.JenaModelHelper;
 
 import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import com.sample.client.resources.Requirement;
 import com.sample.client.resources.TestScript;
 import com.sample.client.clients.GenericRequiredAdaptorClient;
 
 // Start of user code imports
+import org.eclipse.lyo.oslc.domains.cm.ChangeRequest;
 // End of user code
 
 // Start of user code pre_class_code
@@ -74,15 +77,15 @@ public class OslcMainApplication {
             logger.log(Level.SEVERE, "Application encountered IllegalArgumentException.", e);
         }
 
-        ServiceProviderCatalog genericRequiredAdaptorClientCatalog = GenericRequiredAdaptorClient.getServiceProviderCatalog();
+        String in = "resource1.xml";
+        FileInputStream input = new FileInputStream(new File(in));
+        Model model1 = ModelFactory.createDefaultModel();
+        model1.read(in, null);
+        ChangeRequest[] crs = JenaModelHelper.unmarshal(model1, ChangeRequest.class);
+        
+        System.out.println(crs.length);
 
-        List<ResourceShape> shapes = new ArrayList<ResourceShape>();
-        shapes.add(Requirement.createResourceShape());
-        shapes.add(TestScript.createResourceShape());
-        Model model = JenaModelHelper.createJenaModel(shapes.toArray());
-        String fileName = "resourceShapes.ttl";
-        FileOutputStream output = new FileOutputStream(new File(fileName));
-        model.write(output, "TURTLE" );
+    
     }
     // End of user code
 }
