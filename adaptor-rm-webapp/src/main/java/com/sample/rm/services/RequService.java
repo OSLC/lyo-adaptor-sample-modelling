@@ -87,6 +87,7 @@ import com.sample.rm.resources.Requirement;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import org.eclipse.lyo.server.ui.model.PreviewFactory;
 // Start of user code imports
 // End of user code
 
@@ -174,7 +175,10 @@ public class RequService
             // Start of user code getRequirementAsHtml_setAttributes
             // End of user code
 
-            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirement.jsp");
+            httpServletRequest.setAttribute("aResource", aRequirement);
+            httpServletRequest.setAttribute("resourceTypeName", Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME);
+            httpServletRequest.setAttribute("shapeUri", UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(OslcConstants.PATH_RESOURCE_SHAPES).path(Oslc_rmDomainConstants.REQUIREMENT_PATH).build());
+            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/viewresource.jsp");
             rd.forward(httpServletRequest,httpServletResponse);
             return;
         }
@@ -252,7 +256,19 @@ public class RequService
             // Start of user code getRequirementAsHtmlSmallPreview_setAttributes
             // End of user code
 
-            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementsmallpreview.jsp");
+            try {
+                httpServletRequest.setAttribute("resourceTitle", aRequirement.toString());
+                ArrayList<String> getterMethodNames = new ArrayList<String>(Arrays.asList("getIdentifier", "getTitle", "getDescription"));
+                // Start of user code getRequirementAsHtmlSmallPreview_setResourceGetterMethods
+                //TODO: modify the set of attributes to show in the preview
+                // End of user code
+                String oslcPreviewDataSetAsString = PreviewFactory.getPreviewAsJsonString(aRequirement, getterMethodNames, false);
+                httpServletRequest.setAttribute("resourcePreviewDataSet", oslcPreviewDataSetAsString);
+            } catch (Exception e) {
+                log.error("Could not handle smallPreview", e);
+                throw new WebApplicationException("Could not handle smallPreview", e);
+            }
+            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/uipreview.jsp");
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
@@ -279,7 +295,19 @@ public class RequService
             // Start of user code getRequirementAsHtmlLargePreview_setAttributes
             // End of user code
 
-            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementlargepreview.jsp");
+            try {
+                httpServletRequest.setAttribute("resourceTitle", aRequirement.toString());
+                ArrayList<String> getterMethodNames = new ArrayList<String>(Arrays.asList("getIdentifier", "getTitle", "getDescription"));
+                // Start of user code getRequirementAsHtmlLargePreview_setResourceGetterMethods
+                //TODO: modify the set of attributes to show in the preview
+                // End of user code
+                String oslcPreviewDataSetAsString = PreviewFactory.getPreviewAsJsonString(aRequirement, getterMethodNames, true);
+                httpServletRequest.setAttribute("resourcePreviewDataSet", oslcPreviewDataSetAsString);
+            } catch (Exception e) {
+                log.error("Could not handle largePreview", e);
+                throw new WebApplicationException("Could not handle largePreview", e);
+            }
+            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/uipreview.jsp");
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);

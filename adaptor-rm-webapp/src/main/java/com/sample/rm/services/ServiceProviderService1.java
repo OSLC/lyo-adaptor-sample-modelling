@@ -270,7 +270,8 @@ public class ServiceProviderService1
             throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
 
         } else {
-            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementselector.jsp");
+            httpServletRequest.setAttribute("resourceTypeLabel", "Requirement");
+            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/selectiondialog.jsp");
             rd.forward(httpServletRequest, httpServletResponse);
             return null;
         }
