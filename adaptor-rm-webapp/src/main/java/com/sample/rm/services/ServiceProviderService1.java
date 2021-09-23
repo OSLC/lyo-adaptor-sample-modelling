@@ -258,6 +258,7 @@ public class ServiceProviderService1
                     JSONObject r = new JSONObject();
                     r.put("oslc:label", resource.toString());
                     r.put("rdf:resource", resource.getAbout().toString());
+                    r.put("Label", resource.toString());
                     // Start of user code RequirementSelector_setResponse
                     // End of user code
                     resourceArray.add(r);
@@ -271,6 +272,10 @@ public class ServiceProviderService1
 
         } else {
             httpServletRequest.setAttribute("resourceTypeLabel", "Requirement");
+            httpServletRequest.setAttribute("fieldsToList", "[\"Label\"]");
+            // Start of user code RequirementSelector_setAttribute_fieldsToList
+            //TODO: set the attribute "fieldsToList" to form the list of properties you want displayed in the search result
+            // End of user code
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/selectiondialog.jsp");
             rd.forward(httpServletRequest, httpServletResponse);
             return null;
