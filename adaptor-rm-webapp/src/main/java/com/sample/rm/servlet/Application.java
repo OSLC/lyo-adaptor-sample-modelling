@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 import org.eclipse.lyo.oslc4j.core.exception.OslcCoreApplicationException;
 import org.eclipse.lyo.oslc4j.core.model.AllowedValues;
@@ -65,10 +66,10 @@ import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.services.ServiceProviderService1;
 import com.sample.rm.services.RequService;
 import java.util.Collections;
-import org.glassfish.hk2.api.Factory;
-import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
 import org.eclipse.lyo.oslc4j.trs.server.service.TrackedResourceSetService;
+import org.glassfish.jersey.internal.inject.AbstractBinder;
+
 import com.sample.rm.RMToolManager;
 
 // Start of user code imports
@@ -98,14 +99,10 @@ public class Application extends javax.ws.rs.core.Application {
         return Collections.singleton(new AbstractBinder() {
             @Override
             protected void configure() {
-                bindFactory(new Factory<PagedTrs>() {
+                bindFactory(new Supplier<PagedTrs>() {
                             @Override
-                            public PagedTrs provide() {
+                            public PagedTrs get() {
                                 return RMToolManager.getPagedTrs();
-                            }
-
-                            @Override
-                            public void dispose(PagedTrs instance) {
                             }
                         }
                 ).to(PagedTrs.class);
