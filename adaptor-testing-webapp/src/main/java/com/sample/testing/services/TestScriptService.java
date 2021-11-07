@@ -84,8 +84,9 @@ import com.sample.testing.TestingToolConstants;
 import com.sample.testing.resources.Oslc_qmDomainConstants;
 import com.sample.testing.servlet.ServiceProviderCatalogSingleton;
 import com.sample.testing.resources.TestScript;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 // Start of user code imports
 // End of user code
@@ -93,7 +94,6 @@ import io.swagger.annotations.ApiOperation;
 // Start of user code pre_class_code
 // End of user code
 @Path("testScripts")
-@Api(value = "Web Service for {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}")
 public class TestScriptService
 {
     @Context private HttpServletRequest httpServletRequest;
@@ -125,11 +125,13 @@ public class TestScriptService
     @GET
     @Path("{testScriptId}")
     @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
-    @ApiOperation(
-        value = "GET for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
-        notes = "GET for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
+    @Operation(
+        summary = "GET for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
+        description = "GET for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML + ", " + OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML
+        responses = {
+            @ApiResponse(content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        }
     )
     public TestScript getTestScript(
                 @PathParam("testScriptId") final String testScriptId
@@ -154,11 +156,13 @@ public class TestScriptService
     @GET
     @Path("{testScriptId}")
     @Produces({ MediaType.TEXT_HTML })
-    @ApiOperation(
-        value = "GET for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
-        notes = "GET for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
+    @Operation(
+        summary = "GET for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
+        description = "GET for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML + ", " + OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML
+        responses = {
+            @ApiResponse(content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        }
     )
     public void getTestScriptAsHtml(
         @PathParam("testScriptId") final String testScriptId
@@ -185,11 +189,13 @@ public class TestScriptService
     @GET
     @Path("{testScriptId}")
     @Produces({OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML})
-    @ApiOperation(
-        value = "GET for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
-        notes = "GET for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
+    @Operation(
+        summary = "GET for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
+        description = "GET for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML + ", " + OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML
+        responses = {
+            @ApiResponse(content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        }
     )
     public Compact getTestScriptCompact(
         @PathParam("testScriptId") final String testScriptId
@@ -290,11 +296,13 @@ public class TestScriptService
     }
     @DELETE
     @Path("{testScriptId}")
-    @ApiOperation(
-        value = "DELETE for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
-        notes = "DELETE for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
+    @Operation(
+        summary = "DELETE for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
+        description = "DELETE for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML + ", " + OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML
+        responses = {
+            @ApiResponse(content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        }
     )
     public Response deleteTestScript(
                 @PathParam("testScriptId") final String testScriptId
@@ -319,11 +327,13 @@ public class TestScriptService
     @PUT
     @Path("{testScriptId}")
     @Consumes({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON })
-    @ApiOperation(
-        value = "PUT for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
-        notes = "PUT for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
+    @Operation(
+        summary = "PUT for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
+        description = "PUT for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        produces = OslcMediaType.APPLICATION_RDF_XML + ", " + OslcMediaType.APPLICATION_XML + ", " + OslcMediaType.APPLICATION_JSON + ", " + OslcMediaType.TEXT_TURTLE + ", " + MediaType.TEXT_HTML + ", " + OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML
+        responses = {
+            @ApiResponse(content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        }
     )
     public Response updateTestScript(
             @HeaderParam("If-Match") final String eTagHeader,

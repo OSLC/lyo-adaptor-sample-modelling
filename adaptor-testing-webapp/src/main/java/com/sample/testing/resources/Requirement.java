@@ -83,7 +83,7 @@ import com.sample.testing.resources.DctermsDomainConstants;
 // End of user code
 @OslcNamespace(Oslc_rmDomainConstants.REQUIREMENT_NAMESPACE)
 @OslcName(Oslc_rmDomainConstants.REQUIREMENT_LOCALNAME)
-@OslcResourceShape(title = "Requirement Resource Shape", describes = Oslc_rmDomainConstants.REQUIREMENT_TYPE)
+@OslcResourceShape(title = "Requirement Shape", describes = Oslc_rmDomainConstants.REQUIREMENT_TYPE)
 public class Requirement
     extends AbstractResource
     implements IRequirement

@@ -144,7 +144,7 @@ public class TestingToolManager {
         return serviceProviderInfos;
     }
 
-    public static List<TestScript> queryTestScripts(HttpServletRequest httpServletRequest, final String serviceProviderId, String where, String prefix, int page, int limit)
+    public static List<TestScript> queryTestScripts(HttpServletRequest httpServletRequest, final String serviceProviderId, String where, String prefix, boolean paging, int page, int limit)
     {
         List<TestScript> resources = null;
         

@@ -180,7 +180,7 @@ public class RMToolManager {
         return serviceProviderInfos;
     }
 
-    public static List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, String prefix, int page, int limit)
+    public static List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, String prefix, boolean paging, int page, int limit)
     {
         List<Requirement> resources = null;
         
