@@ -68,7 +68,8 @@
       <resourceProperties id="_e8u8wJa4EeqoX6mSFj9log" name="identifier" valueType="String"/>
     </domainSpecifications>
     <domainSpecifications name="Requirements Management" namespaceURI="http://open-services.net/ns/rm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_rm']">
-      <resources id="_e8j9oJa4EeqoX6mSFj9log" name="Requirement" resourceProperties="_e8u8wJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log"/>
+      <resources id="_e8j9oJa4EeqoX6mSFj9log" name="Requirement" resourceProperties="_e8u8wJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log _BZowgEYDEeyZiKJ4vLcgoQ"/>
+      <resourceProperties id="_BZowgEYDEeyZiKJ4vLcgoQ" name="testProperty" valueType="XMLLiteral"/>
     </domainSpecifications>
     <domainPrefixes name="oslc_rm"/>
     <domainPrefixes name="oslc_qm"/>

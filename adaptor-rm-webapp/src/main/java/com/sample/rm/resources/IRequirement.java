@@ -63,6 +63,7 @@ import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.Oslc_rmDomainConstants;
 
 
 // Start of user code imports
@@ -96,9 +97,17 @@ public interface IRequirement
     @OslcReadOnly(false)
     public String getDescription();
 
+    @OslcName("testProperty")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "testProperty")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.XMLLiteral)
+    @OslcReadOnly(false)
+    public String getTestProperty();
+
 
     public void setIdentifier(final String identifier );
     public void setTitle(final String title );
     public void setDescription(final String description );
+    public void setTestProperty(final String testProperty );
 }
 

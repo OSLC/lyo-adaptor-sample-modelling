@@ -98,6 +98,7 @@ public class RMToolManager {
         r.setIdentifier(id);
         r.setTitle("aTitle with id:" + id);
         r.setDescription("A sample Requirement with id:" + id);
+        r.setTestProperty("some text with strange & unstrange stuff");
         return r;
     }
 
@@ -180,7 +181,7 @@ public class RMToolManager {
         return serviceProviderInfos;
     }
 
-    public static List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, String prefix, boolean paging, int page, int limit)
+    public static List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, String prefix, int page, int limit)
     {
         List<Requirement> resources = null;
         

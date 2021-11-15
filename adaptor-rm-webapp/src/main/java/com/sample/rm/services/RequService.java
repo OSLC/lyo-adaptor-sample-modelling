@@ -264,7 +264,7 @@ public class RequService
 
             try {
                 httpServletRequest.setAttribute("resourceTitle", aRequirement.toString());
-                ArrayList<String> getterMethodNames = new ArrayList<String>(Arrays.asList("getIdentifier", "getTitle", "getDescription"));
+                ArrayList<String> getterMethodNames = new ArrayList<String>(Arrays.asList("getIdentifier", "getTitle", "getDescription", "getTestProperty"));
                 // Start of user code getRequirementAsHtmlSmallPreview_setResourceGetterMethods
                 //TODO: modify the set of attributes to show in the preview
                 // End of user code
@@ -303,7 +303,7 @@ public class RequService
 
             try {
                 httpServletRequest.setAttribute("resourceTitle", aRequirement.toString());
-                ArrayList<String> getterMethodNames = new ArrayList<String>(Arrays.asList("getIdentifier", "getTitle", "getDescription"));
+                ArrayList<String> getterMethodNames = new ArrayList<String>(Arrays.asList("getIdentifier", "getTitle", "getDescription", "getTestProperty"));
                 // Start of user code getRequirementAsHtmlLargePreview_setResourceGetterMethods
                 //TODO: modify the set of attributes to show in the preview
                 // End of user code

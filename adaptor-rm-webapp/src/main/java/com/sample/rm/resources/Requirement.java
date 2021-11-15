@@ -71,6 +71,7 @@ import com.sample.rm.resources.Oslc_rmDomainConstants;
 
 
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.Oslc_rmDomainConstants;
 
 
 // Start of user code imports
@@ -97,6 +98,9 @@ public class Requirement
     // Start of user code attributeAnnotation:description
     // End of user code
     private String description;
+    // Start of user code attributeAnnotation:testProperty
+    // End of user code
+    private String testProperty;
     
     // Start of user code classAttributes
     // End of user code
@@ -195,6 +199,20 @@ public class Requirement
         return description;
     }
     
+    // Start of user code getterAnnotation:testProperty
+    // End of user code
+    @OslcName("testProperty")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "testProperty")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.XMLLiteral)
+    @OslcReadOnly(false)
+    public String getTestProperty()
+    {
+        // Start of user code getterInit:testProperty
+        // End of user code
+        return testProperty;
+    }
+    
     
     // Start of user code setterAnnotation:identifier
     // End of user code
@@ -229,6 +247,18 @@ public class Requirement
         this.description = description;
     
         // Start of user code setterFinalize:description
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:testProperty
+    // End of user code
+    public void setTestProperty(final String testProperty )
+    {
+        // Start of user code setterInit:testProperty
+        // End of user code
+        this.testProperty = testProperty;
+    
+        // Start of user code setterFinalize:testProperty
         // End of user code
     }
     

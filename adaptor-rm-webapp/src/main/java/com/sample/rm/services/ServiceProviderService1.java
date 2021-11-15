@@ -149,16 +149,11 @@ public class ServiceProviderService1
                                                     
                                                      @QueryParam("oslc.where") final String where,
                                                      @QueryParam("oslc.prefix") final String prefix,
-                                                     @QueryParam("oslc.paging") final String pagingString,
                                                      @QueryParam("page") final String pageString,
-                                                     @QueryParam("oslc.pageSize") final String pageSizeString) throws IOException, ServletException
+                                                    @QueryParam("oslc.pageSize") final String pageSizeString) throws IOException, ServletException
     {
-        boolean paging=false;
         int page=0;
         int pageSize=20;
-        if (null != pagingString) {
-            paging = Boolean.parseBoolean(pagingString);
-        }
         if (null != pageString) {
             page = Integer.parseInt(pageString);
         }
@@ -170,22 +165,13 @@ public class ServiceProviderService1
         // Here additional logic can be implemented that complements main action taken in RMToolManager
         // End of user code
 
-        final List<Requirement> resources = RMToolManager.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
-        UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
-            .queryParam("oslc.paging", "true")
-            .queryParam("oslc.pageSize", pageSize)
-            .queryParam("page", page);
-        if (null != where) {
-            uriBuilder.queryParam("oslc.where", where);
-        }
-        if (null != prefix) {
-            uriBuilder.queryParam("oslc.prefix", prefix);
-        }
-        httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
+        final List<Requirement> resources = RMToolManager.queryRequirements(httpServletRequest, where, prefix, page, pageSize);
+        httpServletRequest.setAttribute("queryUri",
+                uriInfo.getAbsolutePath().toString() + "?oslc.paging=true");
         if (resources.size() > pageSize) {
             resources.remove(resources.size() - 1);
-            uriBuilder.replaceQueryParam("page", page + 1);
-            httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
+            httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE,
+                    uriInfo.getAbsolutePath().toString() + "?oslc.paging=true&oslc.pageSize=" + pageSize + "&page=" + (page + 1));
         }
         return resources.toArray(new Requirement [resources.size()]);
     }
@@ -205,16 +191,11 @@ public class ServiceProviderService1
                                     
                                        @QueryParam("oslc.where") final String where,
                                        @QueryParam("oslc.prefix") final String prefix,
-                                       @QueryParam("oslc.paging") final String pagingString,
                                        @QueryParam("page") final String pageString,
-                                       @QueryParam("oslc.pageSize") final String pageSizeString) throws ServletException, IOException
+                                    @QueryParam("oslc.pageSize") final String pageSizeString) throws ServletException, IOException
     {
-        boolean paging=false;
         int page=0;
         int pageSize=20;
-        if (null != pagingString) {
-            paging = Boolean.parseBoolean(pagingString);
-        }
         if (null != pageString) {
             page = Integer.parseInt(pageString);
         }
@@ -225,34 +206,25 @@ public class ServiceProviderService1
         // Start of user code queryRequirementsAsHtml
         // End of user code
 
-        final List<Requirement> resources = RMToolManager.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
+        final List<Requirement> resources = RMToolManager.queryRequirements(httpServletRequest, where, prefix, page, pageSize);
 
         if (resources!= null) {
             httpServletRequest.setAttribute("resources", resources);
             // Start of user code queryRequirementsAsHtml_setAttributes
             // End of user code
 
-            UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
-                .queryParam("oslc.paging", "true")
-                .queryParam("oslc.pageSize", pageSize)
-                .queryParam("page", page);
-            if (null != where) {
-                uriBuilder.queryParam("oslc.where", where);
-            }
-            if (null != prefix) {
-                uriBuilder.queryParam("oslc.prefix", prefix);
-            }
-            httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
+            httpServletRequest.setAttribute("queryUri",
+                    uriInfo.getAbsolutePath().toString() + "?oslc.paging=true");
             if (resources.size() > pageSize) {
                 resources.remove(resources.size() - 1);
-
-                uriBuilder.replaceQueryParam("page", page + 1);
-                httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
+                httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE,
+                        uriInfo.getAbsolutePath().toString() + "?oslc.paging=true&oslc.pageSize=" + pageSize + "&page=" + (page + 1));
             }
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementscollection.jsp");
             rd.forward(httpServletRequest,httpServletResponse);
             return;
         }
+
         throw new WebApplicationException(Status.NOT_FOUND);
     }
 
@@ -423,6 +395,15 @@ public class ServiceProviderService1
                 if (paramValues.size() == 1) {
                     if (paramValues.get(0).length() != 0)
                         aResource.setDescription(paramValues.get(0));
+                    // else, there is an empty value for that parameter, and hence ignore since the parameter is not actually set.
+                }
+
+        }
+        paramValues = formParams.get("testProperty");
+        if (paramValues != null) {
+                if (paramValues.size() == 1) {
+                    if (paramValues.get(0).length() != 0)
+                        aResource.setTestProperty(paramValues.get(0));
                     // else, there is an empty value for that parameter, and hence ignore since the parameter is not actually set.
                 }
 
