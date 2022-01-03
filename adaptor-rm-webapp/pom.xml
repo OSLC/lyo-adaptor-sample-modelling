@@ -91,7 +91,6 @@
             <artifactId>jersey-container-servlet</artifactId>
             <version>${jersey.version}</version>
         </dependency>
-        
         <!-- Lyo dependencies -->
         <dependency>
             <groupId>org.eclipse.lyo.oslc4j.core</groupId>
@@ -111,6 +110,11 @@
         <dependency>
             <groupId>org.eclipse.lyo.trs</groupId>
             <artifactId>trs-server</artifactId>
+            <version>${version.lyo}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.lyo.store</groupId>
+            <artifactId>store-core</artifactId>
             <version>${version.lyo}</version>
         </dependency>
         <dependency>
@@ -163,21 +167,15 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.18.v20190429</version>
+                <version>10.0.7</version>
                 <configuration>
-                    <webAppConfig>
-                        <contextPath>/adaptor-rm</contextPath>
-                    </webAppConfig>
-                    <reload>automatic</reload>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <systemProperties>
-                        <systemProperty>
-                            <name>jetty.port</name>
-                            <value>8083</value>
-                        </systemProperty>
-                    </systemProperties>
-                    <stopKey />
-                    <stopPort />
+                  <webApp>
+                    <contextPath>/adaptor-rm</contextPath>
+                  </webApp>
+                  <httpConnector>
+                    <port>8083</port>
+                  </httpConnector>
+                  <scan>5</scan>
                 </configuration>
             </plugin>
             <!-- Swagger-ui -->

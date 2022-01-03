@@ -36,6 +36,19 @@ import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
 import com.sample.rm.resources.Requirement;
+import java.net.URI;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.NoSuchElementException;
+import org.eclipse.lyo.store.ModelUnmarshallingException;
+import org.eclipse.lyo.store.Store;
+import org.eclipse.lyo.store.StorePool;
+import org.eclipse.lyo.store.StoreAccessException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response.Status;
+
 
 import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
@@ -62,6 +75,7 @@ public class RMToolManager {
 
     private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
 
+    private static StorePool storePool;
     
     private static PagedTrs pagedTrs;
     private static TrsEventHandler trsEventHandler;
@@ -135,6 +149,34 @@ public class RMToolManager {
         // Start of user code contextInitializeServletListener
         initializeRequirements(37);
         // End of user code
+        // Start of user code StoreInitialise
+        // End of user code
+        Properties lyoStoreProperties = new Properties();
+        String lyoStorePropertiesFile = RMToolManager.class.getResource("/store.properties").getFile();
+        try {
+            lyoStoreProperties.load(new FileInputStream(lyoStorePropertiesFile));
+        } catch (IOException e) {
+            log.error("Failed to initialize Store. properties file for Store configuration could not be loaded.", e);
+            throw new RuntimeException(e);
+        }
+        
+        int initialPoolSize = Integer.parseInt(lyoStoreProperties.getProperty("initialPoolSize"));
+        URI defaultNamedGraph;
+        URI sparqlQueryEndpoint;
+        URI sparqlUpdateEndpoint;
+        try {
+            defaultNamedGraph = new URI(lyoStoreProperties.getProperty("defaultNamedGraph"));
+            sparqlQueryEndpoint = new URI(lyoStoreProperties.getProperty("sparqlQueryEndpoint"));
+            sparqlUpdateEndpoint = new URI(lyoStoreProperties.getProperty("sparqlUpdateEndpoint"));
+        } catch (URISyntaxException e) {
+            log.error("Failed to initialize Store. One of the configuration property ('defaultNamedGraph' or 'sparqlQueryEndpoint' or 'sparqlUpdateEndpoint') is not a valid URI.", e);
+            throw new RuntimeException(e);
+        }
+        String userName = null;
+        String password = null;
+        storePool = new StorePool(initialPoolSize, defaultNamedGraph, sparqlQueryEndpoint, sparqlUpdateEndpoint, userName, password);
+        // Start of user code StoreFinalize
+        // End of user code
         
         // Start of user code TRSInitialise
         // End of user code
@@ -184,6 +226,19 @@ public class RMToolManager {
     {
         List<Requirement> resources = null;
         
+        // Start of user code queryRequirements_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        try {
+            resources = new ArrayList<Requirement>(store.getResources(storePool.getDefaultNamedGraphUri(), Requirement.class, prefix, where, "", limit+1, page*limit));
+        } catch (StoreAccessException | ModelUnmarshallingException e) {
+            log.error("Failed to query resources, with where-string '" + where + "'", e);
+            throw new WebApplicationException("Failed to query resources, with where-string '" + where + "'", e, Status.INTERNAL_SERVER_ERROR);
+        } finally {
+            storePool.releaseStore(store);
+        }
+        // Start of user code queryRequirements_storeFinalize
+        // End of user code
         
         // Start of user code queryRequirements
         resources = new ArrayList<>(requirements.values());
@@ -194,6 +249,19 @@ public class RMToolManager {
     {
         List<Requirement> resources = null;
         
+        // Start of user code RequirementSelector_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        try {
+            resources = new ArrayList<Requirement>(store.getResources(storePool.getDefaultNamedGraphUri(), Requirement.class, "", "", terms, 20, -1));
+        } catch (StoreAccessException | ModelUnmarshallingException e) {
+            log.error("Failed to search resources, with search-term '" + terms + "'", e);
+            throw new WebApplicationException("Failed to search resources, with search-term '" + terms + "'", e, Status.INTERNAL_SERVER_ERROR);
+        } finally {
+            storePool.releaseStore(store);
+        }
+        // Start of user code RequirementSelector_storeFinalize
+        // End of user code
         
         // Start of user code RequirementSelector
         resources = new ArrayList<>(requirements.values());
@@ -228,6 +296,23 @@ public class RMToolManager {
     {
         Requirement aResource = null;
         
+        // Start of user code getRequirement_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        URI uri = RMToolResourcesFactory.constructURIForRequirement(requirementId);
+        try {
+            aResource = store.getResource(storePool.getDefaultNamedGraphUri(), uri, Requirement.class);
+        } catch (NoSuchElementException e) {
+            log.error("Resource: '" + uri + "' not found");
+            throw new WebApplicationException("Failed to get resource: '" + uri + "'", e, Status.NOT_FOUND);
+        } catch (StoreAccessException | ModelUnmarshallingException  e) {
+            log.error("Failed to get resource: '" + uri + "'", e);
+            throw new WebApplicationException("Failed to get resource: '" + uri + "'", e, Status.INTERNAL_SERVER_ERROR);
+        } finally {
+            storePool.releaseStore(store);
+        }
+        // Start of user code getRequirement_storeFinalize
+        // End of user code
         
         // Start of user code getRequirement
         aResource = requirements.get(requirementId);
@@ -248,6 +333,26 @@ public class RMToolManager {
 
     public static Requirement updateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource, final String requirementId) {
         Requirement updatedResource = null;
+        // Start of user code updateRequirement_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        URI uri = RMToolResourcesFactory.constructURIForRequirement(requirementId);
+        if (!store.resourceExists(storePool.getDefaultNamedGraphUri(), uri)) {
+            log.error("Cannot update a resource that does not already exists: '" + uri + "'");
+            throw new WebApplicationException("Cannot update a resource that does not already exists: '" + uri + "'", Status.NOT_FOUND);
+        }
+        aResource.setAbout(uri);
+        try {
+            store.updateResources(storePool.getDefaultNamedGraphUri(), aResource);
+        } catch (StoreAccessException e) {
+            log.error("Failed to update resource: '" + uri + "'", e);
+            throw new WebApplicationException("Failed to update resource: '" + uri + "'", e);
+        } finally {
+            storePool.releaseStore(store);
+        }
+        updatedResource = aResource;
+        // Start of user code updateRequirement_storeFinalize
+        // End of user code
         
         // Start of user code updateRequirement
         updatedResource = createOrUpdateRequirement(httpServletRequest, aResource);
