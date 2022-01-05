@@ -18,7 +18,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <version.lyo>4.1.0-SNAPSHOT</version.lyo>
+        <version.lyo>5.0.0-SNAPSHOT</version.lyo>
         <jersey.version>2.25.1</jersey.version>
         <swagger.version>2.1.2</swagger.version>
         <swagger-ui.version>3.52.3</swagger-ui.version>
@@ -91,7 +91,6 @@
             <artifactId>jersey-container-servlet</artifactId>
             <version>${jersey.version}</version>
         </dependency>
-        
         <!-- Lyo dependencies -->
         <dependency>
             <groupId>org.eclipse.lyo.oslc4j.core</groupId>
@@ -163,21 +162,15 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.18.v20190429</version>
+                <version>10.0.7</version>
                 <configuration>
-                    <webAppConfig>
-                        <contextPath>/adaptor-rm</contextPath>
-                    </webAppConfig>
-                    <reload>automatic</reload>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <systemProperties>
-                        <systemProperty>
-                            <name>jetty.port</name>
-                            <value>8083</value>
-                        </systemProperty>
-                    </systemProperties>
-                    <stopKey />
-                    <stopPort />
+                  <webApp>
+                    <contextPath>/adaptor-rm</contextPath>
+                  </webApp>
+                  <httpConnector>
+                    <port>8083</port>
+                  </httpConnector>
+                  <scan>5</scan>
                 </configuration>
             </plugin>
             <!-- Swagger-ui -->
