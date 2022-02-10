@@ -188,6 +188,39 @@
         <plugins>
             <!-- Start of user code plugins
             -->
+            <plugin>
+                <groupId>org.codehaus.cargo</groupId>
+                <artifactId>cargo-maven3-plugin</artifactId>
+                <version>1.9.9</version>
+                <configuration>
+                    <container>
+                    <!--WORKS-->
+                        <containerId>tomcat9x</containerId>
+                        <!-- <containerId>jetty10x</containerId> -->
+                        <!-- <containerId>jetty9x</containerId> -->
+                        <!-- <containerId>tomee8x</containerId> -->
+                        <!-- <containerId>payara</containerId> -->
+                        <!-- <containerId>wildfly26x</containerId> -->
+                    <!--FAILS-->
+                        <!-- Context Root Not Found -->
+                        <!-- <containerId>liberty</containerId> -->
+                    </container>
+                    <configuration>
+                        <properties>
+                            <cargo.servlet.port>8083</cargo.servlet.port>
+                        </properties>
+                    </configuration>
+                    <deployables>
+                        <deployable>
+                            <type>war</type>
+                            <location>${project.build.directory}/${project.build.finalName}.war</location>
+                            <properties>
+                                <context>/adaptor-rm</context>
+                            </properties>
+                        </deployable>
+                    </deployables>
+                </configuration>
+            </plugin>
             <!-- TODO: Add additional plugins here to avoid them be overrriden upon future re-generation -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
