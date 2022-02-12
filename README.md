@@ -17,3 +17,7 @@ The repository contains
 
 ![Domain Specification Model](img/SpecificationDiagram.png)
 
+## Prerequisites
+
+- JDK 11 LTS (or possibly newer, briefly tested up to JDK 15 MTS)
+- Maven 3.6.3 or newer (and Maven-related IDE tools if you are using an IDE to build)
