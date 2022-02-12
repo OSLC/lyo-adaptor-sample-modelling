@@ -2,9 +2,11 @@ name: 'CI'
 
 on:
   push:
-    branches: [master]
+    branches:
+      - 'main-*'
   pull_request:
-    branches: [master]
+    branches: 
+      - 'main-*'
   schedule:
     - cron: "30 4,20 * * 4,5,6" # catch SNAPSHOT breaking changes
   workflow_dispatch:
