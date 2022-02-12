@@ -1,4 +1,4 @@
-name: 'Maven CI'
+name: 'CI'
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-jdk11:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -18,7 +18,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: 'Build :: RM Sample'
+      - name: 'Build RM Sample'
         run: |
           mvn -B clean verify --file adaptor-rm-webapp/pom.xml
       - name: 'Build :: Testing Sample'
