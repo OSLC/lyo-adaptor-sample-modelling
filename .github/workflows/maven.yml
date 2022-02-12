@@ -18,12 +18,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '11'
-      - name: Build :: RM Sample
+      - name: 'Build :: RM Sample'
         run: |
           mvn -B clean verify --file adaptor-rm-webapp/pom.xml
-      - name: Build :: Testing Sample
+      - name: 'Build :: Testing Sample'
         run: |
           mvn -B clean verify --file adaptor-testing-webapp/pom.xml
-      - name: Build :: Sample Client
+      - name: 'Build :: Sample Client'
         run: |
           mvn -B clean verify --file adaptor-testing-webapp/pom.xml
