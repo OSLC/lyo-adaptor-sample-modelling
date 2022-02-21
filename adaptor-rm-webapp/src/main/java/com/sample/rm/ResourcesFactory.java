@@ -48,7 +48,7 @@ import com.sample.rm.resources.Requirement;
 // Start of user code pre_class_code
 // End of user code
 
-public class RMToolResourcesFactory {
+public class ResourcesFactory {
 
     // Start of user code class_attributes
     // End of user code

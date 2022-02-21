@@ -23,7 +23,7 @@ import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
-import com.sample.rm.RMToolManager;
+import com.sample.rm.RestDelegate;
 
 // Start of user code imports
 // End of user code
@@ -56,7 +56,7 @@ public class ApplicationBinder extends AbstractBinder {
     private final class TRSFactory implements Factory<PagedTrs> {
         @Override
         public PagedTrs provide() {
-            return RMToolManager.getPagedTrs();
+            return RestDelegate.getPagedTrs();
         }
     
         @Override

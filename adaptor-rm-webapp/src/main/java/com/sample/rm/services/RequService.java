@@ -79,7 +79,7 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 
-import com.sample.rm.RMToolManager;
+import com.sample.rm.RestDelegate;
 import com.sample.rm.RMToolConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
@@ -146,12 +146,12 @@ public class RequService
         // Start of user code getResource_init
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = RestDelegate.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             // Start of user code getRequirement
             // End of user code
-            httpServletResponse.setHeader("ETag", RMToolManager.getETagFromRequirement(aRequirement));
+            httpServletResponse.setHeader("ETag", RestDelegate.getETagFromRequirement(aRequirement));
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
             return aRequirement;
         }
@@ -182,7 +182,7 @@ public class RequService
         // Start of user code getRequirementAsHtml_init
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = RestDelegate.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             httpServletRequest.setAttribute("aRequirement", aRequirement);
@@ -230,7 +230,7 @@ public class RequService
         //TODO: adjust the preview height & width values from the default values provided above.
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = RestDelegate.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             final Compact compact = new Compact();
@@ -270,7 +270,7 @@ public class RequService
         // Start of user code getRequirementAsHtmlSmallPreview_init
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = RestDelegate.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             httpServletRequest.setAttribute("aRequirement", aRequirement);
@@ -309,7 +309,7 @@ public class RequService
         // Start of user code getRequirementAsHtmlLargePreview_init
         // End of user code
 
-        final Requirement aRequirement = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aRequirement = RestDelegate.getRequirement(httpServletRequest, requirementId);
 
         if (aRequirement != null) {
             httpServletRequest.setAttribute("aRequirement", aRequirement);
@@ -358,12 +358,12 @@ public class RequService
     {
         // Start of user code deleteRequirement_init
         // End of user code
-        final Requirement aResource = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement aResource = RestDelegate.getRequirement(httpServletRequest, requirementId);
 
         if (aResource != null) {
             // Start of user code deleteRequirement
             // End of user code
-            boolean deleted = RMToolManager.deleteRequirement(httpServletRequest, requirementId);
+            boolean deleted = RestDelegate.deleteRequirement(httpServletRequest, requirementId);
             if (deleted)
                 return Response.ok().header(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2).build();
             else
@@ -396,16 +396,16 @@ public class RequService
     {
         // Start of user code updateRequirement_init
         // End of user code
-        final Requirement originalResource = RMToolManager.getRequirement(httpServletRequest, requirementId);
+        final Requirement originalResource = RestDelegate.getRequirement(httpServletRequest, requirementId);
 
         if (originalResource != null) {
-            final String originalETag = RMToolManager.getETagFromRequirement(originalResource);
+            final String originalETag = RestDelegate.getETagFromRequirement(originalResource);
 
             if ((eTagHeader == null) || (originalETag.equals(eTagHeader))) {
                 // Start of user code updateRequirement
                 // End of user code
-                final Requirement updatedResource = RMToolManager.updateRequirement(httpServletRequest, aResource, requirementId);
-                httpServletResponse.setHeader("ETag", RMToolManager.getETagFromRequirement(updatedResource));
+                final Requirement updatedResource = RestDelegate.updateRequirement(httpServletRequest, aResource, requirementId);
+                httpServletResponse.setHeader("ETag", RestDelegate.getETagFromRequirement(updatedResource));
                 return Response.ok().header(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2).build();
             }
             else {

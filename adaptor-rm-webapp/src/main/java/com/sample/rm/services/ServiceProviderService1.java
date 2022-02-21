@@ -81,7 +81,7 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 
-import com.sample.rm.RMToolManager;
+import com.sample.rm.RestDelegate;
 import com.sample.rm.RMToolConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
@@ -170,7 +170,7 @@ public class ServiceProviderService1
         // Here additional logic can be implemented that complements main action taken in RMToolManager
         // End of user code
 
-        List<Requirement> resources = RMToolManager.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
+        List<Requirement> resources = RestDelegate.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
         UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
             .queryParam("oslc.paging", "true")
             .queryParam("oslc.pageSize", pageSize)
@@ -226,7 +226,7 @@ public class ServiceProviderService1
         // Start of user code queryRequirementsAsHtml
         // End of user code
 
-        List<Requirement> resources = RMToolManager.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
+        List<Requirement> resources = RestDelegate.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
 
         if (resources!= null) {
             // Start of user code queryRequirementsAsHtml_setAttributes
@@ -285,7 +285,7 @@ public class ServiceProviderService1
 
         if (terms != null ) {
             httpServletRequest.setAttribute("terms", terms);
-            final List<Requirement> resources = RMToolManager.RequirementSelector(httpServletRequest, terms);
+            final List<Requirement> resources = RestDelegate.RequirementSelector(httpServletRequest, terms);
             if (resources!= null) {
                 JSONArray resourceArray = new JSONArray();
                 for (Requirement resource : resources) {
@@ -347,8 +347,8 @@ public class ServiceProviderService1
             final Requirement aResource
         ) throws IOException, ServletException
     {
-        Requirement newResource = RMToolManager.createRequirement(httpServletRequest, aResource);
-        httpServletResponse.setHeader("ETag", RMToolManager.getETagFromRequirement(newResource));
+        Requirement newResource = RestDelegate.createRequirement(httpServletRequest, aResource);
+        httpServletResponse.setHeader("ETag", RestDelegate.getETagFromRequirement(newResource));
         return Response.created(newResource.getAbout()).entity(newResource).header(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2).build();
     }
 
@@ -430,7 +430,7 @@ public class ServiceProviderService1
 
         }
 
-        newResource = RMToolManager.createRequirementFromDialog(httpServletRequest, aResource);
+        newResource = RestDelegate.createRequirementFromDialog(httpServletRequest, aResource);
 
         if (newResource != null) {
             httpServletRequest.setAttribute("newResource", newResource);

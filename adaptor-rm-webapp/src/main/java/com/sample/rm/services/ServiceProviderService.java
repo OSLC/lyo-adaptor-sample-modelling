@@ -49,7 +49,7 @@ import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
 import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 
-import com.sample.rm.RMToolManager;
+import com.sample.rm.RestDelegate;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 
 // Start of user code imports

@@ -72,9 +72,9 @@ import java.util.Iterator;
 // Start of user code pre_class_code
 // End of user code
 
-public class RMToolManager {
+public class RestDelegate {
 
-    private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
+    private static final Logger log = LoggerFactory.getLogger(RestDelegate.class);
 
     
     private static PagedTrs pagedTrs;
@@ -108,7 +108,7 @@ public class RMToolManager {
 
     private static Requirement produceRandomRequirement(String id) {
         Requirement r = null;
-        r = RMToolResourcesFactory.createRequirement(id);
+        r = ResourcesFactory.createRequirement(id);
         r.setIdentifier(id);
         r.setTitle("aTitle with id:" + id);
         r.setDescription("A sample Requirement with id:" + id);
@@ -128,13 +128,13 @@ public class RMToolManager {
         if (!requirements.containsKey(aResource.getIdentifier())) {
             nextRequirementId++;
             String id = Integer.toString(nextRequirementId);
-            URI uri = RMToolResourcesFactory.constructURIForRequirement(id);
+            URI uri = ResourcesFactory.constructURIForRequirement(id);
             aResource.setAbout(uri);
             requirements.put(id, aResource);
             trsEventHandler.onCreated(aResource);
         }
         else {
-            URI uri = RMToolResourcesFactory.constructURIForRequirement(aResource.getIdentifier());
+            URI uri = ResourcesFactory.constructURIForRequirement(aResource.getIdentifier());
             aResource.setAbout(uri);
             requirements.put(aResource.getIdentifier(), aResource);
             trsEventHandler.onModified(aResource);
