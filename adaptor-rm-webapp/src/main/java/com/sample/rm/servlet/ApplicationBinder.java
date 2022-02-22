@@ -22,7 +22,19 @@ import org.slf4j.LoggerFactory;
 import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Properties;
+
+import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
+import org.eclipse.lyo.oslc4j.trs.server.PagedTrsFactory;
+import org.eclipse.lyo.oslc4j.trs.server.TrsEventHandler;
+import org.eclipse.lyo.store.StorePool;
+
 import com.sample.rm.RMToolManager;
 
 // Start of user code imports
@@ -50,17 +62,70 @@ public class ApplicationBinder extends AbstractBinder {
     protected void configure() {
         log.info("HK2 contract binding start");
     
-        bindFactory(new TRSFactory()).to(PagedTrs.class);
-    }
+        bindFactory(new TrsEventHandlerFactory()).to(TrsEventHandler.class);
 
-    private final class TRSFactory implements Factory<PagedTrs> {
+        bindFactory(new StorePoolFactory()).to(StorePool.class);
+}
+
+    private final class StorePoolFactory implements Factory<StorePool> {
         @Override
-        public PagedTrs provide() {
-            return RMToolManager.getPagedTrs();
+        public StorePool provide() {
+            // Start of user code StoreInitialise
+            // End of user code
+            Properties lyoStoreProperties = new Properties();
+            String lyoStorePropertiesFile = RMToolManager.class.getResource("/store.properties").getFile();
+            try {
+                lyoStoreProperties.load(new FileInputStream(lyoStorePropertiesFile));
+            } catch (IOException e) {
+                log.error("Failed to initialize Store. properties file for Store configuration could not be loaded.", e);
+                throw new RuntimeException(e);
+            }
+            
+            int initialPoolSize = Integer.parseInt(lyoStoreProperties.getProperty("initialPoolSize"));
+            URI defaultNamedGraph;
+            URI sparqlQueryEndpoint;
+            URI sparqlUpdateEndpoint;
+            try {
+                defaultNamedGraph = new URI(lyoStoreProperties.getProperty("defaultNamedGraph"));
+                sparqlQueryEndpoint = new URI(lyoStoreProperties.getProperty("sparqlQueryEndpoint"));
+                sparqlUpdateEndpoint = new URI(lyoStoreProperties.getProperty("sparqlUpdateEndpoint"));
+            } catch (URISyntaxException e) {
+                log.error("Failed to initialize Store. One of the configuration property ('defaultNamedGraph' or 'sparqlQueryEndpoint' or 'sparqlUpdateEndpoint') is not a valid URI.", e);
+                throw new RuntimeException(e);
+            }
+            String userName = null;
+            String password = null;
+            StorePool storePool = new StorePool(initialPoolSize, defaultNamedGraph, sparqlQueryEndpoint, sparqlUpdateEndpoint, userName, password);
+            // Start of user code StoreFinalize
+            // End of user code
+            
+            return storePool;
         }
     
         @Override
-        public void dispose(PagedTrs instance) {
+        public void dispose(StorePool instance) {
+        }
+    }
+    
+    private final class TrsEventHandlerFactory implements Factory<TrsEventHandler> {
+        @Override
+        public TrsEventHandler provide() {
+            // Start of user code TRSInitialise
+            // End of user code
+            ArrayList<URI> uris = new ArrayList<URI>();
+            // Start of user code TRSInitialBase
+            //TODO: Provide the initial list of URIs to populate the TRS log with
+            // End of user code
+            InmemPagedTrs temp = new PagedTrsFactory().getInmemPagedTrs(50, 50, uris);
+///            PagedTrs pagedTrs = temp;
+            TrsEventHandler trsEventHandler = temp;
+            // Start of user code TRSFinalize
+            // End of user code
+            return trsEventHandler;
+        }
+    
+        @Override
+        public void dispose(TrsEventHandler instance) {
         }
     }
 }

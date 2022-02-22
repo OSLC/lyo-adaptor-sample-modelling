@@ -25,6 +25,7 @@
 package com.sample.rm;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.inject.Inject;
 import javax.servlet.ServletContextEvent;
 import java.util.List;
 import java.util.ArrayList;
@@ -37,6 +38,19 @@ import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
 import com.sample.rm.resources.Requirement;
+import java.net.URI;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.NoSuchElementException;
+import org.eclipse.lyo.store.ModelUnmarshallingException;
+import org.eclipse.lyo.store.Store;
+import org.eclipse.lyo.store.StorePool;
+import org.eclipse.lyo.store.StoreAccessException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response.Status;
+
 
 import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
 import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
@@ -63,26 +77,17 @@ public class RMToolManager {
 
     private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
 
+    //TODO: Can we inject into a static???
+    @Inject static TrsEventHandler trsEventHandler;
+    //TODO: HOW TO GET THAT?????
+    //    @Inject PagedTrs pagedTrs;
+    @Inject static StorePool storePool;
     
-    private static PagedTrs pagedTrs;
-    private static TrsEventHandler trsEventHandler;
     // Start of user code class_attributes
     private static Map<String, Requirement> requirements = new HashMap<String, Requirement>(1000);
-    private static int nextRequirementId;
+    private static int nextRequirementId = -1;
     // End of user code
     
-    public static PagedTrs getPagedTrs() {
-        return pagedTrs;
-    }
-
-    public static TrsEventHandler getTrsEventHandler() {
-        return trsEventHandler;
-    }
-
-    // Start of user code trsMethods
-    // TODO Use one of these methods to update the PagedTrs service, when appropriate.
-    // trsEventHandler.[onCreated|onModified|onDeleted]();
-    // End of user code
     
     // Start of user code class_methods
 	private static int randomNumber(int origin, int bound) {
@@ -130,35 +135,12 @@ public class RMToolManager {
     }
     // End of user code
 
-    public static void contextInitializeServletListener(final ServletContextEvent servletContextEvent)
-    {
-        
-        // Start of user code contextInitializeServletListener
-        initializeRequirements(37);
-        // End of user code
-        
-        // Start of user code TRSInitialise
-        // End of user code
-        ArrayList<URI> uris = new ArrayList<URI>();
-        // Start of user code TRSInitialBase
-        ArrayList<Requirement> requirements = getRequirements();
-        for (Iterator iterator = requirements.iterator(); iterator.hasNext();) {
-            uris.add(((Requirement) iterator.next()).getAbout());
-        }
-        // End of user code
-        InmemPagedTrs temp = new PagedTrsFactory().getInmemPagedTrs(50, 50, uris);
-        pagedTrs = temp;
-        trsEventHandler = temp;
-        // Start of user code TRSFinalize
-        // End of user code
+    private static void contextInitializeServletListener(final ServletContextEvent servletContextEvent) {
+    //This method is no longer in use. Migrate any user code blocks to the class ServletListener
     }
 
-    public static void contextDestroyServletListener(ServletContextEvent servletContextEvent) 
-    {
-        
-        // Start of user code contextDestroyed
-        // TODO Implement code to shutdown connections to data backbone etc...
-        // End of user code
+    private static void contextDestroyServletListener(ServletContextEvent servletContextEvent)  {
+    //This method is no longer in use. Migrate any user code blocks to the class ServletListener
     }
 
     public static ServiceProviderInfo[] getServiceProviderInfos(HttpServletRequest httpServletRequest)
@@ -187,6 +169,9 @@ public class RMToolManager {
         
         
         // Start of user code queryRequirements
+        if (nextRequirementId == -1) {
+            initializeRequirements(25);
+        }
         resources = new ArrayList<>(requirements.values());
         // End of user code
         return resources;
@@ -229,6 +214,23 @@ public class RMToolManager {
     {
         Requirement aResource = null;
         
+        // Start of user code getRequirement_storeInit
+        // End of user code
+        Store store = storePool.getStore();
+        URI uri = RMToolResourcesFactory.constructURIForRequirement(requirementId);
+        try {
+            aResource = store.getResource(storePool.getDefaultNamedGraphUri(), uri, Requirement.class);
+        } catch (NoSuchElementException e) {
+            log.error("Resource: '" + uri + "' not found");
+            throw new WebApplicationException("Failed to get resource: '" + uri + "'", e, Status.NOT_FOUND);
+        } catch (StoreAccessException | ModelUnmarshallingException  e) {
+            log.error("Failed to get resource: '" + uri + "'", e);
+            throw new WebApplicationException("Failed to get resource: '" + uri + "'", e, Status.INTERNAL_SERVER_ERROR);
+        } finally {
+            storePool.releaseStore(store);
+        }
+        // Start of user code getRequirement_storeFinalize
+        // End of user code
         
         // Start of user code getRequirement
         aResource = requirements.get(requirementId);

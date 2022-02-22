@@ -28,6 +28,8 @@ import java.util.NoSuchElementException;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.net.URI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +41,25 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import com.sample.rm.RMToolManager;
+
+import java.net.URI;
+import java.util.Properties;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.NoSuchElementException;
+import org.eclipse.lyo.store.ModelUnmarshallingException;
+import org.eclipse.lyo.store.Store;
+import org.eclipse.lyo.store.StorePool;
+import org.eclipse.lyo.store.StoreAccessException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response.Status;
+
+
+import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
+import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
+import org.eclipse.lyo.oslc4j.trs.server.PagedTrsFactory;
+import org.eclipse.lyo.oslc4j.trs.server.TrsEventHandler;
 
 // Start of user code imports
 // End of user code
@@ -57,6 +78,11 @@ public class ServletListener implements ServletContextListener  {
     public ServletListener() {
         super();
     }
+
+    // Start of user code trsMethods
+    // TODO Use one of these methods to update the PagedTrs service, when appropriate.
+    // trsEventHandler.[onCreated|onModified|onDeleted]();
+    // End of user code
 
     @Override
     public void contextInitialized(final ServletContextEvent servletContextEvent)
@@ -92,8 +118,9 @@ public class ServletListener implements ServletContextListener  {
 
         logger.info("servletListner contextInitialized.");
 
-        // Establish connection to data backbone etc ...
-        RMToolManager.contextInitializeServletListener(servletContextEvent);
+        // Start of user code contextInitialized_mid
+        // TODO Implement code to establish connection to data backbone etc ...
+        // End of user code
         
         // Start of user code contextInitialized_final
         // End of user code
@@ -106,7 +133,9 @@ public class ServletListener implements ServletContextListener  {
         // End of user code
 
         // Shutdown connections to data backbone etc...
-        RMToolManager.contextDestroyServletListener(servletContextEvent);
+        // Start of user code contextDestroyed_mid
+        // TODO Implement code to shutdown connections to data backbone etc...
+        // End of user code
 
         
         // Start of user code contextDestroyed_final

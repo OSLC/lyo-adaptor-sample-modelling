@@ -147,6 +147,11 @@
             <version>${version.lyo}</version>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.lyo.store</groupId>
+            <artifactId>store-core</artifactId>
+            <version>${version.lyo}</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.lyo.clients</groupId>
             <artifactId>oslc-client</artifactId>
             <version>${version.lyo}</version>
