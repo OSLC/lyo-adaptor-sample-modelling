@@ -78,16 +78,20 @@ public class RMToolManager {
     private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
 
     //TODO: Can we inject into a static???
-    @Inject static TrsEventHandler trsEventHandler;
+    @Inject TrsEventHandler trsEventHandler;
     //TODO: HOW TO GET THAT?????
     //    @Inject PagedTrs pagedTrs;
-    @Inject static StorePool storePool;
+    @Inject StorePool storePool;
     
     // Start of user code class_attributes
     private static Map<String, Requirement> requirements = new HashMap<String, Requirement>(1000);
     private static int nextRequirementId = -1;
     // End of user code
     
+    
+    public RMToolManager() {
+        log.trace("Delegate is initialized");
+    }
     
     // Start of user code class_methods
 	private static int randomNumber(int origin, int bound) {
@@ -116,7 +120,7 @@ public class RMToolManager {
         }
     }
 
-    public static Requirement createOrUpdateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource) {
+    public Requirement createOrUpdateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource) {
         if (!requirements.containsKey(aResource.getIdentifier())) {
             nextRequirementId++;
             String id = Integer.toString(nextRequirementId);
@@ -186,7 +190,7 @@ public class RMToolManager {
         // End of user code
         return resources;
     }
-    public static Requirement createRequirement(HttpServletRequest httpServletRequest, final Requirement aResource)
+    public Requirement createRequirement(HttpServletRequest httpServletRequest, final Requirement aResource)
     {
         Requirement newResource = null;
         
@@ -197,7 +201,7 @@ public class RMToolManager {
         return newResource;
     }
 
-    public static Requirement createRequirementFromDialog(HttpServletRequest httpServletRequest, final Requirement aResource)
+    public Requirement createRequirementFromDialog(HttpServletRequest httpServletRequest, final Requirement aResource)
     {
         Requirement newResource = null;
         
@@ -210,7 +214,7 @@ public class RMToolManager {
 
 
 
-    public static Requirement getRequirement(HttpServletRequest httpServletRequest, final String requirementId)
+    public Requirement getRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
         Requirement aResource = null;
         
@@ -249,7 +253,7 @@ public class RMToolManager {
         return deleted;
     }
 
-    public static Requirement updateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource, final String requirementId) {
+    public Requirement updateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource, final String requirementId) {
         Requirement updatedResource = null;
         
         // Start of user code updateRequirement

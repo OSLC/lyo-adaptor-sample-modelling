@@ -37,6 +37,8 @@ import org.eclipse.lyo.store.StorePool;
 
 import com.sample.rm.RMToolManager;
 
+import javax.inject.Singleton;
+
 // Start of user code imports
 // End of user code
 
@@ -62,6 +64,8 @@ public class ApplicationBinder extends AbstractBinder {
     protected void configure() {
         log.info("HK2 contract binding start");
     
+        bindAsContract(RMToolManager.class).in(Singleton.class);
+        
         bindFactory(new TrsEventHandlerFactory()).to(TrsEventHandler.class);
 
         bindFactory(new StorePoolFactory()).to(StorePool.class);

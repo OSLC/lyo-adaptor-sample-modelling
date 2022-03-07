@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -103,6 +104,7 @@ public class ServiceProviderService1
     @Context private HttpServletRequest httpServletRequest;
     @Context private HttpServletResponse httpServletResponse;
     @Context private UriInfo uriInfo;
+    @Inject  private RMToolManager delegate;
 
     private static final Logger log = LoggerFactory.getLogger(ServiceProviderService1.class);
 
@@ -347,7 +349,7 @@ public class ServiceProviderService1
             final Requirement aResource
         ) throws IOException, ServletException
     {
-        Requirement newResource = RMToolManager.createRequirement(httpServletRequest, aResource);
+        Requirement newResource = delegate.createRequirement(httpServletRequest, aResource);
         httpServletResponse.setHeader("ETag", RMToolManager.getETagFromRequirement(newResource));
         return Response.created(newResource.getAbout()).entity(newResource).header(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2).build();
     }
@@ -430,7 +432,7 @@ public class ServiceProviderService1
 
         }
 
-        newResource = RMToolManager.createRequirementFromDialog(httpServletRequest, aResource);
+        newResource = delegate.createRequirementFromDialog(httpServletRequest, aResource);
 
         if (newResource != null) {
             httpServletRequest.setAttribute("newResource", newResource);
