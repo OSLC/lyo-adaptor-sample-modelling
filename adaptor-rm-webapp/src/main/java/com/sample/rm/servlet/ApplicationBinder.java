@@ -66,9 +66,11 @@ public class ApplicationBinder extends AbstractBinder {
     
         bindAsContract(RMToolManager.class).in(Singleton.class);
         
-        bindFactory(new TrsEventHandlerFactory()).to(TrsEventHandler.class);
-
-        bindFactory(new StorePoolFactory()).to(StorePool.class);
+        bindFactory(new StorePoolFactory()).to(StorePool.class).in(Singleton.class);
+    
+        InmemPagedTrs inmemTrs = new PagedTrsFactory().getInmemPagedTrs(50, 50, new ArrayList<>());
+        bind(inmemTrs).to(TrsEventHandler.class);
+        bind(inmemTrs).to(PagedTrs.class);
 }
 
     private final class StorePoolFactory implements Factory<StorePool> {
