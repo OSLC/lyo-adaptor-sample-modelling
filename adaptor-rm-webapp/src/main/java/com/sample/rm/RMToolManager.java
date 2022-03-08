@@ -84,8 +84,8 @@ public class RMToolManager {
     @Inject StorePool storePool;
     
     // Start of user code class_attributes
-    private static Map<String, Requirement> requirements = new HashMap<String, Requirement>(1000);
-    private static int nextRequirementId = -1;
+    private Map<String, Requirement> requirements = new HashMap<String, Requirement>(1000);
+    private int nextRequirementId = -1;
     // End of user code
     
     
@@ -94,15 +94,15 @@ public class RMToolManager {
     }
     
     // Start of user code class_methods
-	private static int randomNumber(int origin, int bound) {
+	private int randomNumber(int origin, int bound) {
 		return ThreadLocalRandom.current().nextInt(origin, bound);
 	}
 
-    public static ArrayList<Requirement> getRequirements() {
+    public ArrayList<Requirement> getRequirements() {
         return new ArrayList<Requirement>(requirements.values());
     }
 
-    private static Requirement produceRandomRequirement(String id) {
+    private Requirement produceRandomRequirement(String id) {
         Requirement r = null;
         r = RMToolResourcesFactory.createRequirement(id);
         r.setIdentifier(id);
@@ -111,7 +111,7 @@ public class RMToolManager {
         return r;
     }
 
-    private static void initializeRequirements(int size) {
+    private void initializeRequirements(int size) {
         for (int i = 0; i < size; i++) {
             nextRequirementId++;
             String id = Integer.toString(nextRequirementId);
@@ -139,11 +139,11 @@ public class RMToolManager {
     }
     // End of user code
 
-    private static void contextInitializeServletListener(final ServletContextEvent servletContextEvent) {
+    private void contextInitializeServletListener(final ServletContextEvent servletContextEvent) {
     //This method is no longer in use. Migrate any user code blocks to the class ServletListener
     }
 
-    private static void contextDestroyServletListener(ServletContextEvent servletContextEvent)  {
+    private void contextDestroyServletListener(ServletContextEvent servletContextEvent)  {
     //This method is no longer in use. Migrate any user code blocks to the class ServletListener
     }
 
@@ -167,7 +167,7 @@ public class RMToolManager {
         return serviceProviderInfos;
     }
 
-    public static List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, String prefix, boolean paging, int page, int limit)
+    public List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, String prefix, boolean paging, int page, int limit)
     {
         List<Requirement> resources = null;
         
@@ -180,7 +180,7 @@ public class RMToolManager {
         // End of user code
         return resources;
     }
-    public static List<Requirement> RequirementSelector(HttpServletRequest httpServletRequest, String terms)   
+    public List<Requirement> RequirementSelector(HttpServletRequest httpServletRequest, String terms)
     {
         List<Requirement> resources = null;
         
@@ -242,7 +242,7 @@ public class RMToolManager {
         return aResource;
     }
 
-    public static Boolean deleteRequirement(HttpServletRequest httpServletRequest, final String requirementId)
+    public Boolean deleteRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
         Boolean deleted = false;
         
@@ -262,7 +262,7 @@ public class RMToolManager {
         return updatedResource;
     }
 
-    public static String getETagFromRequirement(final Requirement aResource)
+    public String getETagFromRequirement(final Requirement aResource)
     {
         String eTag = null;
         // Start of user code getETagFromRequirement

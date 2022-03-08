@@ -153,7 +153,7 @@ public class RequService
         if (aRequirement != null) {
             // Start of user code getRequirement
             // End of user code
-            httpServletResponse.setHeader("ETag", RMToolManager.getETagFromRequirement(aRequirement));
+            httpServletResponse.setHeader("ETag", delegate.getETagFromRequirement(aRequirement));
             httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2);
             return aRequirement;
         }
@@ -365,7 +365,7 @@ public class RequService
         if (aResource != null) {
             // Start of user code deleteRequirement
             // End of user code
-            boolean deleted = RMToolManager.deleteRequirement(httpServletRequest, requirementId);
+            boolean deleted = delegate.deleteRequirement(httpServletRequest, requirementId);
             if (deleted)
                 return Response.ok().header(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2).build();
             else
@@ -401,13 +401,13 @@ public class RequService
         final Requirement originalResource = delegate.getRequirement(httpServletRequest, requirementId);
 
         if (originalResource != null) {
-            final String originalETag = RMToolManager.getETagFromRequirement(originalResource);
+            final String originalETag = delegate.getETagFromRequirement(originalResource);
 
             if ((eTagHeader == null) || (originalETag.equals(eTagHeader))) {
                 // Start of user code updateRequirement
                 // End of user code
                 final Requirement updatedResource = delegate.updateRequirement(httpServletRequest, aResource, requirementId);
-                httpServletResponse.setHeader("ETag", RMToolManager.getETagFromRequirement(updatedResource));
+                httpServletResponse.setHeader("ETag", delegate.getETagFromRequirement(updatedResource));
                 return Response.ok().header(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2).build();
             }
             else {
