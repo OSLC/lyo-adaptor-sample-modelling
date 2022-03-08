@@ -71,7 +71,7 @@ public class ApplicationBinder extends AbstractBinder {
         InmemPagedTrs inmemTrs = new PagedTrsFactory().getInmemPagedTrs(50, 50, new ArrayList<>());
         bind(inmemTrs).to(TrsEventHandler.class);
         bind(inmemTrs).to(PagedTrs.class);
-}
+    }
 
     private final class StorePoolFactory implements Factory<StorePool> {
         @Override
