@@ -19,6 +19,19 @@
 
 package com.sample.rm;
 
+// Start of user code Notice
+//Note: The Lyo code generator is migrating the name of this class from 'RMToolResourcesFactory' to the new shorter name 'ResourcesFactory'.
+//You are still using the old name. The generator will continue to use this old name until you actively trigger the change.
+//To migrate to the new class name:
+//1. Rename your class to ResourcesFactory 
+//    * Please rename and do not simply create a copy of the file. The generator needs to detect the file deletion in order to activate the name change.
+//2. Regenerate the code. 
+//    * The generator will generate this class with the new name.
+//    * Besides the class name, the code - including the user clode blocks - remain intact.
+//    * All other class references to the new class name are updated.
+//3. Delete this notice
+// End of user code
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
@@ -37,37 +50,38 @@ import com.sample.rm.resources.Requirement;
 
 public class RMToolResourcesFactory {
 
+    private String basePath;
+
     // Start of user code class_attributes
     // End of user code
-    
+
+    public RMToolResourcesFactory(String basePath) {
+        this.basePath = basePath;
+    }
+
     // Start of user code class_methods
     // End of user code
 
     //methods for Requirement resource
     
-    public static Requirement createRequirement(final String requirementId)
-    {
+    public Requirement createRequirement(final String requirementId) {
         return new Requirement(constructURIForRequirement(requirementId));
     }
     
-    public static URI constructURIForRequirement(final String requirementId)
-    {
-        String basePath = OSLC4JUtils.getServletURI();
+    public URI constructURIForRequirement(final String requirementId) {
         Map<String, Object> pathParameters = new HashMap<String, Object>();
         pathParameters.put("requirementId", requirementId);
         String instanceURI = "requirements/{requirementId}";
     
-        final UriBuilder builder = UriBuilder.fromUri(basePath);
+        final UriBuilder builder = UriBuilder.fromUri(this.basePath);
         return builder.path(instanceURI).buildFromMap(pathParameters);
     }
     
-    public static Link constructLinkForRequirement(final String requirementId , final String label)
-    {
+    public Link constructLinkForRequirement(final String requirementId , final String label) {
         return new Link(constructURIForRequirement(requirementId), label);
     }
     
-    public static Link constructLinkForRequirement(final String requirementId)
-    {
+    public Link constructLinkForRequirement(final String requirementId) {
         return new Link(constructURIForRequirement(requirementId));
     }
     

@@ -52,7 +52,7 @@ import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 
-import com.sample.rm.RMToolConstants;
+import com.sample.rm.ServerConstants;
 import com.sample.rm.RMToolManager;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 
@@ -116,7 +116,7 @@ public class ServiceProviderCatalogService
         ServiceProviderCatalog catalog =  ServiceProviderCatalogSingleton.getServiceProviderCatalog(httpServletRequest);
 
         if (catalog != null) {
-            httpServletResponse.addHeader(RMToolConstants.HDR_OSLC_VERSION,"2.0");
+            httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION,"2.0");
             return catalog;
         }
 
