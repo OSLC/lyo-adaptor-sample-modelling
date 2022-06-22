@@ -62,9 +62,13 @@ import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
 import com.sample.rm.resources.Oslc_rmDomainConstants;
+import com.sample.rm.resources.FoafDomainConstants;
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.Oslc_qmDomainConstants;
+import com.sample.rm.resources.Oslc_rmDomainConstants;
 
-
+import com.sample.rm.resources.IPerson;
+import com.sample.rm.resources.ITestScript;
 // Start of user code imports
 // End of user code
 
@@ -74,6 +78,9 @@ import com.sample.rm.resources.DctermsDomainConstants;
 public interface IRequirement
 {
 
+    public void addComments(final String comments );
+    public void addRelations(final Link relations );
+    public void addSomeListOfIntegers(final Integer someListOfIntegers );
 
     @OslcName("identifier")
     @OslcPropertyDefinition(DctermsDomainConstants.DUBLIN_CORE_NAMSPACE + "identifier")
@@ -96,9 +103,75 @@ public interface IRequirement
     @OslcReadOnly(false)
     public String getDescription();
 
+    @OslcName("priority")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "priority")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getPriority();
+
+    @OslcName("approvalDate")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "approvalDate")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.DateTime)
+    @OslcReadOnly(false)
+    public Date getApprovalDate();
+
+    @OslcName("status")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "status")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getStatus();
+
+    @OslcName("author")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "author")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.Resource)
+    @OslcRange({FoafDomainConstants.PERSON_TYPE})
+    @OslcReadOnly(false)
+    public Link getAuthor();
+
+    @OslcName("comments")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "comments")
+    @OslcOccurs(Occurs.ZeroOrMany)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public Set<String> getComments();
+
+    @OslcName("relations")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "relations")
+    @OslcOccurs(Occurs.ZeroOrMany)
+    @OslcValueType(ValueType.Resource)
+    @OslcRange({Oslc_qmDomainConstants.TESTSCRIPT_TYPE})
+    @OslcReadOnly(false)
+    public Set<Link> getRelations();
+
+    @OslcName("someIntegerProperty")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "someIntegerProperty")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.Integer)
+    @OslcReadOnly(false)
+    public Integer getSomeIntegerProperty();
+
+    @OslcName("someListOfIntegers")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "someListOfIntegers")
+    @OslcOccurs(Occurs.ZeroOrMany)
+    @OslcValueType(ValueType.Integer)
+    @OslcReadOnly(false)
+    public Set<Integer> getSomeListOfIntegers();
+
 
     public void setIdentifier(final String identifier );
     public void setTitle(final String title );
     public void setDescription(final String description );
+    public void setPriority(final String priority );
+    public void setApprovalDate(final Date approvalDate );
+    public void setStatus(final String status );
+    public void setAuthor(final Link author );
+    public void setComments(final Set<String> comments );
+    public void setRelations(final Set<Link> relations );
+    public void setSomeIntegerProperty(final Integer someIntegerProperty );
+    public void setSomeListOfIntegers(final Set<Integer> someListOfIntegers );
 }
 

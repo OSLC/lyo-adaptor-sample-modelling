@@ -48,7 +48,7 @@
   <specification>
     <domainSpecifications name="Quality Management" namespaceURI="http://open-services.net/ns/qm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_qm']">
       <resources id="_e8pdMJa4EeqoX6mSFj9log" name="TestPlan" resourceProperties="_e8sggJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8uVsJa4EeqoX6mSFj9log"/>
-      <resources id="_e8ivgJa4EeqoX6mSFj9log" name="TestScript" resourceProperties="_e8qEQJa4EeqoX6mSFj9log _e8lLwJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log"/>
+      <resources id="_e8ivgJa4EeqoX6mSFj9log" name="TestScript" resourceProperties="_e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log"/>
       <resources id="_e8rSYZa4EeqoX6mSFj9log" name="TestCase" resourceProperties="_e8sggJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8uVsJa4EeqoX6mSFj9log"/>
       <resourceProperties id="_e8r5cJa4EeqoX6mSFj9log" name="Reports On" valueType="Resource" range="_e8rSYZa4EeqoX6mSFj9log"/>
       <resourceProperties id="_e8sggJa4EeqoX6mSFj9log" name="uses" valueType="Resource" range="_e8ivgJa4EeqoX6mSFj9log"/>
@@ -68,7 +68,16 @@
       <resourceProperties id="_e8u8wJa4EeqoX6mSFj9log" name="identifier" valueType="String"/>
     </domainSpecifications>
     <domainSpecifications name="Requirements Management" namespaceURI="http://open-services.net/ns/rm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_rm']">
-      <resources id="_e8j9oJa4EeqoX6mSFj9log" name="Requirement" resourceProperties="_e8u8wJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log"/>
+      <resources id="_e8j9oJa4EeqoX6mSFj9log" name="Requirement" resourceProperties="_e8u8wJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log _3_zh8PJqEeyVyN7My60uCA _3_zh8fJqEeyVyN7My60uCA _3_zh8vJqEeyVyN7My60uCA _3_zh9PJqEeyVyN7My60uCA _3_zh8_JqEeyVyN7My60uCA _BfZo4PJrEeyVyN7My60uCA _NSKFQPJrEeyVyN7My60uCA _NSKFQfJrEeyVyN7My60uCA"/>
+      <resourceProperties id="_3_zh8PJqEeyVyN7My60uCA" name="priority" valueType="String"/>
+      <resourceProperties id="_3_zh8fJqEeyVyN7My60uCA" name="approvalDate" valueType="DateTime"/>
+      <resourceProperties id="_3_zh8vJqEeyVyN7My60uCA" name="status" valueType="String"/>
+      <resourceProperties id="_3_zh9PJqEeyVyN7My60uCA" name="author" valueType="Resource" range="_e8wx8Ja4EeqoX6mSFj9log"/>
+      <resourceProperties id="_3_zh8_JqEeyVyN7My60uCA" name="comments" occurs="zeroOrMany" valueType="String"/>
+      <resourceProperties id="_3_zh9fJqEeyVyN7My60uCA" name="property6" valueType="String"/>
+      <resourceProperties id="_BfZo4PJrEeyVyN7My60uCA" name="relations" occurs="zeroOrMany" valueType="Resource" range="_e8ivgJa4EeqoX6mSFj9log"/>
+      <resourceProperties id="_NSKFQPJrEeyVyN7My60uCA" name="someIntegerProperty" valueType="Integer"/>
+      <resourceProperties id="_NSKFQfJrEeyVyN7My60uCA" name="someListOfIntegers" occurs="zeroOrMany" valueType="Integer"/>
     </domainSpecifications>
     <domainPrefixes name="oslc_rm"/>
     <domainPrefixes name="oslc_qm"/>

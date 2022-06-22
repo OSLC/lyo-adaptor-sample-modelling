@@ -70,9 +70,13 @@ import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 
 
+import com.sample.rm.resources.FoafDomainConstants;
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.Oslc_qmDomainConstants;
+import com.sample.rm.resources.Oslc_rmDomainConstants;
 
-
+import com.sample.rm.resources.Person;
+import com.sample.rm.resources.TestScript;
 // Start of user code imports
 // End of user code
 
@@ -97,6 +101,30 @@ public class Requirement
     // Start of user code attributeAnnotation:description
     // End of user code
     private String description;
+    // Start of user code attributeAnnotation:priority
+    // End of user code
+    private String priority;
+    // Start of user code attributeAnnotation:approvalDate
+    // End of user code
+    private Date approvalDate;
+    // Start of user code attributeAnnotation:status
+    // End of user code
+    private String status;
+    // Start of user code attributeAnnotation:author
+    // End of user code
+    private Link author;
+    // Start of user code attributeAnnotation:comments
+    // End of user code
+    private Set<String> comments = new HashSet<String>();
+    // Start of user code attributeAnnotation:relations
+    // End of user code
+    private Set<Link> relations = new HashSet<Link>();
+    // Start of user code attributeAnnotation:someIntegerProperty
+    // End of user code
+    private Integer someIntegerProperty;
+    // Start of user code attributeAnnotation:someListOfIntegers
+    // End of user code
+    private Set<Integer> someListOfIntegers = new HashSet<Integer>();
     
     // Start of user code classAttributes
     // End of user code
@@ -152,6 +180,21 @@ public class Requirement
         return result;
     }
     
+    public void addComments(final String comments)
+    {
+        this.comments.add(comments);
+    }
+    
+    public void addRelations(final Link relations)
+    {
+        this.relations.add(relations);
+    }
+    
+    public void addSomeListOfIntegers(final Integer someListOfIntegers)
+    {
+        this.someListOfIntegers.add(someListOfIntegers);
+    }
+    
     
     // Start of user code getterAnnotation:identifier
     // End of user code
@@ -195,6 +238,120 @@ public class Requirement
         return description;
     }
     
+    // Start of user code getterAnnotation:priority
+    // End of user code
+    @OslcName("priority")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "priority")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getPriority()
+    {
+        // Start of user code getterInit:priority
+        // End of user code
+        return priority;
+    }
+    
+    // Start of user code getterAnnotation:approvalDate
+    // End of user code
+    @OslcName("approvalDate")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "approvalDate")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.DateTime)
+    @OslcReadOnly(false)
+    public Date getApprovalDate()
+    {
+        // Start of user code getterInit:approvalDate
+        // End of user code
+        return approvalDate;
+    }
+    
+    // Start of user code getterAnnotation:status
+    // End of user code
+    @OslcName("status")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "status")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getStatus()
+    {
+        // Start of user code getterInit:status
+        // End of user code
+        return status;
+    }
+    
+    // Start of user code getterAnnotation:author
+    // End of user code
+    @OslcName("author")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "author")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.Resource)
+    @OslcRange({FoafDomainConstants.PERSON_TYPE})
+    @OslcReadOnly(false)
+    public Link getAuthor()
+    {
+        // Start of user code getterInit:author
+        // End of user code
+        return author;
+    }
+    
+    // Start of user code getterAnnotation:comments
+    // End of user code
+    @OslcName("comments")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "comments")
+    @OslcOccurs(Occurs.ZeroOrMany)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public Set<String> getComments()
+    {
+        // Start of user code getterInit:comments
+        // End of user code
+        return comments;
+    }
+    
+    // Start of user code getterAnnotation:relations
+    // End of user code
+    @OslcName("relations")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "relations")
+    @OslcOccurs(Occurs.ZeroOrMany)
+    @OslcValueType(ValueType.Resource)
+    @OslcRange({Oslc_qmDomainConstants.TESTSCRIPT_TYPE})
+    @OslcReadOnly(false)
+    public Set<Link> getRelations()
+    {
+        // Start of user code getterInit:relations
+        // End of user code
+        return relations;
+    }
+    
+    // Start of user code getterAnnotation:someIntegerProperty
+    // End of user code
+    @OslcName("someIntegerProperty")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "someIntegerProperty")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.Integer)
+    @OslcReadOnly(false)
+    public Integer getSomeIntegerProperty()
+    {
+        // Start of user code getterInit:someIntegerProperty
+        // End of user code
+        return someIntegerProperty;
+    }
+    
+    // Start of user code getterAnnotation:someListOfIntegers
+    // End of user code
+    @OslcName("someListOfIntegers")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "someListOfIntegers")
+    @OslcOccurs(Occurs.ZeroOrMany)
+    @OslcValueType(ValueType.Integer)
+    @OslcReadOnly(false)
+    public Set<Integer> getSomeListOfIntegers()
+    {
+        // Start of user code getterInit:someListOfIntegers
+        // End of user code
+        return someListOfIntegers;
+    }
+    
     
     // Start of user code setterAnnotation:identifier
     // End of user code
@@ -229,6 +386,114 @@ public class Requirement
         this.description = description;
     
         // Start of user code setterFinalize:description
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:priority
+    // End of user code
+    public void setPriority(final String priority )
+    {
+        // Start of user code setterInit:priority
+        // End of user code
+        this.priority = priority;
+    
+        // Start of user code setterFinalize:priority
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:approvalDate
+    // End of user code
+    public void setApprovalDate(final Date approvalDate )
+    {
+        // Start of user code setterInit:approvalDate
+        // End of user code
+        this.approvalDate = approvalDate;
+    
+        // Start of user code setterFinalize:approvalDate
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:status
+    // End of user code
+    public void setStatus(final String status )
+    {
+        // Start of user code setterInit:status
+        // End of user code
+        this.status = status;
+    
+        // Start of user code setterFinalize:status
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:author
+    // End of user code
+    public void setAuthor(final Link author )
+    {
+        // Start of user code setterInit:author
+        // End of user code
+        this.author = author;
+    
+        // Start of user code setterFinalize:author
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:comments
+    // End of user code
+    public void setComments(final Set<String> comments )
+    {
+        // Start of user code setterInit:comments
+        // End of user code
+        this.comments.clear();
+        if (comments != null)
+        {
+            this.comments.addAll(comments);
+        }
+    
+        // Start of user code setterFinalize:comments
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:relations
+    // End of user code
+    public void setRelations(final Set<Link> relations )
+    {
+        // Start of user code setterInit:relations
+        // End of user code
+        this.relations.clear();
+        if (relations != null)
+        {
+            this.relations.addAll(relations);
+        }
+    
+        // Start of user code setterFinalize:relations
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:someIntegerProperty
+    // End of user code
+    public void setSomeIntegerProperty(final Integer someIntegerProperty )
+    {
+        // Start of user code setterInit:someIntegerProperty
+        // End of user code
+        this.someIntegerProperty = someIntegerProperty;
+    
+        // Start of user code setterFinalize:someIntegerProperty
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:someListOfIntegers
+    // End of user code
+    public void setSomeListOfIntegers(final Set<Integer> someListOfIntegers )
+    {
+        // Start of user code setterInit:someListOfIntegers
+        // End of user code
+        this.someListOfIntegers.clear();
+        if (someListOfIntegers != null)
+        {
+            this.someListOfIntegers.addAll(someListOfIntegers);
+        }
+    
+        // Start of user code setterFinalize:someListOfIntegers
         // End of user code
     }
     

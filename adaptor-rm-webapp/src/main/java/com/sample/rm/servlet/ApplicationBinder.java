@@ -17,14 +17,23 @@
 
 package com.sample.rm.servlet;
 
+import java.net.URI;
+import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
-import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
-import com.sample.rm.RMToolManager;
+import javax.inject.Singleton;
 
+import com.sample.rm.RMToolManager;
+import com.sample.rm.RMToolResourcesFactory;
+
+import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
+import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
+import org.eclipse.lyo.oslc4j.trs.server.PagedTrsFactory;
+import org.eclipse.lyo.oslc4j.trs.server.TrsEventHandler;
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 // Start of user code imports
 // End of user code
 
@@ -50,17 +59,30 @@ public class ApplicationBinder extends AbstractBinder {
     protected void configure() {
         log.info("HK2 contract binding start");
     
-        bindFactory(new TRSFactory()).to(PagedTrs.class);
+        bindAsContract(RMToolManager.class).in(Singleton.class);
+        bindFactory(new ResourcesFactoryFactory()).to(RMToolResourcesFactory.class).in(Singleton.class);
+    
+        // Start of user code TRSInitialise
+        // End of user code
+        ArrayList<URI> uris = new ArrayList<URI>();
+        // Start of user code TRSInitialBase
+        //TODO: Provide the initial list of URIs to populate the TRS log with
+        // End of user code
+        InmemPagedTrs inmemTrs = new PagedTrsFactory().getInmemPagedTrs(50, 50, uris);
+        bind(inmemTrs).to(TrsEventHandler.class);
+        bind(inmemTrs).to(PagedTrs.class);
+        // Start of user code TRSFinalize
+        // End of user code
     }
-
-    private final class TRSFactory implements Factory<PagedTrs> {
+    private final class ResourcesFactoryFactory implements Factory<RMToolResourcesFactory> {
         @Override
-        public PagedTrs provide() {
-            return RMToolManager.getPagedTrs();
+        public RMToolResourcesFactory provide() {
+            return new RMToolResourcesFactory(OSLC4JUtils.getServletURI());
         }
     
         @Override
-        public void dispose(PagedTrs instance) {
+        public void dispose(RMToolResourcesFactory instance) {
         }
     }
+    
 }

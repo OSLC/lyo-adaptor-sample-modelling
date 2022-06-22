@@ -24,22 +24,40 @@
 
 package com.sample.rm;
 
+// Start of user code Notice
+//Note: The Lyo code generator is migrating the name of this class from 'RMToolManager' to the new shorter name 'RestDelegate'.
+//You are still using the old name. The generator will continue to use this old name until you actively trigger the change.
+//To migrate to the new class name:
+//1. Rename your class to RestDelegate 
+//    * Please rename and do not simply create a copy of the file. The generator needs to detect the file deletion in order to activate the name change.
+//2. Regenerate the code. 
+//    * The generator will generate this class with the new name.
+//    * Besides the class name, the code - including the user clode blocks - remain intact.
+//    * All other class references to the new class name are updated.
+//3. Delete this notice
+// End of user code
+
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContextEvent;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
+import org.eclipse.lyo.oslc4j.core.model.Link;
+
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
+import com.sample.rm.resources.Person;
 import com.sample.rm.resources.Requirement;
+import com.sample.rm.resources.TestScript;
 
-import org.eclipse.lyo.oslc4j.trs.server.InmemPagedTrs;
-import org.eclipse.lyo.oslc4j.trs.server.PagedTrs;
-import org.eclipse.lyo.oslc4j.trs.server.PagedTrsFactory;
 import org.eclipse.lyo.oslc4j.trs.server.TrsEventHandler;
 
 
@@ -63,45 +81,58 @@ public class RMToolManager {
     private static final Logger log = LoggerFactory.getLogger(RMToolManager.class);
 
     
-    private static PagedTrs pagedTrs;
-    private static TrsEventHandler trsEventHandler;
+    @Inject TrsEventHandler trsEventHandler;
+    @Inject RMToolResourcesFactory resourcesFactory;
     // Start of user code class_attributes
-    private static Map<String, Requirement> requirements = new HashMap<String, Requirement>(1000);
+    private static Map<String, Requirement> requirements = null;
     private static int nextRequirementId;
     // End of user code
     
-    public static PagedTrs getPagedTrs() {
-        return pagedTrs;
+    public RMToolManager() {
+        log.trace("Delegate is initialized");
     }
-
-    public static TrsEventHandler getTrsEventHandler() {
-        return trsEventHandler;
-    }
-
-    // Start of user code trsMethods
-    // TODO Use one of these methods to update the PagedTrs service, when appropriate.
-    // trsEventHandler.[onCreated|onModified|onDeleted]();
-    // End of user code
+    
     
     // Start of user code class_methods
-	private static int randomNumber(int origin, int bound) {
+	private int randomNumber(int origin, int bound) {
 		return ThreadLocalRandom.current().nextInt(origin, bound);
 	}
 
-    public static ArrayList<Requirement> getRequirements() {
+    public ArrayList<Requirement> getRequirements() {
         return new ArrayList<Requirement>(requirements.values());
     }
 
-    private static Requirement produceRandomRequirement(String id) {
+    private Requirement produceRandomRequirement(String id) {
         Requirement r = null;
-        r = RMToolResourcesFactory.createRequirement(id);
+        r = resourcesFactory.createRequirement(id);
         r.setIdentifier(id);
         r.setTitle("aTitle with id:" + id);
-        r.setDescription("A sample Requirement with id:" + id);
+        r.setDescription("A sample Requirement with id:" + id + "<br>" + "with more lines" + "<br>" + "and one final line");
+        r.setPriority("High");
+        r.setApprovalDate(new Date());
+        r.setStatus("Approved");
+        r.setAuthor(new Link(URI.create("http://localhost:8083/adaptor-rm/services/person/" + id), "myAuthorname" + id));
+        for (int i = 0; i < 5; i++) {
+            r.addComments("this is a comment " + i);
+        }
+        for (int i = 0; i < 4; i++) {
+            r.addRelations(new Link(URI.create("http://localhost:8083/adaptor-rm/services/tests/" + i), "test" + i));
+        }
+        r.setSomeIntegerProperty(Integer.parseInt(id));
+        for (int i = 0; i < 3; i++) {
+            r.addSomeListOfIntegers(Integer.parseInt(id)+i);
+        }
+        
+        
         return r;
     }
 
-    private static void initializeRequirements(int size) {
+    public void initializeRequirements() {
+        if (null != requirements) {
+            return;
+        }
+        int size = 20;
+        requirements = new HashMap<String, Requirement>(size+100);
         for (int i = 0; i < size; i++) {
             nextRequirementId++;
             String id = Integer.toString(nextRequirementId);
@@ -110,55 +141,26 @@ public class RMToolManager {
         }
     }
 
-    public static Requirement createOrUpdateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource) {
+    public Requirement createOrUpdateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource) {
         if (!requirements.containsKey(aResource.getIdentifier())) {
             nextRequirementId++;
             String id = Integer.toString(nextRequirementId);
-            URI uri = RMToolResourcesFactory.constructURIForRequirement(id);
+            URI uri = resourcesFactory.constructURIForRequirement(id);
             aResource.setAbout(uri);
             requirements.put(id, aResource);
-            trsEventHandler.onCreated(aResource);
         }
         else {
-            URI uri = RMToolResourcesFactory.constructURIForRequirement(aResource.getIdentifier());
+            URI uri = resourcesFactory.constructURIForRequirement(aResource.getIdentifier());
             aResource.setAbout(uri);
             requirements.put(aResource.getIdentifier(), aResource);
-            trsEventHandler.onModified(aResource);
         }
         return aResource;
     }
     // End of user code
 
-    public static void contextInitializeServletListener(final ServletContextEvent servletContextEvent)
-    {
-        
-        // Start of user code contextInitializeServletListener
-        initializeRequirements(37);
-        // End of user code
-        
-        // Start of user code TRSInitialise
-        // End of user code
-        ArrayList<URI> uris = new ArrayList<URI>();
-        // Start of user code TRSInitialBase
-        ArrayList<Requirement> requirements = getRequirements();
-        for (Iterator iterator = requirements.iterator(); iterator.hasNext();) {
-            uris.add(((Requirement) iterator.next()).getAbout());
-        }
-        // End of user code
-        InmemPagedTrs temp = new PagedTrsFactory().getInmemPagedTrs(50, 50, uris);
-        pagedTrs = temp;
-        trsEventHandler = temp;
-        // Start of user code TRSFinalize
-        // End of user code
-    }
-
-    public static void contextDestroyServletListener(ServletContextEvent servletContextEvent) 
-    {
-        
-        // Start of user code contextDestroyed
-        // TODO Implement code to shutdown connections to data backbone etc...
-        // End of user code
-    }
+    //The methods contextInitializeServletListener() and contextDestroyServletListener() no longer exits
+    //Migrate any user-specific code blocks to the class com.sample.rm.servlet.ServletListener
+    //Any user-specific code should be found in *.lost files.
 
     public static ServiceProviderInfo[] getServiceProviderInfos(HttpServletRequest httpServletRequest)
     {
@@ -180,43 +182,47 @@ public class RMToolManager {
         return serviceProviderInfos;
     }
 
-    public static List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, String prefix, boolean paging, int page, int limit)
+    public List<Requirement> queryRequirements(HttpServletRequest httpServletRequest, String where, String prefix, boolean paging, int page, int limit)
     {
         List<Requirement> resources = null;
         
         
         // Start of user code queryRequirements
+        initializeRequirements();
         resources = new ArrayList<>(requirements.values());
         // End of user code
         return resources;
     }
-    public static List<Requirement> RequirementSelector(HttpServletRequest httpServletRequest, String terms)   
+    public List<Requirement> RequirementSelector(HttpServletRequest httpServletRequest, String terms)
     {
         List<Requirement> resources = null;
         
         
         // Start of user code RequirementSelector
+        initializeRequirements();
         resources = new ArrayList<>(requirements.values());
         // End of user code
         return resources;
     }
-    public static Requirement createRequirement(HttpServletRequest httpServletRequest, final Requirement aResource)
+    public Requirement createRequirement(HttpServletRequest httpServletRequest, final Requirement aResource)
     {
         Requirement newResource = null;
         
         
         // Start of user code createRequirement
+        initializeRequirements();
         newResource = createOrUpdateRequirement(httpServletRequest, aResource);
         // End of user code
         return newResource;
     }
 
-    public static Requirement createRequirementFromDialog(HttpServletRequest httpServletRequest, final Requirement aResource)
+    public Requirement createRequirementFromDialog(HttpServletRequest httpServletRequest, final Requirement aResource)
     {
         Requirement newResource = null;
         
         
         // Start of user code createRequirementFromDialog
+        initializeRequirements();
         newResource = createOrUpdateRequirement(httpServletRequest, aResource);
         // End of user code
         return newResource;
@@ -224,18 +230,19 @@ public class RMToolManager {
 
 
 
-    public static Requirement getRequirement(HttpServletRequest httpServletRequest, final String requirementId)
+    public Requirement getRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
         Requirement aResource = null;
         
         
         // Start of user code getRequirement
+        initializeRequirements();
         aResource = requirements.get(requirementId);
         // End of user code
         return aResource;
     }
 
-    public static Boolean deleteRequirement(HttpServletRequest httpServletRequest, final String requirementId)
+    public Boolean deleteRequirement(HttpServletRequest httpServletRequest, final String requirementId)
     {
         Boolean deleted = false;
         
@@ -246,16 +253,17 @@ public class RMToolManager {
         return deleted;
     }
 
-    public static Requirement updateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource, final String requirementId) {
+    public Requirement updateRequirement(HttpServletRequest httpServletRequest, final Requirement aResource, final String requirementId) {
         Requirement updatedResource = null;
         
         // Start of user code updateRequirement
+        initializeRequirements();
         updatedResource = createOrUpdateRequirement(httpServletRequest, aResource);
         // End of user code
         return updatedResource;
     }
 
-    public static String getETagFromRequirement(final Requirement aResource)
+    public String getETagFromRequirement(final Requirement aResource)
     {
         String eTag = null;
         // Start of user code getETagFromRequirement
