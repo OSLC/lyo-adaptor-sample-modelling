@@ -79,7 +79,7 @@ public interface IRequirement
 {
 
     public void addComments(final String comments );
-    public void addRelations(final Link relations );
+    public void addTestScripts(final Link testScripts );
     public void addSomeListOfIntegers(final Integer someListOfIntegers );
 
     @OslcName("identifier")
@@ -139,13 +139,13 @@ public interface IRequirement
     @OslcReadOnly(false)
     public Set<String> getComments();
 
-    @OslcName("relations")
-    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "relations")
+    @OslcName("testScripts")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "testScripts")
     @OslcOccurs(Occurs.ZeroOrMany)
     @OslcValueType(ValueType.Resource)
     @OslcRange({Oslc_qmDomainConstants.TESTSCRIPT_TYPE})
     @OslcReadOnly(false)
-    public Set<Link> getRelations();
+    public Set<Link> getTestScripts();
 
     @OslcName("someIntegerProperty")
     @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "someIntegerProperty")
@@ -170,7 +170,7 @@ public interface IRequirement
     public void setStatus(final String status );
     public void setAuthor(final Link author );
     public void setComments(final Set<String> comments );
-    public void setRelations(final Set<Link> relations );
+    public void setTestScripts(final Set<Link> testScripts );
     public void setSomeIntegerProperty(final Integer someIntegerProperty );
     public void setSomeListOfIntegers(final Set<Integer> someListOfIntegers );
 }

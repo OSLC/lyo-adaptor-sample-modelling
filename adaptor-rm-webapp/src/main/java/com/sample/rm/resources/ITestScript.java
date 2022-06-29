@@ -53,9 +53,11 @@ import org.eclipse.lyo.oslc4j.core.model.Representation;
 import org.eclipse.lyo.oslc4j.core.model.ValueType;
 
 import com.sample.rm.resources.Oslc_qmDomainConstants;
+import com.sample.rm.resources.FoafDomainConstants;
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.Oslc_qmDomainConstants;
 
-
+import com.sample.rm.resources.IPerson;
 // Start of user code imports
 // End of user code
 
@@ -80,8 +82,33 @@ public interface ITestScript
     @OslcReadOnly(false)
     public String getDescription();
 
+    @OslcName("executionInstructions")
+    @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "executionInstructions")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getExecutionInstructions();
+
+    @OslcName("creator")
+    @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "creator")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.Resource)
+    @OslcRange({FoafDomainConstants.PERSON_TYPE})
+    @OslcReadOnly(false)
+    public Link getCreator();
+
+    @OslcName("created")
+    @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "created")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.DateTime)
+    @OslcReadOnly(false)
+    public Date getCreated();
+
 
     public void setTitle(final String title );
     public void setDescription(final String description );
+    public void setExecutionInstructions(final String executionInstructions );
+    public void setCreator(final Link creator );
+    public void setCreated(final Date created );
 }
 

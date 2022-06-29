@@ -105,7 +105,7 @@
           </tr>
           <tr>
             <td>
-            <label for="relations">relations: </LABEL>
+            <label for="testScripts">testScripts: </LABEL>
             <%
             %>
             </td>

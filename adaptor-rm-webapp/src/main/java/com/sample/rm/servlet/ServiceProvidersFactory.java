@@ -50,6 +50,7 @@ import com.sample.rm.resources.DctermsDomainConstants;
 import com.sample.rm.resources.Oslc_qmDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.services.ServiceProviderService1;
+import com.sample.rm.services.ServiceProviderService2;
 
 // Start of user code imports
 // End of user code
@@ -58,7 +59,7 @@ public class ServiceProvidersFactory
 {
     private static Class<?>[] RESOURCE_CLASSES =
     {
-        ServiceProviderService1.class
+        ServiceProviderService1.class, ServiceProviderService2.class
     };
 
     private ServiceProvidersFactory()

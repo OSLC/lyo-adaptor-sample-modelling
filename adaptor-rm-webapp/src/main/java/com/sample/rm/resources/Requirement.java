@@ -116,9 +116,9 @@ public class Requirement
     // Start of user code attributeAnnotation:comments
     // End of user code
     private Set<String> comments = new HashSet<String>();
-    // Start of user code attributeAnnotation:relations
+    // Start of user code attributeAnnotation:testScripts
     // End of user code
-    private Set<Link> relations = new HashSet<Link>();
+    private Set<Link> testScripts = new HashSet<Link>();
     // Start of user code attributeAnnotation:someIntegerProperty
     // End of user code
     private Integer someIntegerProperty;
@@ -185,9 +185,9 @@ public class Requirement
         this.comments.add(comments);
     }
     
-    public void addRelations(final Link relations)
+    public void addTestScripts(final Link testScripts)
     {
-        this.relations.add(relations);
+        this.testScripts.add(testScripts);
     }
     
     public void addSomeListOfIntegers(final Integer someListOfIntegers)
@@ -309,19 +309,19 @@ public class Requirement
         return comments;
     }
     
-    // Start of user code getterAnnotation:relations
+    // Start of user code getterAnnotation:testScripts
     // End of user code
-    @OslcName("relations")
-    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "relations")
+    @OslcName("testScripts")
+    @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "testScripts")
     @OslcOccurs(Occurs.ZeroOrMany)
     @OslcValueType(ValueType.Resource)
     @OslcRange({Oslc_qmDomainConstants.TESTSCRIPT_TYPE})
     @OslcReadOnly(false)
-    public Set<Link> getRelations()
+    public Set<Link> getTestScripts()
     {
-        // Start of user code getterInit:relations
+        // Start of user code getterInit:testScripts
         // End of user code
-        return relations;
+        return testScripts;
     }
     
     // Start of user code getterAnnotation:someIntegerProperty
@@ -453,19 +453,19 @@ public class Requirement
         // End of user code
     }
     
-    // Start of user code setterAnnotation:relations
+    // Start of user code setterAnnotation:testScripts
     // End of user code
-    public void setRelations(final Set<Link> relations )
+    public void setTestScripts(final Set<Link> testScripts )
     {
-        // Start of user code setterInit:relations
+        // Start of user code setterInit:testScripts
         // End of user code
-        this.relations.clear();
-        if (relations != null)
+        this.testScripts.clear();
+        if (testScripts != null)
         {
-            this.relations.addAll(relations);
+            this.testScripts.addAll(testScripts);
         }
     
-        // Start of user code setterFinalize:relations
+        // Start of user code setterFinalize:testScripts
         // End of user code
     }
     

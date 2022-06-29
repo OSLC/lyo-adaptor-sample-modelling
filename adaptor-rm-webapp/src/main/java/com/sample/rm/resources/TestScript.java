@@ -59,9 +59,11 @@ import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 import com.sample.rm.resources.Oslc_qmDomainConstants;
 
 
+import com.sample.rm.resources.FoafDomainConstants;
 import com.sample.rm.resources.DctermsDomainConstants;
+import com.sample.rm.resources.Oslc_qmDomainConstants;
 
-
+import com.sample.rm.resources.Person;
 // Start of user code imports
 // End of user code
 
@@ -83,6 +85,15 @@ public class TestScript
     // Start of user code attributeAnnotation:description
     // End of user code
     private String description;
+    // Start of user code attributeAnnotation:executionInstructions
+    // End of user code
+    private String executionInstructions;
+    // Start of user code attributeAnnotation:creator
+    // End of user code
+    private Link creator;
+    // Start of user code attributeAnnotation:created
+    // End of user code
+    private Date created;
     
     // Start of user code classAttributes
     // End of user code
@@ -167,6 +178,49 @@ public class TestScript
         return description;
     }
     
+    // Start of user code getterAnnotation:executionInstructions
+    // End of user code
+    @OslcName("executionInstructions")
+    @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "executionInstructions")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.String)
+    @OslcReadOnly(false)
+    public String getExecutionInstructions()
+    {
+        // Start of user code getterInit:executionInstructions
+        // End of user code
+        return executionInstructions;
+    }
+    
+    // Start of user code getterAnnotation:creator
+    // End of user code
+    @OslcName("creator")
+    @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "creator")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.Resource)
+    @OslcRange({FoafDomainConstants.PERSON_TYPE})
+    @OslcReadOnly(false)
+    public Link getCreator()
+    {
+        // Start of user code getterInit:creator
+        // End of user code
+        return creator;
+    }
+    
+    // Start of user code getterAnnotation:created
+    // End of user code
+    @OslcName("created")
+    @OslcPropertyDefinition(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE + "created")
+    @OslcOccurs(Occurs.ExactlyOne)
+    @OslcValueType(ValueType.DateTime)
+    @OslcReadOnly(false)
+    public Date getCreated()
+    {
+        // Start of user code getterInit:created
+        // End of user code
+        return created;
+    }
+    
     
     // Start of user code setterAnnotation:title
     // End of user code
@@ -189,6 +243,42 @@ public class TestScript
         this.description = description;
     
         // Start of user code setterFinalize:description
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:executionInstructions
+    // End of user code
+    public void setExecutionInstructions(final String executionInstructions )
+    {
+        // Start of user code setterInit:executionInstructions
+        // End of user code
+        this.executionInstructions = executionInstructions;
+    
+        // Start of user code setterFinalize:executionInstructions
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:creator
+    // End of user code
+    public void setCreator(final Link creator )
+    {
+        // Start of user code setterInit:creator
+        // End of user code
+        this.creator = creator;
+    
+        // Start of user code setterFinalize:creator
+        // End of user code
+    }
+    
+    // Start of user code setterAnnotation:created
+    // End of user code
+    public void setCreated(final Date created )
+    {
+        // Start of user code setterInit:created
+        // End of user code
+        this.created = created;
+    
+        // Start of user code setterFinalize:created
         // End of user code
     }
     

@@ -42,16 +42,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContextEvent;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
-import org.eclipse.lyo.oslc4j.core.model.Link;
-
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
 import com.sample.rm.resources.Person;
@@ -62,6 +58,8 @@ import org.eclipse.lyo.oslc4j.trs.server.TrsEventHandler;
 
 
 // Start of user code imports
+import java.util.Date;
+import org.eclipse.lyo.oslc4j.core.model.Link;
 import java.util.concurrent.ThreadLocalRandom;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -85,7 +83,9 @@ public class RMToolManager {
     @Inject RMToolResourcesFactory resourcesFactory;
     // Start of user code class_attributes
     private static Map<String, Requirement> requirements = null;
+    private static Map<String, TestScript> testScripts = null;
     private static int nextRequirementId;
+    private static int nextTestScriptId;
     // End of user code
     
     public RMToolManager() {
@@ -102,6 +102,10 @@ public class RMToolManager {
         return new ArrayList<Requirement>(requirements.values());
     }
 
+    public ArrayList<TestScript> getTestScripts() {
+        return new ArrayList<TestScript>(testScripts.values());
+    }
+
     private Requirement produceRandomRequirement(String id) {
         Requirement r = null;
         r = resourcesFactory.createRequirement(id);
@@ -115,16 +119,33 @@ public class RMToolManager {
         for (int i = 0; i < 5; i++) {
             r.addComments("this is a comment " + i);
         }
-        for (int i = 0; i < 4; i++) {
-            r.addRelations(new Link(URI.create("http://localhost:8083/adaptor-rm/services/tests/" + i), "test" + i));
+        int tc = randomNumber(0, 6);
+        for (int i = 0; i < tc; i++) {
+            int p = randomNumber(1, testScripts.size()-1);
+            String v = Integer.toString(p);
+            r.addTestScripts(new Link(testScripts.get(v).getAbout()));
         }
         r.setSomeIntegerProperty(Integer.parseInt(id));
         for (int i = 0; i < 3; i++) {
             r.addSomeListOfIntegers(Integer.parseInt(id)+i);
         }
-        
-        
         return r;
+    }
+
+    private TestScript produceRandomTestScript(String id) {
+        TestScript r = null;
+        r = resourcesFactory.createTestScript(id);
+        r.setTitle("aTitle with id:" + id);
+        r.setDescription("A sample TestScript with id:" + id + "<br>" + "with more lines" + "<br>" + "and one final line");
+        r.setExecutionInstructions("Some instructions with id:" + id + "<br>" + "with more lines" + "<br>" + "and one final line");
+        r.setCreated(new Date());
+        r.setCreator(new Link(URI.create("http://localhost:8083/adaptor-rm/services/person/" + id), "myAuthorname" + id));
+        return r;
+    }
+
+    public void initializeResources() {
+        initializeTestScripts();
+        initializeRequirements();
     }
 
     public void initializeRequirements() {
@@ -138,6 +159,20 @@ public class RMToolManager {
             String id = Integer.toString(nextRequirementId);
             Requirement r = produceRandomRequirement(id);
             requirements.put(id, r);
+        }
+    }
+
+    public void initializeTestScripts() {
+        if (null != testScripts) {
+            return;
+        }
+        int size = 20;
+        testScripts = new HashMap<String, TestScript>(size+100);
+        for (int i = 0; i < size; i++) {
+            nextTestScriptId++;
+            String id = Integer.toString(nextTestScriptId);
+            TestScript r = produceRandomTestScript(id);
+            testScripts.put(id, r);
         }
     }
 
@@ -188,7 +223,7 @@ public class RMToolManager {
         
         
         // Start of user code queryRequirements
-        initializeRequirements();
+        initializeResources();
         resources = new ArrayList<>(requirements.values());
         // End of user code
         return resources;
@@ -199,7 +234,7 @@ public class RMToolManager {
         
         
         // Start of user code RequirementSelector
-        initializeRequirements();
+        initializeResources();
         resources = new ArrayList<>(requirements.values());
         // End of user code
         return resources;
@@ -210,7 +245,7 @@ public class RMToolManager {
         
         
         // Start of user code createRequirement
-        initializeRequirements();
+        initializeResources();
         newResource = createOrUpdateRequirement(httpServletRequest, aResource);
         // End of user code
         return newResource;
@@ -222,11 +257,36 @@ public class RMToolManager {
         
         
         // Start of user code createRequirementFromDialog
-        initializeRequirements();
+        initializeResources();
         newResource = createOrUpdateRequirement(httpServletRequest, aResource);
         // End of user code
         return newResource;
     }
+
+
+    public List<TestScript> queryTestScripts(HttpServletRequest httpServletRequest, String where, String prefix, boolean paging, int page, int limit)
+    {
+        List<TestScript> resources = null;
+        
+        
+        // Start of user code queryTestScripts
+        initializeResources();
+        resources = new ArrayList<>(testScripts.values());
+        // End of user code
+        return resources;
+    }
+    public List<TestScript> TestScriptSelector(HttpServletRequest httpServletRequest, String terms)
+    {
+        List<TestScript> resources = null;
+        
+        
+        // Start of user code TestScriptSelector
+        initializeResources();
+        resources = new ArrayList<>(testScripts.values());
+        // End of user code
+        return resources;
+    }
+
 
 
 
@@ -236,7 +296,7 @@ public class RMToolManager {
         
         
         // Start of user code getRequirement
-        initializeRequirements();
+        initializeResources();
         aResource = requirements.get(requirementId);
         // End of user code
         return aResource;
@@ -257,17 +317,39 @@ public class RMToolManager {
         Requirement updatedResource = null;
         
         // Start of user code updateRequirement
-        initializeRequirements();
+        initializeResources();
         updatedResource = createOrUpdateRequirement(httpServletRequest, aResource);
         // End of user code
         return updatedResource;
     }
+    public TestScript getTestScript(HttpServletRequest httpServletRequest, final String testScriptId)
+    {
+        TestScript aResource = null;
+        
+        
+        // Start of user code getTestScript
+        initializeResources();
+        aResource = testScripts.get(testScriptId);
+        // End of user code
+        return aResource;
+    }
+
+
 
     public String getETagFromRequirement(final Requirement aResource)
     {
         String eTag = null;
         // Start of user code getETagFromRequirement
         // TODO Implement code to return an ETag for a particular resource
+        // End of user code
+        return eTag;
+    }
+    public String getETagFromTestScript(final TestScript aResource)
+    {
+        String eTag = null;
+        // Start of user code getETagFromTestScript
+        // TODO Implement code to return an ETag for a particular resource
+        // If you encounter problems, consider throwing the runtime exception WebApplicationException(message, cause, final httpStatus)
         // End of user code
         return eTag;
     }

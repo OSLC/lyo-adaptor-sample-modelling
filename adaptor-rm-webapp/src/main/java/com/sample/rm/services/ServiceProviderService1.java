@@ -100,7 +100,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 // Start of user code pre_class_code
 // End of user code
 @OslcService(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
-@Path("requirements")
+@Path("service1/requirements")
 public class ServiceProviderService1
 {
     @Context private HttpServletRequest httpServletRequest;
@@ -266,7 +266,7 @@ public class ServiceProviderService1
     (
          title = "SelectionDialog1",
          label = "SelectionDialog1",
-         uri = "requirements/selector",
+         uri = "service1/requirements/selector",
          hintWidth = "0px",
          hintHeight = "0px",
          resourceTypes = {Oslc_rmDomainConstants.REQUIREMENT_TYPE},
@@ -388,7 +388,7 @@ public class ServiceProviderService1
     (
          title = "CreationDialog1",
          label = "CreationDialog1",
-         uri = "requirements/creator",
+         uri = "service1/requirements/creator",
          hintWidth = "0px",
          hintHeight = "0px",
          resourceTypes = {Oslc_rmDomainConstants.REQUIREMENT_TYPE},
@@ -475,10 +475,10 @@ public class ServiceProviderService1
                     aResource.addComments(paramValues.get(i));
                 }
         }
-        paramValues = formParams.get("relations");
+        paramValues = formParams.get("testScripts");
         if (paramValues != null) {
                 for(int i=0; i<paramValues.size(); i++) {
-                    aResource.addRelations(new Link(new URI(paramValues.get(i))));
+                    aResource.addTestScripts(new Link(new URI(paramValues.get(i))));
                 }
         }
         paramValues = formParams.get("someIntegerProperty");

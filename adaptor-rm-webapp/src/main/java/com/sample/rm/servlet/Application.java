@@ -73,7 +73,9 @@ import com.sample.rm.resources.DctermsDomainConstants;
 import com.sample.rm.resources.Oslc_qmDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.services.ServiceProviderService1;
+import com.sample.rm.services.ServiceProviderService2;
 import com.sample.rm.services.RequService;
+import com.sample.rm.services.TestScriptService;
 import org.eclipse.lyo.oslc4j.trs.server.service.TrackedResourceSetService;
 
 // Start of user code imports
@@ -107,7 +109,9 @@ public class Application extends javax.ws.rs.core.Application {
         RESOURCE_CLASSES.addAll(JenaProvidersRegistry.getProviders());
         RESOURCE_CLASSES.addAll(Json4JProvidersRegistry.getProviders());
         RESOURCE_CLASSES.add(ServiceProviderService1.class);
+        RESOURCE_CLASSES.add(ServiceProviderService2.class);
         RESOURCE_CLASSES.add(RequService.class);
+        RESOURCE_CLASSES.add(TestScriptService.class);
 
         // Catalog resources
         RESOURCE_CLASSES.add(ServiceProviderCatalogService.class);

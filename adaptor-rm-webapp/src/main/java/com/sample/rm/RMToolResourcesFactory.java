@@ -88,4 +88,28 @@ public class RMToolResourcesFactory {
     }
     
 
+    //methods for TestScript resource
+    
+    public TestScript createTestScript(final String testScriptId) {
+        return new TestScript(constructURIForTestScript(testScriptId));
+    }
+    
+    public URI constructURIForTestScript(final String testScriptId) {
+        Map<String, Object> pathParameters = new HashMap<String, Object>();
+        pathParameters.put("testScriptId", testScriptId);
+        String instanceURI = "testScript/{testScriptId}";
+    
+        final UriBuilder builder = UriBuilder.fromUri(this.basePath);
+        return builder.path(instanceURI).buildFromMap(pathParameters);
+    }
+    
+    public Link constructLinkForTestScript(final String testScriptId , final String label) {
+        return new Link(constructURIForTestScript(testScriptId), label);
+    }
+    
+    public Link constructLinkForTestScript(final String testScriptId) {
+        return new Link(constructURIForTestScript(testScriptId));
+    }
+    
+
 }

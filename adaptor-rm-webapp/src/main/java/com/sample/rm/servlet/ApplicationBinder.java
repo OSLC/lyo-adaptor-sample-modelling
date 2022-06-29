@@ -17,7 +17,6 @@
 
 package com.sample.rm.servlet;
 
-import java.net.URI;
 import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +34,7 @@ import org.eclipse.lyo.oslc4j.trs.server.PagedTrsFactory;
 import org.eclipse.lyo.oslc4j.trs.server.TrsEventHandler;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 // Start of user code imports
+import java.net.URI;
 // End of user code
 
 // Start of user code pre_class_code
