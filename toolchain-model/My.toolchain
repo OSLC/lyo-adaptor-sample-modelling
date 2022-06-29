@@ -26,9 +26,14 @@
           <selectionDialogs title="SelectionDialog1" label="SelectionDialog1" dialogURI="selector" resourceTypes="_e8j9oJa4EeqoX6mSFj9log"/>
           <creationDialogs title="CreationDialog1" label="CreationDialog1" dialogURI="creator" resourceTypes="_e8j9oJa4EeqoX6mSFj9log"/>
         </services>
+        <services domainSpecification="//@specification/@domainSpecifications[name='Quality%20Management']">
+          <queryCapabilities title="QueryCapability1" label="QueryCapability1" queryBaseURI="query" resourceTypes="_e8ivgJa4EeqoX6mSFj9log"/>
+          <selectionDialogs title="SelectionDialog1" label="SelectionDialog1" dialogURI="selector" hintWidth="250" hintHeight="250" resourceTypes="_e8ivgJa4EeqoX6mSFj9log"/>
+        </services>
       </serviceProviders>
     </serviceProviderCatalog>
     <webServices name="RequService" serviceUrlPattern="requirements" resourceUrlPattern="{requirementId}" resourceTypes="_e8j9oJa4EeqoX6mSFj9log" delete="true" update="true"/>
+    <webServices name="TestScriptService" serviceUrlPattern="testScript" resourceUrlPattern="{testScriptId}" resourceTypes="_e8ivgJa4EeqoX6mSFj9log"/>
     <trsService xsi:type="oslc4j_ai:InmemPagedTrsService" basePageLimit="50" changeLogPageLimit="50"/>
     <specification/>
     <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://your.host/adaptor/services/catalog/singleton" name="GenericRequiredAdaptor"/>
@@ -48,12 +53,15 @@
   <specification>
     <domainSpecifications name="Quality Management" namespaceURI="http://open-services.net/ns/qm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_qm']">
       <resources id="_e8pdMJa4EeqoX6mSFj9log" name="TestPlan" resourceProperties="_e8sggJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8uVsJa4EeqoX6mSFj9log"/>
-      <resources id="_e8ivgJa4EeqoX6mSFj9log" name="TestScript" resourceProperties="_e8qEQJa4EeqoX6mSFj9log _e8lLwJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log"/>
+      <resources id="_e8ivgJa4EeqoX6mSFj9log" name="TestScript" resourceProperties="_e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log _2uNwQPfmEey9rrJSCUA3pQ _2uO-YPfmEey9rrJSCUA3pQ _2uNwQffmEey9rrJSCUA3pQ"/>
       <resources id="_e8rSYZa4EeqoX6mSFj9log" name="TestCase" resourceProperties="_e8sggJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8uVsJa4EeqoX6mSFj9log"/>
       <resourceProperties id="_e8r5cJa4EeqoX6mSFj9log" name="Reports On" valueType="Resource" range="_e8rSYZa4EeqoX6mSFj9log"/>
       <resourceProperties id="_e8sggJa4EeqoX6mSFj9log" name="uses" valueType="Resource" range="_e8ivgJa4EeqoX6mSFj9log"/>
       <resourceProperties id="_62jskJgnEeq-i62MkJoKaA" name="uses" valueType="Resource" range="_e8rSYZa4EeqoX6mSFj9log"/>
       <resourceProperties id="_e8lLwJa4EeqoX6mSFj9log" name="validatesRequirement" occurs="zeroOrMany" valueType="Resource" range="_e8j9oJa4EeqoX6mSFj9log"/>
+      <resourceProperties id="_2uNwQPfmEey9rrJSCUA3pQ" name="executionInstructions" valueType="String"/>
+      <resourceProperties id="_2uO-YPfmEey9rrJSCUA3pQ" name="creator" valueType="Resource" range="_e8wx8Ja4EeqoX6mSFj9log"/>
+      <resourceProperties id="_2uNwQffmEey9rrJSCUA3pQ" name="created" valueType="DateTime"/>
     </domainSpecifications>
     <domainSpecifications name=" foaf" namespaceURI="http://xmlns.com/foaf/0.1/" namespacePrefix="//@specification/@domainPrefixes[name='foaf']">
       <resources id="_e8wx8Ja4EeqoX6mSFj9log" name="Person" resourceProperties="_e8wx8Za4EeqoX6mSFj9log _e8wx8pa4EeqoX6mSFj9log _e8wx85a4EeqoX6mSFj9log"/>
@@ -68,7 +76,16 @@
       <resourceProperties id="_e8u8wJa4EeqoX6mSFj9log" name="identifier" valueType="String"/>
     </domainSpecifications>
     <domainSpecifications name="Requirements Management" namespaceURI="http://open-services.net/ns/rm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_rm']">
-      <resources id="_e8j9oJa4EeqoX6mSFj9log" name="Requirement" resourceProperties="_e8u8wJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log"/>
+      <resources id="_e8j9oJa4EeqoX6mSFj9log" name="Requirement" resourceProperties="_e8u8wJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log _3_zh8PJqEeyVyN7My60uCA _3_zh8fJqEeyVyN7My60uCA _3_zh8vJqEeyVyN7My60uCA _3_zh9PJqEeyVyN7My60uCA _3_zh8_JqEeyVyN7My60uCA _BfZo4PJrEeyVyN7My60uCA _NSKFQPJrEeyVyN7My60uCA _NSKFQfJrEeyVyN7My60uCA"/>
+      <resourceProperties id="_3_zh8PJqEeyVyN7My60uCA" name="priority" valueType="String"/>
+      <resourceProperties id="_3_zh8fJqEeyVyN7My60uCA" name="approvalDate" valueType="DateTime"/>
+      <resourceProperties id="_3_zh8vJqEeyVyN7My60uCA" name="status" valueType="String"/>
+      <resourceProperties id="_3_zh9PJqEeyVyN7My60uCA" name="author" valueType="Resource" range="_e8wx8Ja4EeqoX6mSFj9log"/>
+      <resourceProperties id="_3_zh8_JqEeyVyN7My60uCA" name="comments" occurs="zeroOrMany" valueType="String"/>
+      <resourceProperties id="_3_zh9fJqEeyVyN7My60uCA" name="property6" valueType="String"/>
+      <resourceProperties id="_BfZo4PJrEeyVyN7My60uCA" name="testScripts" occurs="zeroOrMany" valueType="Resource" range="_e8ivgJa4EeqoX6mSFj9log"/>
+      <resourceProperties id="_NSKFQPJrEeyVyN7My60uCA" name="someIntegerProperty" valueType="Integer"/>
+      <resourceProperties id="_NSKFQfJrEeyVyN7My60uCA" name="someListOfIntegers" occurs="zeroOrMany" valueType="Integer"/>
     </domainSpecifications>
     <domainPrefixes name="oslc_rm"/>
     <domainPrefixes name="oslc_qm"/>

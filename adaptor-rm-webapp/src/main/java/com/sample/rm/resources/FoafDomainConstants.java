@@ -36,11 +36,11 @@ public interface FoafDomainConstants
     // Start of user code user constants
     // End of user code
 
-    public static String FOAF_DOMAIN = "http://xmlns.com/foaf/0.1/";
-    public static String FOAF_NAMSPACE = "http://xmlns.com/foaf/0.1/";
-    public static String FOAF_NAMSPACE_PREFIX = "foaf";
+    public static String FOAF_DOMAIN = " foaf";
+    public static String FOAF_NAMSPACE = "http://xmlns.com/foaf/0.1/"; //Vocabulary namespace for the resources and resource properties, when no explicit vocabulary (describes, or propertyDefinition) is defined 
+    public static String FOAF_NAMSPACE_PREFIX = "foaf"; //Vocabulary prefix for the resources and resource properties, when no explicit vocabulary (describes, or propertyDefinition) is defined
 
-    public static String PERSON_PATH = "person";
+    public static String PERSON_PATH = "person";  //the relative path of the resource shape URL.
     public static String PERSON_NAMESPACE = FOAF_NAMSPACE; //namespace of the rdfs:class the resource describes
     public static String PERSON_LOCALNAME = "Person"; //localName of the rdfs:class the resource describes
     public static String PERSON_TYPE = PERSON_NAMESPACE + PERSON_LOCALNAME; //fullname of the rdfs:class the resource describes

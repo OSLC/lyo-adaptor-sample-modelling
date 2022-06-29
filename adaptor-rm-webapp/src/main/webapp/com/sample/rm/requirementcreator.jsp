@@ -65,6 +65,68 @@
             </td>
           </tr>
           <tr>
+            <td>
+            <label for="priority">priority: </LABEL>
+            <%
+            out.write("<input name=\"priority\" type=\"text\" style=\"width: 400px\" id=\"priority\" >");
+            %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <label for="approvalDate">approvalDate: </LABEL>
+            <%
+            out.write("<input name=\"approvalDate\" type=\"text\" style=\"width: 400px\" id=\"approvalDate\" >");
+            %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <label for="status">status: </LABEL>
+            <%
+            out.write("<input name=\"status\" type=\"text\" style=\"width: 400px\" id=\"status\" >");
+            %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <label for="author">author: </LABEL>
+            <%
+            %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <label for="comments">comments: </LABEL>
+            <%
+            out.write("<input name=\"comments\" type=\"text\" style=\"width: 400px\" id=\"comments\" >");
+            %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <label for="testScripts">testScripts: </LABEL>
+            <%
+            %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <label for="someIntegerProperty">someIntegerProperty: </LABEL>
+            <%
+            out.write("<input name=\"someIntegerProperty\" type=\"text\" style=\"width: 400px\" id=\"someIntegerProperty\" >");
+            %>
+            </td>
+          </tr>
+          <tr>
+            <td>
+            <label for="someListOfIntegers">someListOfIntegers: </LABEL>
+            <%
+            out.write("<input name=\"someListOfIntegers\" type=\"text\" style=\"width: 400px\" id=\"someListOfIntegers\" >");
+            %>
+            </td>
+          </tr>
+          <tr>
             <td></td>
             <td>
               <input type="button"

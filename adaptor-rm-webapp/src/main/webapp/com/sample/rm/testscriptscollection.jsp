@@ -25,10 +25,10 @@
 <%@page import="org.eclipse.lyo.oslc4j.core.OSLC4JConstants"%>
 <%@page import="java.util.List" %>
 
-<%@page import="com.sample.rm.resources.Requirement"%>
+<%@page import="com.sample.rm.resources.TestScript"%>
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 <%
-  List<Requirement> resources = (List<Requirement>) request.getAttribute("resources");
+  List<TestScript> resources = (List<TestScript>) request.getAttribute("resources");
   String queryUri = (String)request.getAttribute("queryUri");
   String nextPageUri = (String)request.getAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE);
   String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catalog/singleton").build().toString();
@@ -38,7 +38,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Query capability QueryCapability</title>
+  <title>Query capability QueryCapability1</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -65,14 +65,14 @@
   <!-- Begin page content -->
   <div class="container">
     <div class="page-header">
-      <h1>Query Capability &quot;QueryCapability&quot; results</h1>
+      <h1>Query Capability &quot;QueryCapability1&quot; results</h1>
       <div class="alert alert-secondary" role="alert">
           Number of elements:&nbsp;
           <%= resources.size()%>
           <% if (nextPageUri != null) { %><p><a href="<%= nextPageUri %>">Next Page</a></p><% } %>
       </div>
     </div>
-        <% for (Requirement aResource : resources) { %>
+        <% for (TestScript aResource : resources) { %>
         <p><a href="<%= aResource.getAbout() %>" class="oslc-resource-link"><%=aResource.toString()%></a><br /></p>
         <% } %>
       </div>
