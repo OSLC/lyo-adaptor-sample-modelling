@@ -87,6 +87,7 @@ import com.sample.rm.ServerConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
+import com.sample.rm.resources.Comment;
 import com.sample.rm.resources.Person;
 import com.sample.rm.resources.Requirement;
 import com.sample.rm.resources.TestScript;
@@ -472,7 +473,7 @@ public class ServiceProviderService1
         paramValues = formParams.get("comments");
         if (paramValues != null) {
                 for(int i=0; i<paramValues.size(); i++) {
-                    aResource.addComments(paramValues.get(i));
+                    aResource.addComments(new Comment(new URI(paramValues.get(i))));
                 }
         }
         paramValues = formParams.get("testScripts");

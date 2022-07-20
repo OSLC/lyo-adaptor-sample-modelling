@@ -77,15 +77,30 @@
     </domainSpecifications>
     <domainSpecifications name="Requirements Management" namespaceURI="http://open-services.net/ns/rm#" namespacePrefix="//@specification/@domainPrefixes[name='oslc_rm']">
       <resources id="_e8j9oJa4EeqoX6mSFj9log" name="Requirement" resourceProperties="_e8u8wJa4EeqoX6mSFj9log _e8qEQJa4EeqoX6mSFj9log _e8rSYJa4EeqoX6mSFj9log _3_zh8PJqEeyVyN7My60uCA _3_zh8fJqEeyVyN7My60uCA _3_zh8vJqEeyVyN7My60uCA _3_zh9PJqEeyVyN7My60uCA _3_zh8_JqEeyVyN7My60uCA _BfZo4PJrEeyVyN7My60uCA _NSKFQPJrEeyVyN7My60uCA _NSKFQfJrEeyVyN7My60uCA"/>
-      <resourceProperties id="_3_zh8PJqEeyVyN7My60uCA" name="priority" valueType="String"/>
+      <resources id="_lJCcoQgpEe2u1K3mPTZNtg" name="Comment" resourceProperties="_e8rSYJa4EeqoX6mSFj9log _lJCcoAgpEe2u1K3mPTZNtg _3_zh9PJqEeyVyN7My60uCA"/>
+      <resourceProperties id="_3_zh8PJqEeyVyN7My60uCA" name="priority" valueType="String">
+        <allowedValue>low</allowedValue>
+        <allowedValue>medium</allowedValue>
+        <allowedValue>high</allowedValue>
+        <allowedValue>veryHigh</allowedValue>
+      </resourceProperties>
       <resourceProperties id="_3_zh8fJqEeyVyN7My60uCA" name="approvalDate" valueType="DateTime"/>
-      <resourceProperties id="_3_zh8vJqEeyVyN7My60uCA" name="status" valueType="String"/>
+      <resourceProperties id="_3_zh8vJqEeyVyN7My60uCA" name="status" valueType="String">
+        <allowedValue>open</allowedValue>
+        <allowedValue>inProgress</allowedValue>
+        <allowedValue>underReview</allowedValue>
+        <allowedValue>reviewed</allowedValue>
+        <allowedValue>closed</allowedValue>
+        <allowedValue>done</allowedValue>
+        <allowedValue>wontFix</allowedValue>
+      </resourceProperties>
       <resourceProperties id="_3_zh9PJqEeyVyN7My60uCA" name="author" valueType="Resource" range="_e8wx8Ja4EeqoX6mSFj9log"/>
-      <resourceProperties id="_3_zh8_JqEeyVyN7My60uCA" name="comments" occurs="zeroOrMany" valueType="String"/>
+      <resourceProperties id="_3_zh8_JqEeyVyN7My60uCA" name="comments" occurs="zeroOrMany" valueType="LocalResource" range="_lJCcoQgpEe2u1K3mPTZNtg"/>
       <resourceProperties id="_3_zh9fJqEeyVyN7My60uCA" name="property6" valueType="String"/>
       <resourceProperties id="_BfZo4PJrEeyVyN7My60uCA" name="testScripts" occurs="zeroOrMany" valueType="Resource" range="_e8ivgJa4EeqoX6mSFj9log"/>
       <resourceProperties id="_NSKFQPJrEeyVyN7My60uCA" name="someIntegerProperty" valueType="Integer"/>
       <resourceProperties id="_NSKFQfJrEeyVyN7My60uCA" name="someListOfIntegers" occurs="zeroOrMany" valueType="Integer"/>
+      <resourceProperties id="_lJCcoAgpEe2u1K3mPTZNtg" name="date" valueType="DateTime"/>
     </domainSpecifications>
     <domainPrefixes name="oslc_rm"/>
     <domainPrefixes name="oslc_qm"/>

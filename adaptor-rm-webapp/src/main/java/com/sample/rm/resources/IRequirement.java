@@ -67,6 +67,7 @@ import com.sample.rm.resources.DctermsDomainConstants;
 import com.sample.rm.resources.Oslc_qmDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 
+import com.sample.rm.resources.IComment;
 import com.sample.rm.resources.IPerson;
 import com.sample.rm.resources.ITestScript;
 // Start of user code imports
@@ -78,7 +79,7 @@ import com.sample.rm.resources.ITestScript;
 public interface IRequirement
 {
 
-    public void addComments(final String comments );
+    public void addComments(final Comment comments );
     public void addTestScripts(final Link testScripts );
     public void addSomeListOfIntegers(final Integer someListOfIntegers );
 
@@ -108,6 +109,7 @@ public interface IRequirement
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
+    @OslcAllowedValue({"low", "medium", "high", "veryHigh"})
     public String getPriority();
 
     @OslcName("approvalDate")
@@ -122,6 +124,7 @@ public interface IRequirement
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
+    @OslcAllowedValue({"open", "inProgress", "underReview", "reviewed", "closed", "done", "wontFix"})
     public String getStatus();
 
     @OslcName("author")
@@ -135,9 +138,10 @@ public interface IRequirement
     @OslcName("comments")
     @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "comments")
     @OslcOccurs(Occurs.ZeroOrMany)
-    @OslcValueType(ValueType.String)
+    @OslcValueType(ValueType.LocalResource)
+    @OslcRange({Oslc_rmDomainConstants.COMMENT_TYPE})
     @OslcReadOnly(false)
-    public Set<String> getComments();
+    public Set<Comment> getComments();
 
     @OslcName("testScripts")
     @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "testScripts")
@@ -169,7 +173,7 @@ public interface IRequirement
     public void setApprovalDate(final Date approvalDate );
     public void setStatus(final String status );
     public void setAuthor(final Link author );
-    public void setComments(final Set<String> comments );
+    public void setComments(final Set<Comment> comments );
     public void setTestScripts(final Set<Link> testScripts );
     public void setSomeIntegerProperty(final Integer someIntegerProperty );
     public void setSomeListOfIntegers(final Set<Integer> someListOfIntegers );

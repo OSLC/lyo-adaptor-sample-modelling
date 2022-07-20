@@ -18,8 +18,6 @@
 //register an addEventListener that handles the response form the Selection DelegatedUI iframe to the parent window.
 //The function passes the message payload without any processing.
 function registerSelectionDUIRawResponseListener(iframeElement, oslcMessageHandler) {
-
-
     window.addEventListener('message', function (e) {
         var HEADER = "oslc-response:";
         if (e.source == iframeElement.contentWindow
@@ -37,7 +35,6 @@ function registerSelectionDUIResponseListener(iframeElement, oslcSelectionPrepro
         var HEADER = "oslc-response:";
         if (e.source == iframeElement.contentWindow
                 && e.data.indexOf(HEADER) == 0) {
-
             var message = e.data.slice(HEADER.length);
             oslcSelectionPreprocessingFunction();
             var selectedOslcResources = JSON.parse(message)["oslc:results"];

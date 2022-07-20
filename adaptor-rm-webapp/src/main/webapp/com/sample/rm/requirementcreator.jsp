@@ -99,7 +99,6 @@
             <td>
             <label for="comments">comments: </LABEL>
             <%
-            out.write("<input name=\"comments\" type=\"text\" style=\"width: 400px\" id=\"comments\" >");
             %>
             </td>
           </tr>

@@ -291,7 +291,7 @@ public class RequService
                 log.error("Could not handle smallPreview", e);
                 throw new WebApplicationException("Could not handle smallPreview", e);
             }
-            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/smallpreview.jsp");
+            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/uipreview.jsp");
             httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);

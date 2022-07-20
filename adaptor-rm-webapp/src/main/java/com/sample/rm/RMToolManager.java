@@ -42,6 +42,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContextEvent;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +52,7 @@ import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.ServiceProviderInfo;
+import com.sample.rm.resources.Comment;
 import com.sample.rm.resources.Person;
 import com.sample.rm.resources.Requirement;
 import com.sample.rm.resources.TestScript;
@@ -84,6 +87,9 @@ public class RMToolManager {
     // Start of user code class_attributes
     private static Map<String, Requirement> requirements = null;
     private static Map<String, TestScript> testScripts = null;
+    private static List<String> priority = Arrays.asList("low", "medium", "high", "veryHigh");
+    private static List<String> status = Arrays.asList("open", "inProgress", "underReview", "reviewed", "closeds");
+
     private static int nextRequirementId;
     private static int nextTestScriptId;
     // End of user code
@@ -112,12 +118,16 @@ public class RMToolManager {
         r.setIdentifier(id);
         r.setTitle("aTitle with id:" + id);
         r.setDescription("A sample Requirement with id:" + id + "<br>" + "with more lines" + "<br>" + "and one final line");
-        r.setPriority("High");
+        r.setPriority(priority.get(randomNumber(0, priority.size()-1)));
         r.setApprovalDate(new Date());
-        r.setStatus("Approved");
+        r.setStatus(status.get(randomNumber(0, status.size()-1)));
         r.setAuthor(new Link(URI.create("http://localhost:8083/adaptor-rm/services/person/" + id), "myAuthorname" + id));
         for (int i = 0; i < 5; i++) {
-            r.addComments("this is a comment " + i);
+            Comment c = new Comment();
+            c.setDescription("this is a comment " + i);
+            c.setDate(new Date());
+            c.setAuthor(new Link(URI.create("http://localhost:8083/adaptor-rm/services/person/" + id), "myAuthorname" + id));
+            r.addComments(c);
         }
         int tc = randomNumber(0, 6);
         for (int i = 0; i < tc; i++) {

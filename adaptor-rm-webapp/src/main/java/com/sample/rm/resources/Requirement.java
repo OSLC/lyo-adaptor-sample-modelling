@@ -75,6 +75,7 @@ import com.sample.rm.resources.DctermsDomainConstants;
 import com.sample.rm.resources.Oslc_qmDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 
+import com.sample.rm.resources.Comment;
 import com.sample.rm.resources.Person;
 import com.sample.rm.resources.TestScript;
 // Start of user code imports
@@ -115,7 +116,7 @@ public class Requirement
     private Link author;
     // Start of user code attributeAnnotation:comments
     // End of user code
-    private Set<String> comments = new HashSet<String>();
+    private Set<Comment> comments = new HashSet<Comment>();
     // Start of user code attributeAnnotation:testScripts
     // End of user code
     private Set<Link> testScripts = new HashSet<Link>();
@@ -180,7 +181,7 @@ public class Requirement
         return result;
     }
     
-    public void addComments(final String comments)
+    public void addComments(final Comment comments)
     {
         this.comments.add(comments);
     }
@@ -245,6 +246,7 @@ public class Requirement
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
+    @OslcAllowedValue({"low", "medium", "high", "veryHigh"})
     public String getPriority()
     {
         // Start of user code getterInit:priority
@@ -273,6 +275,7 @@ public class Requirement
     @OslcOccurs(Occurs.ExactlyOne)
     @OslcValueType(ValueType.String)
     @OslcReadOnly(false)
+    @OslcAllowedValue({"open", "inProgress", "underReview", "reviewed", "closed", "done", "wontFix"})
     public String getStatus()
     {
         // Start of user code getterInit:status
@@ -300,9 +303,10 @@ public class Requirement
     @OslcName("comments")
     @OslcPropertyDefinition(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE + "comments")
     @OslcOccurs(Occurs.ZeroOrMany)
-    @OslcValueType(ValueType.String)
+    @OslcValueType(ValueType.LocalResource)
+    @OslcRange({Oslc_rmDomainConstants.COMMENT_TYPE})
     @OslcReadOnly(false)
-    public Set<String> getComments()
+    public Set<Comment> getComments()
     {
         // Start of user code getterInit:comments
         // End of user code
@@ -439,7 +443,7 @@ public class Requirement
     
     // Start of user code setterAnnotation:comments
     // End of user code
-    public void setComments(final Set<String> comments )
+    public void setComments(final Set<Comment> comments )
     {
         // Start of user code setterInit:comments
         // End of user code
