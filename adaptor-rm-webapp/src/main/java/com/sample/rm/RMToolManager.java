@@ -133,7 +133,7 @@ public class RMToolManager {
         for (int i = 0; i < tc; i++) {
             int p = randomNumber(1, testScripts.size()-1);
             String v = Integer.toString(p);
-            r.addTestScripts(new Link(testScripts.get(v).getAbout()));
+            r.addTestScripts(new Link(testScripts.get(v).getAbout(), testScripts.get(v).getTitle()));
         }
         r.setSomeIntegerProperty(Integer.parseInt(id));
         for (int i = 0; i < 3; i++) {
