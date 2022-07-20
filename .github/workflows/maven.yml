@@ -1,0 +1,31 @@
+name: 'CI'
+
+on:
+  push:
+    branches:
+      - 'main-*'
+  pull_request:
+    branches: 
+      - 'main-*'
+  schedule:
+    - cron: "30 4,20 * * 4,5,6" # catch SNAPSHOT breaking changes
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+      - name: 'Build RM Sample'
+        run: |
+          mvn -B clean verify --file adaptor-rm-webapp/pom.xml
+      - name: 'Build :: Testing Sample'
+        run: |
+          mvn -B clean verify --file adaptor-testing-webapp/pom.xml
+      - name: 'Build :: Sample Client'
+        run: |
+          mvn -B clean verify --file adaptor-testing-webapp/pom.xml
