@@ -32,9 +32,9 @@
 </head>
 
 <body>
-    <oslc-small-preview input-data='<%=resourcePreviewDataSet%>' id="oslc-small-preview-id" title="<%=resourceTitle%>"></oslc-small-preview>
+    <oslc-small-preview input-data='<%=resourcePreviewDataSet%>' id="oslc-small-preview-id" url="<%=resourceTitle%>"></oslc-small-preview>
 
-    <script src="<c:url value="/static/dist/oslc-ui/main.js"/>" type="module"></script> 
+    <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script> 
 
 </body>
 </html>

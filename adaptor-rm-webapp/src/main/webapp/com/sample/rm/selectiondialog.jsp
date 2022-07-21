@@ -29,8 +29,8 @@
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     </head>
     <body>
-        <oslc-selector selection-uri="<%=selectionUri%>" id="oslc-selector-id" fields='<%=fieldsToList%>' no-data-text="No <%=resourceTypeLabel%> found" search-placeholder-text="Search for resources of type: <%=resourceTypeLabel%>" id="root"></oslc-selector>
-        <script src="<c:url value="/static/dist/oslc-ui/main.js"/>" type="module"></script>
+        <oslc-selector selection-uri="<%=selectionUri%>" id="oslc-selector-id" fields='<%=fieldsToList%>' no-data-text="No <%=resourceTypeLabel%> found" search-placeholder-text="Search for resources of type: <%=resourceTypeLabel%>"></oslc-selector>
+        <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script>
 
 
     </body>
