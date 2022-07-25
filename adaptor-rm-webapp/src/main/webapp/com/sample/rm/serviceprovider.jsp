@@ -46,6 +46,7 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link href="<c:url value="/static/css/adaptor.css"/>" rel="stylesheet">
 </head>
 <body>
@@ -117,7 +118,10 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     <h3>OSLC Capabilities</h3>
     <% if(selectionDialogs.length > 0) {%>
     <div class="container">
-    <h4>Resource Selector Dialogs</h4>
+    <!-- <h4><i class="bi bi-box-arrow-in-right"></i> Resource Selector Dialogs</h4> -->
+    <!-- <h4><i class="bi bi-check-circle"></i> Resource Selector Dialogs</h4> -->
+    <h4><span class="badge badge-primary"><i class="bi bi-hand-index-thumb"></i></span>
+         <span class="badge badge-info"><i class="bi bi-display"></i></span> Resource Selector Dialogs</h4>
     <%
         for (int selectionDialogIndex = 0; selectionDialogIndex < selectionDialogs.length; selectionDialogIndex++) {
             String selectionDialog = selectionDialogs[selectionDialogIndex].getDialog().toString();
@@ -128,7 +132,7 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     <%}%>
     <% if(creationDialogs.length > 0) {%>
     <div class="container">
-    <h4>Resource Creator Dialogs</h4>
+    <h4><span class="badge badge-success"><i class="bi bi-patch-plus"></i></span> <span class="badge badge-info"><i class="bi bi-display"></i></span> Resource Creator Dialogs</h4>
     <%
         for (int creationDialogIndex = 0; creationDialogIndex < creationDialogs.length; creationDialogIndex++) {
             String creationDialog = creationDialogs[creationDialogIndex].getDialog().toString();
@@ -139,7 +143,7 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     <%}%>
     <% if(creationFactories.length > 0) {%>
     <div class="container">
-    <h4>Resource Creation Factories</h4>
+    <h4><span class="badge badge-success"><i class="bi bi-patch-plus"></i></span> Resource Creation Factories</h4>
     <%
         for (int creationFactoryIndex = 0; creationFactoryIndex < creationFactories.length; creationFactoryIndex++) {
             String creationFactory = creationFactories[creationFactoryIndex].getCreation().toString();
@@ -150,7 +154,7 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     <%}%>
     <% if(queryCapabilities.length > 0) {%>
     <div class="container">
-    <h4>Resource Query Capabilities</h4>
+    <h4><span class="badge badge-primary"><i class="bi bi-search"></i></span> Resource Query Capabilities</h4>
     <%
         for (int queryCapabilityIndex = 0; queryCapabilityIndex < queryCapabilities.length; queryCapabilityIndex++) {
             QueryCapability qc = queryCapabilities[queryCapabilityIndex];
@@ -162,7 +166,8 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     <%}%>
     <% if(creationFactories.length > 0) {%>
     <div class="container">
-    <h4>Creation Resource Shapes</h4>
+    <h4><span class="badge badge-success"><i class="bi bi-patch-plus"></i></span> <span class="badge badge-secondary"><i class="bi bi-hexagon"></i></span>
+        Creation Resource Shapes</h4>
     <%
         for (int creationFactoryIndex = 0; creationFactoryIndex < creationFactories.length; creationFactoryIndex++) {
             URI[] creationShapes = creationFactories[creationFactoryIndex].getResourceShapes();
@@ -174,7 +179,7 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     <%}%>
     <% if(queryCapabilities.length > 0) {%>
     <div class="container">
-    <h4>Query Resource Shapes</h4>
+    <h4><span class="badge badge-primary"><i class="bi bi-search"></i></span> <span class="badge badge-secondary"><i class="bi bi-hexagon"></i></span>  Query Resource Shapes</h4>
     <%
         for (int queryCapabilityIndex = 0; queryCapabilityIndex < queryCapabilities.length; queryCapabilityIndex++) {
             String queryShape = queryCapabilities[queryCapabilityIndex].getResourceShape().toString();
