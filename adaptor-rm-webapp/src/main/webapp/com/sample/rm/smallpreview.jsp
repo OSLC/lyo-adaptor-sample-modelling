@@ -18,9 +18,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<%@page import="com.sample.rm.resources.Requirement"%>
+
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 
 <%
+  Requirement aRequirement = (Requirement) request.getAttribute("aRequirement");
   String resourceTitle = (String) request.getAttribute("resourceTitle");
   String resourcePreviewDataSet = (String) request.getAttribute("resourcePreviewDataSet");
 %>
@@ -32,7 +35,7 @@
 </head>
 
 <body>
-    <oslc-small-preview input-data='<%=resourcePreviewDataSet%>' id="oslc-small-preview-id" url="<%=resourceTitle%>"></oslc-small-preview>
+    <oslc-small-preview input-data='<%=resourcePreviewDataSet%>' id="oslc-small-preview-id" url="<%=aRequirement.getAbout()%>"></oslc-small-preview>
 
     <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script> 
 
