@@ -26,6 +26,7 @@
   Requirement aRequirement = (Requirement) request.getAttribute("aRequirement");
   String resourceTitle = (String) request.getAttribute("resourceTitle");
   String resourcePreviewDataSet = (String) request.getAttribute("resourcePreviewDataSet");
+  String previewId = (String) request.getAttribute("previewId");
 %>
 
 <html lang="en">
@@ -37,7 +38,7 @@
 <body>
   <!-- TODO: I am not sure what kind of data is fetched via 'url' that is not in
      the 'input-data already' @Andrew -->
-    <oslc-small-preview input-data='<%=resourcePreviewDataSet%>' id="oslc-small-preview-id" url="<%=aRequirement.getAbout()%>"></oslc-small-preview>
+    <<%=previewId%> input-data='<%=resourcePreviewDataSet%>' id="<%=previewId%>-id" url="<%=aRequirement.getAbout()%>"></<%=previewId%>>
 
     <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script> 
 
