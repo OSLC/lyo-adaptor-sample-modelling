@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <oslc-large-preview input-data='<%=resourcePreviewDataSet%>' id="oslc-large-preview-id" url="<%=resourceTitle%>"></oslc-preview>
+    <oslc-large-preview input-data='<%=resourcePreviewDataSet%>' id="oslc-large-preview-id" url="<%=resourceTitle%>"></oslc-large-preview>
 
     <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script> 
 

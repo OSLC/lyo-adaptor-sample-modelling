@@ -38,7 +38,6 @@
   <!-- TODO: I am not sure what kind of data is fetched via 'url' that is not in
      the 'input-data already' @Andrew -->
     <oslc-small-preview input-data='<%=resourcePreviewDataSet%>' id="oslc-small-preview-id" url="<%=aRequirement.getAbout()%>"></oslc-small-preview>
-
     <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script> 
 
 </body>

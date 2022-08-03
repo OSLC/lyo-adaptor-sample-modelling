@@ -23,13 +23,15 @@
   String selectionUri = (String) request.getAttribute("selectionUri");
   String resourceTypeLabel = (String) request.getAttribute("resourceTypeLabel");
   String fieldsToList = (String) request.getAttribute("fieldsToList");
+  String resourceShapes = (String) request.getAttribute("resourceShapes");
+
 %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     </head>
     <body>
-        <oslc-selector selection-uri="<%=selectionUri%>" id="oslc-selector-id" fields='<%=fieldsToList%>' no-data-text="No <%=resourceTypeLabel%> found" search-placeholder-text="Search for resources of type: <%=resourceTypeLabel%>"></oslc-selector>
+        <oslc-selector selection-uri="<%=selectionUri%>" id="oslc-selector-id" no-data-text="No <%=resourceTypeLabel%> found" search-placeholder-text="Search for resources of type: <%=resourceTypeLabel%>" resource-shapes="<%=resourceShapes%>" label="<%=resourceTypeLabel%>"></oslc-selector>
         <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script>
 
 

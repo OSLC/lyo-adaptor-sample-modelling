@@ -306,6 +306,8 @@ public class ServiceProviderService2
         } else {
             httpServletRequest.setAttribute("resourceTypeLabel", "TestScript");
             httpServletRequest.setAttribute("fieldsToList", "[\"Label\"]");
+            httpServletRequest.setAttribute("resourceShapes", OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH);
+
             // Start of user code TestScriptSelector_setAttribute_fieldsToList
             //TODO: set the attribute "fieldsToList" to form the list of properties you want displayed in the search result
             // End of user code

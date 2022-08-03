@@ -312,6 +312,7 @@ public class ServiceProviderService1
         } else {
             httpServletRequest.setAttribute("resourceTypeLabel", "Requirement");
             httpServletRequest.setAttribute("fieldsToList", "[\"Label\"]");
+            httpServletRequest.setAttribute("resourceShapes", OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_rmDomainConstants.REQUIREMENT_PATH);
             // Start of user code RequirementSelector_setAttribute_fieldsToList
             //TODO: set the attribute "fieldsToList" to form the list of properties you want displayed in the search result
             // End of user code
