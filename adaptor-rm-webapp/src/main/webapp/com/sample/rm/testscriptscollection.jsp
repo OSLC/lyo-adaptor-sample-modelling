@@ -72,14 +72,13 @@
           <% if (nextPageUri != null) { %><p><a href="<%= nextPageUri %>">Next Page</a></p><% } %>
       </div>
     </div>
-        <% for (TestScript aResource : resources) { %>
-        <p><a href="<%= aResource.getAbout() %>" class="oslc-resource-link"><%=aResource.toString()%></a><br /></p>
-        <% } %>
+    <testscripts-query-page id="testscripts-query-page-id" url='["http://localhost:8083/adaptor-rm/services/testScript/10", "http://localhost:8083/adaptor-rm/services/testScript/11", "http://localhost:8083/adaptor-rm/services/testScript/12", "http://localhost:8083/adaptor-rm/services/testScript/13", "http://localhost:8083/adaptor-rm/services/testScript/14", "http://localhost:8083/adaptor-rm/services/testScript/15", "http://localhost:8083/adaptor-rm/services/testScript/16", "http://localhost:8083/adaptor-rm/services/testScript/17", "http://localhost:8083/adaptor-rm/services/testScript/18", "http://localhost:8083/adaptor-rm/services/testScript/19"]' />
       </div>
   <footer class="footer">
       <div class="container">
           <p class="text-muted">OSLC Adaptor was generated using <a href="http://eclipse.org/lyo">Eclipse Lyo</a>.</p>
       </div>
   </footer>
+  <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script>
 </body>
 </html>

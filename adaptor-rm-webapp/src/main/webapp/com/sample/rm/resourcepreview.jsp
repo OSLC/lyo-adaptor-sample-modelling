@@ -23,6 +23,7 @@
 <%
   String resourceTitle = (String) request.getAttribute("resourceTitle");
   String resourcePreviewDataSet = (String) request.getAttribute("resourcePreviewDataSet");
+  String previewId = (String) request.getAttribute("previewId");
 %>
 
 <html lang="en">
@@ -32,7 +33,7 @@
 </head>
 
 <body>
-    <oslc-large-preview input-data='<%=resourcePreviewDataSet%>' id="oslc-large-preview-id" url="<%=resourceTitle%>"></oslc-large-preview>
+    <<%=previewId%> id="<%=previewId%>-id" url="<%=resourceTitle%>"></<%=previewId%>>
 
     <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script> 
 

@@ -213,7 +213,7 @@ public class ServiceProviderService1
                                        @QueryParam("oslc.prefix") final String prefix,
                                        @QueryParam("oslc.paging") final String pagingString,
                                        @QueryParam("page") final String pageString,
-                                       @QueryParam("oslc.pageSize") final String pageSizeString) throws ServletException, IOException
+                                       @QueryParam("oslc.pageSize") final String pageSizeString) throws ServletException, IOException, JSONException
     {
         boolean paging=false;
         int page=0;
@@ -255,7 +255,15 @@ public class ServiceProviderService1
                 uriBuilder.replaceQueryParam("page", page + 1);
                 httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
             }
-            httpServletRequest.setAttribute("resources", resources);
+            JSONArray resourceArray = new JSONArray();
+            if(resources !=null){
+            for (Requirement resource : resources) {
+                JSONObject r = new JSONObject();
+                // Start of user code RequirementSelector_setResponse
+                // End of user code
+                resourceArray.add(resource.toString());
+            }}
+            httpServletRequest.setAttribute("resources", resourceArray);
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementscollection.jsp");
             rd.forward(httpServletRequest,httpServletResponse);
             return;
