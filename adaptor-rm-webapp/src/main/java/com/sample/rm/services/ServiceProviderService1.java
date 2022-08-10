@@ -255,15 +255,14 @@ public class ServiceProviderService1
                 uriBuilder.replaceQueryParam("page", page + 1);
                 httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
             }
-            JSONArray resourceArray = new JSONArray();
-            if(resources !=null){
-            for (Requirement resource : resources) {
-                JSONObject r = new JSONObject();
-                // Start of user code RequirementSelector_setResponse
-                // End of user code
-                resourceArray.add(resource.toString());
+            JSONArray resourcesArray = new JSONArray();
+            if(resources != null){
+            for (Requirement aResource : resources) {
+                resourcesArray.add(aResource.toString());
             }}
-            httpServletRequest.setAttribute("resources", resourceArray);
+            httpServletRequest.setAttribute("resourcesArray", resourcesArray);
+            httpServletRequest.setAttribute("resourcesQuery", "requirements-query-page");
+            httpServletRequest.setAttribute("resources", resources);
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementscollection.jsp");
             rd.forward(httpServletRequest,httpServletResponse);
             return;

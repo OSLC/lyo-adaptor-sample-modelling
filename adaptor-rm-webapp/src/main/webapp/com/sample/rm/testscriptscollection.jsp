@@ -29,6 +29,8 @@
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 <%
   List<TestScript> resources = (List<TestScript>) request.getAttribute("resources");
+  String resourcesArray = request.getAttribute("resourcesArray").toString();
+  String resourcesQuery = (String) request.getAttribute("resourcesQuery");
   String queryUri = (String)request.getAttribute("queryUri");
   String nextPageUri = (String)request.getAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE);
   String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catalog/singleton").build().toString();
@@ -71,9 +73,7 @@
           <%= resources.size()%>
           <% if (nextPageUri != null) { %><p><a href="<%= nextPageUri %>">Next Page</a></p><% } %>
       </div>
-    </div>
-    <testscripts-query-page id="testscripts-query-page-id" url='["http://localhost:8083/adaptor-rm/services/testScript/10", "http://localhost:8083/adaptor-rm/services/testScript/11", "http://localhost:8083/adaptor-rm/services/testScript/12", "http://localhost:8083/adaptor-rm/services/testScript/13", "http://localhost:8083/adaptor-rm/services/testScript/14", "http://localhost:8083/adaptor-rm/services/testScript/15", "http://localhost:8083/adaptor-rm/services/testScript/16", "http://localhost:8083/adaptor-rm/services/testScript/17", "http://localhost:8083/adaptor-rm/services/testScript/18", "http://localhost:8083/adaptor-rm/services/testScript/19"]' />
-      </div>
+    <<%= resourcesQuery %> id="<%= resourcesQuery %>-id" resourcesArray= <%= resourcesArray %> resources="<%= resources %>" />
   <footer class="footer">
       <div class="container">
           <p class="text-muted">OSLC Adaptor was generated using <a href="http://eclipse.org/lyo">Eclipse Lyo</a>.</p>

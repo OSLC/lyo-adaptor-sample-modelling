@@ -248,6 +248,13 @@ public class ServiceProviderService2
                 uriBuilder.replaceQueryParam("page", page + 1);
                 httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
             }
+            JSONArray resourcesArray = new JSONArray();
+            if(resources != null){
+                for (TestScript aResource : resources) {
+                    resourcesArray.add(aResource.toString());
+                }}
+            httpServletRequest.setAttribute("resourcesArray", resourcesArray);
+            httpServletRequest.setAttribute("resourcesQuery", "testscripts-query-page");
             httpServletRequest.setAttribute("resources", resources);
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/testscriptscollection.jsp");
             rd.forward(httpServletRequest,httpServletResponse);
