@@ -24,7 +24,6 @@
   String resourceTypeLabel = (String) request.getAttribute("resourceTypeLabel");
   String fieldsToList = (String) request.getAttribute("fieldsToList");
   String resourceShapes = (String) request.getAttribute("resourceShapes");
-
 %>
 <html>
     <head>

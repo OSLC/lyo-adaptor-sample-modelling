@@ -29,8 +29,9 @@
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 <%
 List<Requirement> resources = (List<Requirement>) request.getAttribute("resources");
-  String resourcesArray = request.getAttribute("resourcesArray").toString();
   String resourcesQuery = (String) request.getAttribute("resourcesQuery");
+  String resourcesQueryPage = (String) request.getAttribute("resourcesQueryPage");
+  String resourcePreviewDataSet = (String) request.getAttribute("resourcePreviewDataSet");
     String queryUri = (String)request.getAttribute("queryUri");
   String nextPageUri = (String)request.getAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE);
   String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catalog/singleton").build().toString();
@@ -74,7 +75,7 @@ List<Requirement> resources = (List<Requirement>) request.getAttribute("resource
           <% if (nextPageUri != null) { %><p><a href="<%= nextPageUri %>">Next Page</a></p><% } %>
       </div>
       <div>
-        <<%= resourcesQuery %> id="<%= resourcesQuery %>-id" resourcesArray=<%= resourcesArray %> resources="<%= resources %>" />
+        <<%= resourcesQueryPage %> id="<%= resourcesQueryPage %>-id" url="<%= queryUri %>"/>
     </div>
   <footer class="footer">
       <div class="container">
