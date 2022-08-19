@@ -95,12 +95,15 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 // End of user code
 @OslcService(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE)
 @Path("service2/testScripts")
-public class ServiceProviderService2
-{
-    @Context private HttpServletRequest httpServletRequest;
-    @Context private HttpServletResponse httpServletResponse;
-    @Context private UriInfo uriInfo;
-    @Inject  private RMToolManager delegate;
+public class ServiceProviderService2 {
+    @Context
+    private HttpServletRequest httpServletRequest;
+    @Context
+    private HttpServletResponse httpServletResponse;
+    @Context
+    private UriInfo uriInfo;
+    @Inject
+    private RMToolManager delegate;
 
     private static final Logger log = LoggerFactory.getLogger(ServiceProviderService2.class);
 
@@ -110,50 +113,50 @@ public class ServiceProviderService2
     // Start of user code class_methods
     // End of user code
 
-    public ServiceProviderService2()
-    {
+    public ServiceProviderService2() {
         super();
     }
 
-    private void addCORSHeaders (final HttpServletResponse httpServletResponse) {
-        //UI preview can be blocked by CORS policy.
-        //add select CORS headers to every response that is embedded in an iframe.
+    private void addCORSHeaders(final HttpServletResponse httpServletResponse) {
+        // UI preview can be blocked by CORS policy.
+        // add select CORS headers to every response that is embedded in an iframe.
         httpServletResponse.addHeader("Access-Control-Allow-Origin", "*");
         httpServletResponse.addHeader("Access-Control-Allow-Methods", "GET, OPTIONS, HEAD");
         httpServletResponse.addHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
         httpServletResponse.addHeader("Access-Control-Allow-Credentials", "true");
     }
 
-    @OslcQueryCapability
-    (
-        title = "QueryCapability1",
-        label = "QueryCapability1",
-        resourceShape = OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH,
-        resourceTypes = {Oslc_qmDomainConstants.TESTSCRIPT_TYPE},
-        usages = {}
-    )
+    @OslcQueryCapability(title = "QueryCapability1", label = "QueryCapability1", resourceShape = OslcConstants.PATH_RESOURCE_SHAPES
+            + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH, resourceTypes = {
+                    Oslc_qmDomainConstants.TESTSCRIPT_TYPE }, usages = {})
     @GET
     @Path("query")
-    @Produces({OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE, OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON})
-    @Operation(
-        summary = "Query capability for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
-        description = "Query capability for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
-            ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}",
-        responses = { 
-            @ApiResponse(description = "default response", content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML)})
-        }
-    )
+    @Produces({ OslcMediaType.APPLICATION_RDF_XML, OslcMediaType.APPLICATION_JSON_LD, OslcMediaType.TEXT_TURTLE,
+            OslcMediaType.APPLICATION_XML, OslcMediaType.APPLICATION_JSON })
+    @Operation(summary = "Query capability for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME
+            + "}", description = "Query capability for resources of type {" + "<a href=\""
+                    + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME
+                    + "</a>" + "}" +
+                    ", with respective resource shapes {" + "<a href=\"" + "../services/"
+                    + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">"
+                    + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}", responses = {
+                            @ApiResponse(description = "default response", content = {
+                                    @Content(mediaType = OslcMediaType.APPLICATION_RDF_XML),
+                                    @Content(mediaType = OslcMediaType.APPLICATION_XML),
+                                    @Content(mediaType = OslcMediaType.APPLICATION_JSON),
+                                    @Content(mediaType = OslcMediaType.TEXT_TURTLE),
+                                    @Content(mediaType = MediaType.TEXT_HTML) })
+                    })
     public TestScript[] queryTestScripts(
-                                                    
-                                                     @QueryParam("oslc.where") final String where,
-                                                     @QueryParam("oslc.prefix") final String prefix,
-                                                     @QueryParam("oslc.paging") final String pagingString,
-                                                     @QueryParam("page") final String pageString,
-                                                     @QueryParam("oslc.pageSize") final String pageSizeString) throws IOException, ServletException
-    {
-        boolean paging=false;
-        int page=0;
-        int pageSize=20;
+
+            @QueryParam("oslc.where") final String where,
+            @QueryParam("oslc.prefix") final String prefix,
+            @QueryParam("oslc.paging") final String pagingString,
+            @QueryParam("page") final String pageString,
+            @QueryParam("oslc.pageSize") final String pageSizeString) throws IOException, ServletException {
+        boolean paging = false;
+        int page = 0;
+        int pageSize = 20;
         if (null != pagingString) {
             paging = Boolean.parseBoolean(pagingString);
         }
@@ -165,14 +168,16 @@ public class ServiceProviderService2
         }
 
         // Start of user code queryTestScripts
-        // Here additional logic can be implemented that complements main action taken in RMToolManager
+        // Here additional logic can be implemented that complements main action taken
+        // in RMToolManager
         // End of user code
 
-        List<TestScript> resources = delegate.queryTestScripts(httpServletRequest, where, prefix, paging, page, pageSize);
+        List<TestScript> resources = delegate.queryTestScripts(httpServletRequest, where, prefix, paging, page,
+                pageSize);
         UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
-            .queryParam("oslc.paging", "true")
-            .queryParam("oslc.pageSize", pageSize)
-            .queryParam("page", page);
+                .queryParam("oslc.paging", "true")
+                .queryParam("oslc.pageSize", pageSize)
+                .queryParam("page", page);
         if (null != where) {
             uriBuilder.queryParam("oslc.where", where);
         }
@@ -180,37 +185,42 @@ public class ServiceProviderService2
             uriBuilder.queryParam("oslc.prefix", prefix);
         }
         httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
-        if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize) 
-            || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
+        if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize)
+                || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
             resources = resources.subList(0, pageSize);
             uriBuilder.replaceQueryParam("page", page + 1);
             httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
         }
-        return resources.toArray(new TestScript [resources.size()]);
+        return resources.toArray(new TestScript[resources.size()]);
     }
 
     @GET
     @Path("query")
     @Produces({ MediaType.TEXT_HTML })
-    @Operation(
-        summary = "Query capability for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "}",
-        description = "Query capability for resources of type {" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}" +
-            ", with respective resource shapes {" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}",
-        responses = { 
-            @ApiResponse(description = "default response", content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML)})
-        }
-    )
+    @Operation(summary = "Query capability for resources of type {" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME
+            + "}", description = "Query capability for resources of type {" + "<a href=\""
+                    + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME
+                    + "</a>" + "}" +
+                    ", with respective resource shapes {" + "<a href=\"" + "../services/"
+                    + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">"
+                    + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "}", responses = {
+                            @ApiResponse(description = "default response", content = {
+                                    @Content(mediaType = OslcMediaType.APPLICATION_RDF_XML),
+                                    @Content(mediaType = OslcMediaType.APPLICATION_XML),
+                                    @Content(mediaType = OslcMediaType.APPLICATION_JSON),
+                                    @Content(mediaType = OslcMediaType.TEXT_TURTLE),
+                                    @Content(mediaType = MediaType.TEXT_HTML) })
+                    })
     public void queryTestScriptsAsHtml(
-                                    
-                                       @QueryParam("oslc.where") final String where,
-                                       @QueryParam("oslc.prefix") final String prefix,
-                                       @QueryParam("oslc.paging") final String pagingString,
-                                       @QueryParam("page") final String pageString,
-                                       @QueryParam("oslc.pageSize") final String pageSizeString) throws ServletException, IOException
-    {
-        boolean paging=false;
-        int page=0;
-        int pageSize=20;
+
+            @QueryParam("oslc.where") final String where,
+            @QueryParam("oslc.prefix") final String prefix,
+            @QueryParam("oslc.paging") final String pagingString,
+            @QueryParam("page") final String pageString,
+            @QueryParam("oslc.pageSize") final String pageSizeString) throws ServletException, IOException {
+        boolean paging = false;
+        int page = 0;
+        int pageSize = 20;
         if (null != pagingString) {
             paging = Boolean.parseBoolean(pagingString);
         }
@@ -224,16 +234,17 @@ public class ServiceProviderService2
         // Start of user code queryTestScriptsAsHtml
         // End of user code
 
-        List<TestScript> resources = delegate.queryTestScripts(httpServletRequest, where, prefix, paging, page, pageSize);
+        List<TestScript> resources = delegate.queryTestScripts(httpServletRequest, where, prefix, paging, page,
+                pageSize);
 
-        if (resources!= null) {
+        if (resources != null) {
             // Start of user code queryTestScriptsAsHtml_setAttributes
             // End of user code
 
             UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
-                .queryParam("oslc.paging", "true")
-                .queryParam("oslc.pageSize", pageSize)
-                .queryParam("page", page);
+                    .queryParam("oslc.paging", "true")
+                    .queryParam("oslc.pageSize", pageSize)
+                    .queryParam("page", page);
             if (null != where) {
                 uriBuilder.queryParam("oslc.where", where);
             }
@@ -242,81 +253,43 @@ public class ServiceProviderService2
             }
             httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
 
-        if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize) 
-            || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
+            if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize)
+                    || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
                 resources = resources.subList(0, pageSize);
                 uriBuilder.replaceQueryParam("page", page + 1);
                 httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
             }
-            httpServletRequest.setAttribute("resourcesQuery", "testscripts-query-page");
-            httpServletRequest.setAttribute("resourcesQueryPage", "resources-query-page");
+            httpServletRequest.setAttribute("resourcesQueryPage", "testscripts-query-page");
             httpServletRequest.setAttribute("resources", resources);
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/testscriptscollection.jsp");
-            rd.forward(httpServletRequest,httpServletResponse);
+            rd.forward(httpServletRequest, httpServletResponse);
             return;
         }
         throw new WebApplicationException(Status.NOT_FOUND);
     }
 
-    @OslcDialog
-    (
-         title = "SelectionDialog1",
-         label = "SelectionDialog1",
-         uri = "service2/testScripts/selector",
-         hintWidth = "250px",
-         hintHeight = "250px",
-         resourceTypes = {Oslc_qmDomainConstants.TESTSCRIPT_TYPE},
-         usages = {}
-    )
+    @OslcDialog(title = "SelectionDialog1", label = "SelectionDialog1", uri = "service2/testScripts/selector", hintWidth = "250px", hintHeight = "250px", resourceTypes = {
+            Oslc_qmDomainConstants.TESTSCRIPT_TYPE }, usages = {})
     @GET
     @Path("selector")
     @Consumes({ MediaType.TEXT_HTML, MediaType.WILDCARD })
     public Response TestScriptSelector(
-        @QueryParam("terms") final String terms
-        
-        ) throws ServletException, IOException, JSONException
-    {
-        // Start of user code TestScriptSelector_init
-        // End of user code
+            @QueryParam("terms") final String terms
 
-        httpServletRequest.setAttribute("selectionUri",UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(uriInfo.getPath()).build().toString());
-        // Start of user code TestScriptSelector_setAttributes
-        // End of user code
-
-        if (terms != null ) {
-            httpServletRequest.setAttribute("terms", terms);
-            final List<TestScript> resources = delegate.TestScriptSelector(httpServletRequest, terms);
-            if (resources!= null) {
-                JSONArray resourceArray = new JSONArray();
-                for (TestScript resource : resources) {
-                    JSONObject r = new JSONObject();
-                    r.put("oslc:label", resource.toString());
-                    r.put("rdf:resource", resource.getAbout().toString());
-                    r.put("Label", resource.toString());
-                    // Start of user code TestScriptSelector_setResponse
-                    //TODO: Add any other attributes that are to be displayed in the search result
-                    // End of user code
-                    resourceArray.add(r);
-                }
-                JSONObject response = new JSONObject();
-                response.put("oslc:results", resourceArray);
-                return Response.ok(response.write()).build();
-            }
-            log.error("A empty search should return an empty list and not NULL!");
-            throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
-
-        } else {
-            httpServletRequest.setAttribute("resourceTypeLabel", "TestScript");
-            httpServletRequest.setAttribute("fieldsToList", "[\"Label\"]");
-            httpServletRequest.setAttribute("resourceShapes", OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH);
-
-            // Start of user code TestScriptSelector_setAttribute_fieldsToList
-            //TODO: set the attribute "fieldsToList" to form the list of properties you want displayed in the search result
-            // End of user code
-            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/selectiondialog.jsp");
-            rd.forward(httpServletRequest, httpServletResponse);
-            return null;
+    ) throws ServletException, IOException, JSONException {
+        UriBuilder uriBuilder = UriBuilder.fromUri(OSLC4JUtils.getServletURI())
+                .path("service2/testScripts/query");
+        if (null != terms) {
+            uriBuilder.queryParam("oslc.searchTerms", terms);
         }
+        httpServletRequest.setAttribute("selectionUri",UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(uriInfo.getPath()).build().toString());
+        httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
+        httpServletRequest.setAttribute("resourceTypeLabel", "testscripts");
+        httpServletRequest.setAttribute("resourceShapes",
+                    OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH);
+        RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/selectiondialog.jsp");
+        rd.forward(httpServletRequest, httpServletResponse);
+        return null;
     }
 
 }

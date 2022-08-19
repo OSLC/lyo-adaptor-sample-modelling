@@ -151,7 +151,7 @@ public class ServiceProviderService1
         }
     )
     public Requirement[] queryRequirements(
-                                                    
+                                                     @QueryParam("oslc.searchTerms") final String searchTerms,
                                                      @QueryParam("oslc.where") final String where,
                                                      @QueryParam("oslc.prefix") final String prefix,
                                                      @QueryParam("oslc.paging") final String pagingString,
@@ -180,6 +180,9 @@ public class ServiceProviderService1
             .queryParam("oslc.paging", "true")
             .queryParam("oslc.pageSize", pageSize)
             .queryParam("page", page);
+        if (null != searchTerms) {
+            uriBuilder.queryParam("oslc.searchTerms", searchTerms);
+        }
         if (null != where) {
             uriBuilder.queryParam("oslc.where", where);
         }
@@ -227,16 +230,6 @@ public class ServiceProviderService1
         if (null != pageSizeString) {
             pageSize = Integer.parseInt(pageSizeString);
         }
-
-        // Start of user code queryRequirementsAsHtml
-        // End of user code
-
-        List<Requirement> resources = delegate.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
-
-        if (resources!= null) {
-            // Start of user code queryRequirementsAsHtml_setAttributes
-            // End of user code
-
             UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
                 .queryParam("oslc.paging", "true")
                 .queryParam("oslc.pageSize", pageSize)
@@ -248,21 +241,10 @@ public class ServiceProviderService1
                 uriBuilder.queryParam("oslc.prefix", prefix);
             }
             httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
-
-        if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize) 
-            || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
-                resources = resources.subList(0, pageSize);
-                uriBuilder.replaceQueryParam("page", page + 1);
-                httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
-            }
-            httpServletRequest.setAttribute("resourcesQuery", "requirements-query-page");
-            httpServletRequest.setAttribute("resourcesQueryPage", "resources-query-page");
-            httpServletRequest.setAttribute("resources", resources);
+            httpServletRequest.setAttribute("resourcesQueryPage", "requirements-query-page");
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/requirementscollection.jsp");
             rd.forward(httpServletRequest,httpServletResponse);
             return;
-        }
-        throw new WebApplicationException(Status.NOT_FOUND);
     }
 
     @OslcDialog
@@ -283,46 +265,20 @@ public class ServiceProviderService1
         
         ) throws ServletException, IOException, JSONException
     {
-        // Start of user code RequirementSelector_init
-            // End of user code
+        UriBuilder uriBuilder = UriBuilder.fromUri(OSLC4JUtils.getServletURI())
+                .path("service1/requirements/query");
+        if (null != terms) {
+            uriBuilder.queryParam("oslc.searchTerms", terms);
+        }
 
         httpServletRequest.setAttribute("selectionUri",UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(uriInfo.getPath()).build().toString());
+        httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
+        httpServletRequest.setAttribute("resourceTypeLabel", "requirements");
+        httpServletRequest.setAttribute("resourceShapes", OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_rmDomainConstants.REQUIREMENT_PATH);
+        RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/selectiondialog.jsp");
+        rd.forward(httpServletRequest, httpServletResponse);
+        return null;
 
-        // Start of user code RequirementSelector_setAttributes
-            // End of user code
-
-        if (terms != null ) {
-            httpServletRequest.setAttribute("terms", terms);
-            final List<Requirement> resources = delegate.RequirementSelector(httpServletRequest, terms);
-            if (resources!= null) {
-                JSONArray resourceArray = new JSONArray();
-                for (Requirement resource : resources) {
-                    JSONObject r = new JSONObject();
-                    r.put("oslc:label", resource.toString());
-                    r.put("rdf:resource", resource.getAbout().toString());
-                    r.put("Label", resource.toString());
-                    // Start of user code RequirementSelector_setResponse
-                    // End of user code
-                    resourceArray.add(r);
-                }
-                JSONObject response = new JSONObject();
-                response.put("oslc:results", resourceArray);
-                return Response.ok(response.write()).build();
-            }
-            log.error("A empty search should return an empty list and not NULL!");
-            throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
-
-        } else {
-            httpServletRequest.setAttribute("resourceTypeLabel", "Requirement");
-            httpServletRequest.setAttribute("fieldsToList", "[\"Label\"]");
-            httpServletRequest.setAttribute("resourceShapes", OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_rmDomainConstants.REQUIREMENT_PATH);
-            // Start of user code RequirementSelector_setAttribute_fieldsToList
-            //TODO: set the attribute "fieldsToList" to form the list of properties you want displayed in the search result
-            // End of user code
-            RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/selectiondialog.jsp");
-            rd.forward(httpServletRequest, httpServletResponse);
-            return null;
-        }
     }
 
     /**

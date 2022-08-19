@@ -73,7 +73,7 @@
           <%= resources.size()%>
           <% if (nextPageUri != null) { %><p><a href="<%= nextPageUri %>">Next Page</a></p><% } %>
       </div>
-    <<%= resourcesQueryPage %> id="<%= resourcesQueryPage %>-id" url= "<%= queryUri %>"/>
+      <<%= resourcesQueryPage %> id="<%= resourcesQueryPage %>-id" url="<%= queryUri %>" />
   <footer class="footer">
       <div class="container">
           <p class="text-muted">OSLC Adaptor was generated using <a href="http://eclipse.org/lyo">Eclipse Lyo</a>.</p>
