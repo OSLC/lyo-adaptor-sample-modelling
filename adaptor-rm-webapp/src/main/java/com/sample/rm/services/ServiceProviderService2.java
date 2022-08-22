@@ -80,6 +80,7 @@ import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.rm.RMToolManager;
 import com.sample.rm.ServerConstants;
 import com.sample.rm.resources.Oslc_qmDomainConstants;
+import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.resources.Oslc_qmDomainConstants;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
 import com.sample.rm.resources.Person;
@@ -285,8 +286,7 @@ public class ServiceProviderService2 {
         httpServletRequest.setAttribute("selectionUri",UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(uriInfo.getPath()).build().toString());
         httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
         httpServletRequest.setAttribute("resourceTypeLabel", "testscripts");
-        httpServletRequest.setAttribute("resourceShapes",
-                    OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH);
+        httpServletRequest.setAttribute("resourceShapes", UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(OslcConstants.PATH_RESOURCE_SHAPES).path(Oslc_qmDomainConstants.TESTSCRIPT_PATH).build().toString());
         RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/selectiondialog.jsp");
         rd.forward(httpServletRequest, httpServletResponse);
         return null;
