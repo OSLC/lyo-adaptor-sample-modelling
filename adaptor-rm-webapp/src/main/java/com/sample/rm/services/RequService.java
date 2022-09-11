@@ -291,7 +291,7 @@ public class RequService
                 log.error("Could not handle smallPreview", e);
                 throw new WebApplicationException("Could not handle smallPreview", e);
             }
-            httpServletRequest.setAttribute("previewId", "oslc-small-preview");
+            httpServletRequest.setAttribute("previewId", "requirements-small-preview");
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/resourcepreview.jsp");
             httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);
@@ -331,7 +331,7 @@ public class RequService
                 log.error("Could not handle largePreview", e);
                 throw new WebApplicationException("Could not handle largePreview", e);
             }
-            httpServletRequest.setAttribute("previewId", "oslc-large-preview");
+            httpServletRequest.setAttribute("previewId", "requirements-large-preview");
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/resourcepreview.jsp");
             httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);

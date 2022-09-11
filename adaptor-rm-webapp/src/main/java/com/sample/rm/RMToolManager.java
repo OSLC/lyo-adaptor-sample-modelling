@@ -245,7 +245,7 @@ public class RMToolManager {
         
         // Start of user code RequirementSelector
         initializeResources();
-        resources = new ArrayList<>(requirements.values());
+        resources = new ArrayList<>();
         // End of user code
         return resources;
     }

@@ -51,7 +51,7 @@ List<Requirement> resources = (List<Requirement>) request.getAttribute("resource
     <div class="page-header">
       <h1>Query Capability &quot;QueryCapability&quot; results</h1>
      
-        <<%= resourcesQueryPage %> id="<%= resourcesQueryPage %>-id" url="<%= queryUri %>" />
+        <div id="<%= resourcesQueryPage %>" url="<%= queryUri %>" />
   <footer class="footer">
       <div class="container">
           <p class="text-muted">OSLC Adaptor was generated using <a href="http://eclipse.org/lyo">Eclipse Lyo</a>.</p>

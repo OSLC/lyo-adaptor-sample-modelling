@@ -8,6 +8,8 @@
   String queryUri = (String) request.getAttribute("queryUri");
   String resourceTypeLabel = (String) request.getAttribute("resourceTypeLabel");
   String resourceShapes = (String) request.getAttribute("resourceShapes");
+  String selectorId = (String) request.getAttribute("selector-id");
+
 %>
 <html>
     <head>
@@ -15,7 +17,7 @@
     </head>
     <body>
     
-        <oslc-selector url="<%=queryUri%>" id="oslc-selector-id" no-data-text="No <%=resourceTypeLabel%> found" search-placeholder-text="Search for resources of type: <%=resourceTypeLabel%>" resource-shapes="<%=resourceShapes%>" label="<%=resourceTypeLabel%>"></oslc-selector>
+        <div url="<%=queryUri%>" id="<%=selectorId%>" no-data-text="No <%=resourceTypeLabel%> found" search-placeholder-text="Search for resources of type: <%=resourceTypeLabel%>" resource-shapes="<%=resourceShapes%>" label="<%=resourceTypeLabel%>"></div>
         <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script>
 
 

@@ -33,7 +33,7 @@
 </head>
 
 <body>
-    <<%=previewId%> id="<%=previewId%>-id" url="<%=resourceTitle%>"></<%=previewId%>>
+    <div id="<%=previewId%>" url="<%=resourceTitle%>"></div>
 
     <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script> 
 

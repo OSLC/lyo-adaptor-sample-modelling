@@ -274,6 +274,7 @@ public class ServiceProviderService1
         httpServletRequest.setAttribute("selectionUri",UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(uriInfo.getPath()).build().toString());
         httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
         httpServletRequest.setAttribute("resourceTypeLabel", "requirements");
+        httpServletRequest.setAttribute("selector-id", "requirements-selector");
         httpServletRequest.setAttribute("resourceShapes", UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path(OslcConstants.PATH_RESOURCE_SHAPES).path(Oslc_rmDomainConstants.REQUIREMENT_PATH).build().toString());
         RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/rm/selectiondialog.jsp");
         rd.forward(httpServletRequest, httpServletResponse);
