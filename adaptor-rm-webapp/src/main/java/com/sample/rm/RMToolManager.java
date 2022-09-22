@@ -234,7 +234,23 @@ public class RMToolManager {
         
         // Start of user code queryRequirements
         initializeResources();
-        resources = new ArrayList<>(requirements.values());
+        if (page == 2) {
+            resources = new ArrayList<>();
+            int i = 0;
+            for (Requirement requirement : requirements.values()) {
+                resources.add(requirement);
+                i++;
+                if (i > 5) break;
+            }
+        }
+        else {
+            if (page > 2) {
+                resources = new ArrayList<>();
+            }
+            else {
+                resources = new ArrayList<>(requirements.values());
+            }
+        }
         // End of user code
         return resources;
     }
