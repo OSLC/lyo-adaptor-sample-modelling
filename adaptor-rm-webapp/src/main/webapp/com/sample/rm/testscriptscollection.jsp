@@ -68,12 +68,8 @@
   <div class="container">
     <div class="page-header">
       <h1>Query Capability &quot;QueryCapability1&quot; results</h1>
-      <div class="alert alert-secondary" role="alert">
-          Number of elements:&nbsp;
-          <%= resources.size()%>
-          <% if (nextPageUri != null) { %><p><a href="<%= nextPageUri %>">Next Page</a></p><% } %>
-      </div>
-      <<%= resourcesQueryPage %> id="<%= resourcesQueryPage %>-id" url="<%= queryUri %>" />
+     
+      <div id="<%= resourcesQueryPage %>" url="<%= queryUri %>" />
   <footer class="footer">
       <div class="container">
           <p class="text-muted">OSLC Adaptor was generated using <a href="http://eclipse.org/lyo">Eclipse Lyo</a>.</p>
