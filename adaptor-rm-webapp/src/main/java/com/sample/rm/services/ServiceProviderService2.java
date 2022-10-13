@@ -269,7 +269,7 @@ public class ServiceProviderService2 {
         throw new WebApplicationException(Status.NOT_FOUND);
     }
 
-    @OslcDialog(title = "SelectionDialog1", label = "SelectionDialog1", uri = "service2/testScripts/selector", hintWidth = "250px", hintHeight = "250px", resourceTypes = {
+    @OslcDialog(title = "SelectionDialog1", label = "SelectionDialog1", uri = "service2/testScripts/selector", hintWidth = "800px", hintHeight = "800px", resourceTypes = {
             Oslc_qmDomainConstants.TESTSCRIPT_TYPE }, usages = {})
     @GET
     @Path("selector")

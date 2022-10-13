@@ -111,12 +111,13 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     <%
     for (int selectionDialogIndex = 0; selectionDialogIndex < selectionDialogs.length; selectionDialogIndex++) {
         String selectionDialog = selectionDialogs[selectionDialogIndex].getDialog().toString();
+        Dialog dialog = selectionDialogs[selectionDialogIndex];
 %>
 
 <!--  Selection dialogue -->
     <h6><span class="badge badge-primary"><i class="bi bi-hand-index-thumb"></i></span>
          <span class="badge badge-info"><i class="bi bi-display"></i></span>
-         <a href="<%=request.getContextPath()%>/com/sample/rm/selectiondialogsampleclient.jsp?selectionUri=<%= URLEncoder.encode(selectionDialog.toString(), "UTF-8") %>">
+         <a href="<%=request.getContextPath()%>/com/sample/rm/selectiondialogsampleclient.jsp?hintHeight=<%=dialog.getHintHeight()%>&hintWidth=<%=dialog.getHintWidth()%>&selectionUri=<%= URLEncoder.encode(dialog.getDialog().toString(), "UTF-8") %>">
         Selection Dialogue</a></h6>
     <p>Dialog Url: <a href="<%= selectionDialog %>""><%= selectionDialog %></a><i class="hover-bg-light-blue p-2 bi bi-clipboard-fill" onclick="handleOnClick(this)"></i></p>
          <p>Resource Type: {<%= listResourceTypes(selectionDialogs[selectionDialogIndex].getResourceTypes()) %>}</p>

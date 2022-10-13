@@ -22,6 +22,8 @@
 <%@ page contentType="text/html" language="java" pageEncoding="UTF-8" %>
 <%
   String selectionDialogUri = request.getParameter("selectionUri");
+  String hintHeight = request.getParameter("hintHeight");
+  String hintWidth = request.getParameter("hintWidth");
   selectionDialogUri += "#oslc-core-postMessage-1.0";
   String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catalog/singleton").build().toString();
 %>
@@ -64,7 +66,7 @@
           <p><em style="word-wrap:break-word;"><%= selectionDialogUri %></em></p>
         </div>
         <div class="panel-body">
-          <iframe src="<%= selectionDialogUri %>" id="delegatedUI"></iframe>
+          <iframe src="<%= selectionDialogUri %>" id="delegatedUI" style="width: <%=hintWidth%>; height: <%=hintHeight%>;"></iframe>
         </div>
       </div>
     </div>
