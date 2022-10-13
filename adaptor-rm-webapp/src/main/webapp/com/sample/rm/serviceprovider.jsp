@@ -51,22 +51,26 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
 </head>
 <body>
   <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
-    <div class="container">
       <a class="navbar-brand" href="<c:url value="/"/>"><%= application.getServletContextName() %></a>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item"><a class="nav-link" href="<c:url value="<%= catalogUrl %>"/>">Service Provider Catalog</a></li>
         <li class="nav-item"><a class="nav-link" href="<c:url value="/swagger-ui/index.jsp"/>">Swagger UI</a></li>
       </ul>
-    </div>
+  </nav>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= catalogUrl %>">Service Provider Catalog</a></li>
+      <li class="breadcrumb-item"><a href="http://localhost:8083/adaptor-rm/services/service1/requirements/query">Service Provider 1</a></li>
+
+    </ol>
   </nav>
 
-  <div class="container">
+  <div class="provider-container">
     <div class="page-header">
-      <h1><%= serviceProvider.getTitle() %></h1>
+      <h4><%= serviceProvider.getTitle() %></h4>
       <p><%= serviceProvider.getDescription() %></p>
-
-
     </div>
+    <div class="provider-container-body">
     <%!
     String listResourceTypes(URI[] resourceTypes) {
         List<String> rs = new ArrayList<String>();
@@ -87,6 +91,8 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
                 Then re-generate to obtain access to these services.
             </p>
         </div>
+        <div class="card">
+
     <% } %>
     <%for (int serviceIndex = 0; serviceIndex < services.length; serviceIndex++) {%>
     <% 
@@ -96,111 +102,96 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     CreationFactory[] creationFactories = services[serviceIndex].getCreationFactories();
     QueryCapability[] queryCapabilities= services[serviceIndex].getQueryCapabilities();
     %>
-    <h2>OSLC Service for Domain: <a href="<%=domain%>"><%=domain%></a></h2>
-    <div class="container">
-    <h3>Sample Clients</h3>
-    <p>Use the code behind these sample pages (html, javascript) to build your own interactions with OSLC Delegated UIs.</p>
-    <%
-        for (int selectionDialogIndex = 0; selectionDialogIndex < selectionDialogs.length; selectionDialogIndex++) {
-            String selectionDialog = selectionDialogs[selectionDialogIndex].getDialog().toString();
-    %>
-    <p><a href="<%=request.getContextPath()%>/com/sample/rm/selectiondialogsampleclient.jsp?selectionUri=<%= URLEncoder.encode(selectionDialog.toString(), "UTF-8") %>">Sample Selector Dialog Client</a> For {<%= listResourceTypes(selectionDialogs[selectionDialogIndex].getResourceTypes()) %>}</p>
-    <%}%>
-    <%
-        for (int creationDialogIndex = 0; creationDialogIndex < creationDialogs.length; creationDialogIndex++) {
-            String creationDialog = creationDialogs[creationDialogIndex].getDialog().toString();
-    %>
-    <p><a href="<%=request.getContextPath()%>/com/sample/rm/creationdialogsampleclient.jsp?creationUri=<%= URLEncoder.encode(creationDialog.toString(), "UTF-8") %>">Sample Creation Dialog Client</a> For {<%= listResourceTypes(creationDialogs[creationDialogIndex].getResourceTypes()) %>}</p>
-    <%}%>
-    </div>
-
-    <div class="container">
-    <h3>OSLC Capabilities</h3>
+      <div class="card-body">
+        <h5>OSLC Service</h5>
+      <p class="text-sm"> Domain: <a href="<%=domain%>"><%=domain%></a></p>
+    <h5>Capabilities</h5>
     <% if(selectionDialogs.length > 0) {%>
-    <div class="container">
-    <!-- <h4><i class="bi bi-box-arrow-in-right"></i> Resource Selector Dialogs</h4> -->
-    <!-- <h4><i class="bi bi-check-circle"></i> Resource Selector Dialogs</h4> -->
-    <h4><span class="badge badge-primary"><i class="bi bi-hand-index-thumb"></i></span>
-         <span class="badge badge-info"><i class="bi bi-display"></i></span> Resource Selector Dialogs</h4>
+    <div class="section">
     <%
-        for (int selectionDialogIndex = 0; selectionDialogIndex < selectionDialogs.length; selectionDialogIndex++) {
-            String selectionDialog = selectionDialogs[selectionDialogIndex].getDialog().toString();
-    %>
-    <p><a href="<%= selectionDialog %>">Selection Dialog</a> For {<%= listResourceTypes(selectionDialogs[selectionDialogIndex].getResourceTypes()) %>}</p>
-    <%}%>
+    for (int selectionDialogIndex = 0; selectionDialogIndex < selectionDialogs.length; selectionDialogIndex++) {
+        String selectionDialog = selectionDialogs[selectionDialogIndex].getDialog().toString();
+%>
+
+<!--  Selection dialogue -->
+    <h6><span class="badge badge-primary"><i class="bi bi-hand-index-thumb"></i></span>
+         <span class="badge badge-info"><i class="bi bi-display"></i></span>
+         <a href="<%=request.getContextPath()%>/com/sample/rm/selectiondialogsampleclient.jsp?selectionUri=<%= URLEncoder.encode(selectionDialog.toString(), "UTF-8") %>">
+        Selection Dialogue</a></h6>
+    <p>Dialog Url: <a href="<%= selectionDialog %>""><%= selectionDialog %></a><i class="hover-bg-light-blue p-2 bi bi-clipboard-fill" onclick="handleOnClick(this)"></i></p>
+         <p>Resource Type: {<%= listResourceTypes(selectionDialogs[selectionDialogIndex].getResourceTypes()) %>}</p>
+         <p>hintHeight: 250px</p>
+         <p>hintWidth: 250px</p>
+            <%}%>
     </div>
     <%}%>
+
+    <!-- Resource Creation Dialogue -->
+ 
     <% if(creationDialogs.length > 0) {%>
-    <div class="container">
-    <h4><span class="badge badge-success"><i class="bi bi-patch-plus"></i></span> <span class="badge badge-info"><i class="bi bi-display"></i></span> Resource Creator Dialogs</h4>
-    <%
+      <div class="section">
+        <%
         for (int creationDialogIndex = 0; creationDialogIndex < creationDialogs.length; creationDialogIndex++) {
             String creationDialog = creationDialogs[creationDialogIndex].getDialog().toString();
     %>
-    <p><a href="<%= creationDialog %>">Creation Dialog</a> For {<%= listResourceTypes(creationDialogs[creationDialogIndex].getResourceTypes()) %>}</p>
+        <h6><span class="badge badge-success"><i class="bi bi-patch-plus"></i></span>
+           <span class="badge badge-info"><i class="bi bi-display"></i></span> 
+           <a href="<%= creationDialog %>">Creation Dialogue</a></h6>
+           <p>Dialog Url: <a href="<%= creationDialog %>"><%= creationDialog %></a><i class="p-2 bi bi-clipboard-fill" onclick="handleOnClick(this)"></i></p>
+          <p>Resource Type: {<%= listResourceTypes(creationDialogs[creationDialogIndex].getResourceTypes()) %>}</p>
     <%}%>
     </div>
     <%}%>
+
+    <!-- Resource creation Factory -->
     <% if(creationFactories.length > 0) {%>
-    <div class="container">
-    <h4><span class="badge badge-success"><i class="bi bi-patch-plus"></i></span> Resource Creation Factories</h4>
-    <%
+      <div class="section">
+        <%
         for (int creationFactoryIndex = 0; creationFactoryIndex < creationFactories.length; creationFactoryIndex++) {
             String creationFactory = creationFactories[creationFactoryIndex].getCreation().toString();
     %>
-    <p><a href="<%= creationFactory %>">Creation Factory</a> For {<%= listResourceTypes(creationFactories[creationFactoryIndex].getResourceTypes()) %>}</p>
-    <%}%>
-    </div>
-    <%}%>
-    <% if(queryCapabilities.length > 0) {%>
-    <div class="container">
-    <h4><span class="badge badge-primary"><i class="bi bi-search"></i></span> Resource Query Capabilities</h4>
-    <%
-        for (int queryCapabilityIndex = 0; queryCapabilityIndex < queryCapabilities.length; queryCapabilityIndex++) {
-            QueryCapability qc = queryCapabilities[queryCapabilityIndex];
-            String queryCapability = qc.getQueryBase().toString();
-    %>
-    <p><a href="<%= queryCapability %>">Query Capability</a> For {<%= listResourceTypes(queryCapabilities[queryCapabilityIndex].getResourceTypes()) %>}</p>
-    <%}%>
-    </div>
-    <%}%>
-    <% if(creationFactories.length > 0) {%>
-    <div class="container">
-    <h4><span class="badge badge-success"><i class="bi bi-patch-plus"></i></span> <span class="badge badge-secondary"><i class="bi bi-hexagon"></i></span>
-        Creation Resource Shapes</h4>
-    <%
-        for (int creationFactoryIndex = 0; creationFactoryIndex < creationFactories.length; creationFactoryIndex++) {
-            URI[] creationShapes = creationFactories[creationFactoryIndex].getResourceShapes();
-            String creationShape = creationShapes[0].toString();
-    %>
-    <p><a href="<%= creationShape %>"><%= creationShape %></a></p>
-    <%}%>
-    </div>
-    <%}%>
-    <% if(queryCapabilities.length > 0) {%>
-    <div class="container">
-    <h4><span class="badge badge-primary"><i class="bi bi-search"></i></span> <span class="badge badge-secondary"><i class="bi bi-hexagon"></i></span>  Query Resource Shapes</h4>
-    <%
-        for (int queryCapabilityIndex = 0; queryCapabilityIndex < queryCapabilities.length; queryCapabilityIndex++) {
-            String queryShape = queryCapabilities[queryCapabilityIndex].getResourceShape().toString();
-    %>
-    <p><a href="<%= queryShape %>"><%= queryShape %></a></p>
+        <h6><span class="badge badge-success"><i class="bi bi-patch-plus"></i></span>
+          <span class="badge badge-info"><i class="bi bi-display"></i></span>
+          <a href="<%= creationFactory %>">Creation Factory</a></h6>
+          <p>Factory Url: <a href="<%= creationFactory %>"><%= creationFactory %></a><i class="p-2 bi bi-clipboard-fill" onclick="handleOnClick(this)"></i></p>
+          <p>Resource Type: {<%= listResourceTypes(creationFactories[creationFactoryIndex].getResourceTypes()) %>}</p>
     <%}%>
     </div>
     <%}%>
 
+    <!-- resource query capabilities -->
+    <% if(queryCapabilities.length > 0) {%>
+      <div class="section">
+        <% 
+        for (int queryCapabilityIndex = 0; queryCapabilityIndex < queryCapabilities.length; queryCapabilityIndex++) {
+          QueryCapability qc = queryCapabilities[queryCapabilityIndex];
+          String queryCapability = qc.getQueryBase().toString();
+          String queryShape = queryCapabilities[queryCapabilityIndex].getResourceShape().toString();
+          %>
+          
+        <h6><span class="badge badge-primary"><i class="bi bi-search"></i></span>
+          <span class="badge badge-info"><i class="bi bi-display"></i></span>
+          <a href="<%= queryCapability %>">Query Capabilities</a></h6>
+          <p>Resource Shape: <a href="<%= queryShape %>"><%= queryShape %></a><i class="p-2 bi bi-clipboard-fill" onclick="handleOnClick(this)"></i></p>
+          <p>Resource Type: {<%= listResourceTypes(queryCapabilities[queryCapabilityIndex].getResourceTypes()) %>}</p>
+    <%}%>
+    </div>
+    <%}%>
     <c:if test="<%=serviceIndex + 1 < services.length%>">
-      <hr>
     </c:if>
     </div>
     <%}%>
   </div>
+</div>
+</div>
   <footer class="footer">
-    <div class="container">
       <p class="text-muted">
         OSLC Adaptor was generated using <a href="http://eclipse.org/lyo">Eclipse Lyo</a>.
       </p>
-    </div>
   </footer>
+  <script>
+    const handleOnClick = (e) => {navigator.clipboard.writeText(e.previousSibling.innerHTML);
+}
+    </script>
 </body>
 </html>

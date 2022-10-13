@@ -41,14 +41,22 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
-    <div class="container">
-      <a class="navbar-brand" href="<c:url value="/"/>"><%= application.getServletContextName() %></a>
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="nav-link" href="<c:url value="<%= catalogUrl %>"/>">Service Provider Catalog</a></li>
-        <li class="nav-item"><a class="nav-link" href="<c:url value="/swagger-ui/index.jsp"/>">Swagger UI</a></li>
-      </ul>
-    </div>
+  // <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
+  //   <div class="container">
+  //     <a class="navbar-brand" href="<c:url value="/"/>"><%= application.getServletContextName() %></a>
+  //     <ul class="navbar-nav mr-auto">
+  //       <li class="nav-item"><a class="nav-link" href="<c:url value="<%= catalogUrl %>"/>">Service Provider Catalog</a></li>
+  //       <li class="nav-item"><a class="nav-link" href="<c:url value="/swagger-ui/index.jsp"/>">Swagger UI</a></li>
+  //     </ul>
+  //   </div>
+  // </nav>
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= catalogUrl %>">Service Provider Catalog</a></li>
+      <li class="breadcrumb-item"><a href="http://localhost:8083/adaptor-rm/services/catalog/singleton">Service Provider 1</a></li>
+      <li class="breadcrumb-item"><a href="http://localhost:8083/adaptor-rm/com/sample/rm/selectiondialogsampleclient.jsp?selectionUri=http%3A%2F%2Flocalhost%3A8083%2Fadaptor-rm%2Fservices%2Fservice2%2FtestScripts%2Fselector">Selection Dialog</a></li>
+    </ol>
   </nav>
 
 <div class="container">

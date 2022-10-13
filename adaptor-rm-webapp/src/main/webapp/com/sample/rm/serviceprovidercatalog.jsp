@@ -57,6 +57,11 @@ String catalogUrl = UriBuilder.fromUri(OSLC4JUtils.getServletURI()).path("/catal
     <div class="page-header">
       <h1>RM Tool Service Provider Catalogue</h1>
     </div>
+ <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="<%= catalogUrl %>">Service Provider Catalog</a></li>
+      </ol>
+    </nav>
 
   	<h2>Service Providers</h2>
     <% if (catalog.getServiceProviders().length == 0) {%>

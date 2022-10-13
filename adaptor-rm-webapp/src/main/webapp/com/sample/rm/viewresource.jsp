@@ -71,16 +71,17 @@
   </nav>
 <!-- Begin page content -->
 <div class="container">
-        <h2>
+    <div class="container-body">
+        <h4>
             <%= aResource.toString() %>
             <small class="text-muted"><%= resourceTypeName %></small>
-        </h2>
+        </h4>
+        <div class="card">
+            <div class="card-body">
+                <div class="card-header">
+                <p>Common properties</p>
+                    </div>
         
-        <div class="row mt-3">
-            <div class="col">
-                <h3>Common properties</h3>
-            </div>
-        </div>
         <div class="row">
             <div class="col-2 text-right">
                 <p class="font-weight-bold">Resource URI</p>
@@ -115,10 +116,13 @@
                 </ul>
             </div>
         </div>
-
+    </div>
+    </div>
+    <div class="card bg-light-blue">
+            <div class="card-body">
         <div class="row mt-3">
             <div class="col">
-                <h3>Resource-specific properties</h3>
+                <p>Resource-specific properties</p>
             </div>
         </div>
         <ul class="nav nav-tabs">
@@ -127,6 +131,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#" id="smallUiPreview">Small</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="xmlCodePreview">XML Code</a>
           </li>
         </ul>
         <div class="container">
@@ -140,7 +147,7 @@
         Map<QName, Object> extendedProperties = aResource.getExtendedProperties();
         if (!extendedProperties.isEmpty()) {
         %>
-            <h3>Extended Properties</h3>
+            <p>Extended Properties</p>
             <div>
             <%
             for (Map.Entry<QName, Object> entry : extendedProperties.entrySet()) 
@@ -159,6 +166,9 @@
         <%
         }
         %>
+</div>
+</div>
+</div>
 </div>
   <footer class="footer">
     <div class="container">

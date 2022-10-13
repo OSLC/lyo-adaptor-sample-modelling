@@ -38,7 +38,7 @@ List<Requirement> resources = (List<Requirement>) request.getAttribute("resource
 <body>
 <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-light">
-    <div class="container">
+    c  <div class="container">
       <a class="navbar-brand" href="<c:url value="/"/>"><%= application.getServletContextName() %></a>
       <ul class="navbar-nav mr-auto">
         <li class="nav-item"><a class="nav-link" href="<c:url value="<%= catalogUrl %>"/>">Service Provider Catalog</a></li>
@@ -46,17 +46,28 @@ List<Requirement> resources = (List<Requirement>) request.getAttribute("resource
       </ul>
     </div>
   </nav>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="<%= catalogUrl %>">Service Provider Catalog</a></li>
+      <li class="breadcrumb-item"><a href="http://localhost:8083/adaptor-rm/services/catalog/singleton">Service Provider 1</a></li>
+      <li class="breadcrumb-item"><a href="http://localhost:8083/adaptor-rm/services/service1/requirements/query">Service Provider 1</a></li>
+
+    </ol>
+  </nav>
   <!-- Begin page content -->
-  <div class="container">
     <div class="page-header">
-      <h1>Query Capability &quot;QueryCapability&quot; results</h1>
-     
-        <div id="<%= resourcesQueryPage %>" url="<%= queryUri %>" />
-  <footer class="footer">
-      <div class="container">
-          <p class="text-muted">OSLC Adaptor was generated using <a href="http://eclipse.org/lyo">Eclipse Lyo</a>.</p>
+      <h3>Query Capability results</h3>
       </div>
+      <div class="container">
+      <div class="container-body">
+        <div class="card">
+            <div id="<%= resourcesQueryPage %>" url="<%= queryUri %>" />
+            </div>
+  <footer class="footer">
+          <p class="text-muted">OSLC Adaptor was generated using <a href="http://eclipse.org/lyo">Eclipse Lyo</a>.</p>
   </footer>
+  </div>
+  </div>
   <script src="<c:url value="/static/dist/react/main.js"/>" type="module"></script>
 </body>
 </html>

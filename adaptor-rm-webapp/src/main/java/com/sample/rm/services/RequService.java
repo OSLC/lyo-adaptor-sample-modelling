@@ -148,17 +148,17 @@ public class RequService
         // Start of user code getResource_init
         // End of user code
 
-        final Requirement aRequirement = delegate.getRequirement(httpServletRequest, requirementId);
+        // final Requirement aRequirement = delegate.getRequirement(httpServletRequest, requirementId);
 
-        if (aRequirement != null) {
-            // Start of user code getRequirement
-            // End of user code
-            httpServletResponse.setHeader("ETag", delegate.getETagFromRequirement(aRequirement));
-            httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2);
-            return aRequirement;
-        }
+        // if (aRequirement != null) {
+        //     // Start of user code getRequirement
+        //     // End of user code
+        //     httpServletResponse.setHeader("ETag", delegate.getETagFromRequirement(aRequirement));
+        //     httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2);
+        //     return aRequirement;
+        // }
 
-        throw new WebApplicationException(Status.NOT_FOUND);
+        throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
     }
 
     @GET
