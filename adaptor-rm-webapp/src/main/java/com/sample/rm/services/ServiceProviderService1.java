@@ -158,46 +158,48 @@ public class ServiceProviderService1
                                                      @QueryParam("page") final String pageString,
                                                      @QueryParam("oslc.pageSize") final String pageSizeString) throws IOException, ServletException
     {
-        // boolean paging=false;
-        // int page=0;
-        // int pageSize=20;
-        // if (null != pagingString) {
-        //     paging = Boolean.parseBoolean(pagingString);
-        // }
-        // if (null != pageString) {
-        //     page = Integer.parseInt(pageString);
-        // }
-        // if (null != pageSizeString) {
-        //     pageSize = Integer.parseInt(pageSizeString);
-        // }
+         boolean paging=false;
+         int page=0;
+         int pageSize=20;
+         if (null != pagingString) {
+             paging = Boolean.parseBoolean(pagingString);
+         }
+         if (null != pageString) {
+             page = Integer.parseInt(pageString);
+         }
+         if (null != pageSizeString) {
+             pageSize = Integer.parseInt(pageSizeString);
+         }
 
         // // Start of user code queryRequirements
         // // Here additional logic can be implemented that complements main action taken in RMToolManager
         // // End of user code
 
-        // List<Requirement> resources = delegate.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
-        // UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
-        //     .queryParam("oslc.paging", "true")
-        //     .queryParam("oslc.pageSize", pageSize)
-        //     .queryParam("page", page);
-        // if (null != searchTerms) {
-        //     uriBuilder.queryParam("oslc.searchTerms", searchTerms);
-        // }
-        // if (null != where) {
-        //     uriBuilder.queryParam("oslc.where", where);
-        // }
-        // if (null != prefix) {
-        //     uriBuilder.queryParam("oslc.prefix", prefix);
-        // }
-        // httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
-        // if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize) 
-        //     || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
-        //     resources = resources.subList(0, pageSize);
-        //     uriBuilder.replaceQueryParam("page", page + 1);
-        //     httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
-        // }
-        // return resources.toArray(new Requirement [resources.size()]);
-        throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
+         List<Requirement> resources = delegate.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
+         UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
+             .queryParam("oslc.paging", "true")
+             .queryParam("oslc.pageSize", pageSize)
+             .queryParam("page", page);
+         if (null != searchTerms) {
+             uriBuilder.queryParam("oslc.searchTerms", searchTerms);
+         }
+         if (null != where) {
+             uriBuilder.queryParam("oslc.where", where);
+         }
+         if (null != prefix) {
+             uriBuilder.queryParam("oslc.prefix", prefix);
+         }
+
+         resources = new ArrayList();
+         httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
+         if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize) 
+             || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
+             resources = resources.subList(0, pageSize);
+             uriBuilder.replaceQueryParam("page", page + 1);
+             httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
+         }
+         return resources.toArray(new Requirement [resources.size()]);
+//        throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
 
     }
 
