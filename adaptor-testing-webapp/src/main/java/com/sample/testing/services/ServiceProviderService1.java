@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -81,8 +82,8 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 
-import com.sample.testing.TestingToolManager;
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.RestDelegate;
+import com.sample.testing.ServerConstants;
 import com.sample.testing.resources.Oslc_qmDomainConstants;
 import com.sample.testing.resources.Oslc_qmDomainConstants;
 import com.sample.testing.servlet.ServiceProviderCatalogSingleton;
@@ -97,13 +98,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 // Start of user code pre_class_code
 // End of user code
-@OslcService(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_DOMAIN)
+@OslcService(Oslc_qmDomainConstants.QUALITY_MANAGEMENT_NAMSPACE)
 @Path("serviceProviders/{serviceProviderId}/testScripts")
 public class ServiceProviderService1
 {
     @Context private HttpServletRequest httpServletRequest;
     @Context private HttpServletResponse httpServletResponse;
     @Context private UriInfo uriInfo;
+    @Inject  private RestDelegate delegate;
 
     private static final Logger log = LoggerFactory.getLogger(ServiceProviderService1.class);
 
@@ -171,7 +173,7 @@ public class ServiceProviderService1
         // Here additional logic can be implemented that complements main action taken in TestingToolManager
         // End of user code
 
-        final List<TestScript> resources = TestingToolManager.queryTestScripts(httpServletRequest, serviceProviderId, where, prefix, paging, page, pageSize);
+        List<TestScript> resources = delegate.queryTestScripts(httpServletRequest, serviceProviderId, where, prefix, paging, page, pageSize);
         UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
             .queryParam("oslc.paging", "true")
             .queryParam("oslc.pageSize", pageSize)
@@ -183,8 +185,9 @@ public class ServiceProviderService1
             uriBuilder.queryParam("oslc.prefix", prefix);
         }
         httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
-        if (resources.size() > pageSize) {
-            resources.remove(resources.size() - 1);
+        if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize) 
+            || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
+            resources = resources.subList(0, pageSize);
             uriBuilder.replaceQueryParam("page", page + 1);
             httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
         }
@@ -226,10 +229,9 @@ public class ServiceProviderService1
         // Start of user code queryTestScriptsAsHtml
         // End of user code
 
-        final List<TestScript> resources = TestingToolManager.queryTestScripts(httpServletRequest, serviceProviderId, where, prefix, paging, page, pageSize);
+        List<TestScript> resources = delegate.queryTestScripts(httpServletRequest, serviceProviderId, where, prefix, paging, page, pageSize);
 
         if (resources!= null) {
-            httpServletRequest.setAttribute("resources", resources);
             // Start of user code queryTestScriptsAsHtml_setAttributes
             // End of user code
 
@@ -244,12 +246,14 @@ public class ServiceProviderService1
                 uriBuilder.queryParam("oslc.prefix", prefix);
             }
             httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
-            if (resources.size() > pageSize) {
-                resources.remove(resources.size() - 1);
 
+        if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize) 
+            || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
+                resources = resources.subList(0, pageSize);
                 uriBuilder.replaceQueryParam("page", page + 1);
                 httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
             }
+            httpServletRequest.setAttribute("resources", resources);
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/testscriptscollection.jsp");
             rd.forward(httpServletRequest,httpServletResponse);
             return;
@@ -288,9 +292,9 @@ public class ServiceProviderService1
             final TestScript aResource
         ) throws IOException, ServletException
     {
-        TestScript newResource = TestingToolManager.createTestScript(httpServletRequest, aResource, serviceProviderId);
-        httpServletResponse.setHeader("ETag", TestingToolManager.getETagFromTestScript(newResource));
-        return Response.created(newResource.getAbout()).entity(newResource).header(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2).build();
+        TestScript newResource = delegate.createTestScript(httpServletRequest, aResource, serviceProviderId);
+        httpServletResponse.setHeader("ETag", delegate.getETagFromTestScript(newResource));
+        return Response.created(newResource.getAbout()).entity(newResource).header(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2).build();
     }
 
 }

@@ -69,10 +69,7 @@ import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 
-
 import com.sample.rm.resources.DctermsDomainConstants;
-
-
 // Start of user code imports
 // End of user code
 
@@ -166,7 +163,7 @@ public class Requirement
         // End of user code
         return identifier;
     }
-    
+
     // Start of user code getterAnnotation:title
     // End of user code
     @OslcName("title")
@@ -180,7 +177,7 @@ public class Requirement
         // End of user code
         return title;
     }
-    
+
     // Start of user code getterAnnotation:description
     // End of user code
     @OslcName("description")
@@ -194,8 +191,7 @@ public class Requirement
         // End of user code
         return description;
     }
-    
-    
+
     // Start of user code setterAnnotation:identifier
     // End of user code
     public void setIdentifier(final String identifier )
@@ -203,11 +199,10 @@ public class Requirement
         // Start of user code setterInit:identifier
         // End of user code
         this.identifier = identifier;
-    
         // Start of user code setterFinalize:identifier
         // End of user code
     }
-    
+
     // Start of user code setterAnnotation:title
     // End of user code
     public void setTitle(final String title )
@@ -215,11 +210,10 @@ public class Requirement
         // Start of user code setterInit:title
         // End of user code
         this.title = title;
-    
         // Start of user code setterFinalize:title
         // End of user code
     }
-    
+
     // Start of user code setterAnnotation:description
     // End of user code
     public void setDescription(final String description )
@@ -227,10 +221,8 @@ public class Requirement
         // Start of user code setterInit:description
         // End of user code
         this.description = description;
-    
         // Start of user code setterFinalize:description
         // End of user code
     }
-    
-    
+
 }

@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -79,8 +80,8 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 
-import com.sample.testing.TestingToolManager;
-import com.sample.testing.TestingToolConstants;
+import com.sample.testing.RestDelegate;
+import com.sample.testing.ServerConstants;
 import com.sample.testing.resources.Oslc_qmDomainConstants;
 import com.sample.testing.servlet.ServiceProviderCatalogSingleton;
 import com.sample.testing.resources.TestScript;
@@ -99,6 +100,7 @@ public class TestScriptService
     @Context private HttpServletRequest httpServletRequest;
     @Context private HttpServletResponse httpServletResponse;
     @Context private UriInfo uriInfo;
+    @Inject  private RestDelegate delegate;
 
     private static final Logger log = LoggerFactory.getLogger(TestScriptService.class);
 
@@ -129,8 +131,13 @@ public class TestScriptService
         summary = "GET for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
         description = "GET for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        responses = {
-            @ApiResponse(description = "default response", content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        responses = {@ApiResponse(description = "default response",
+            content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_JSON), @Content(
+                mediaType = OslcMediaType.TEXT_TURTLE), @Content(
+                mediaType = MediaType.TEXT_HTML), @Content(
+                mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
         }
     )
     public TestScript getTestScript(
@@ -140,13 +147,13 @@ public class TestScriptService
         // Start of user code getResource_init
         // End of user code
 
-        final TestScript aTestScript = TestingToolManager.getTestScript(httpServletRequest, testScriptId);
+        final TestScript aTestScript = delegate.getTestScript(httpServletRequest, testScriptId);
 
         if (aTestScript != null) {
             // Start of user code getTestScript
             // End of user code
-            httpServletResponse.setHeader("ETag", TestingToolManager.getETagFromTestScript(aTestScript));
-            httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
+            httpServletResponse.setHeader("ETag", delegate.getETagFromTestScript(aTestScript));
+            httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2);
             return aTestScript;
         }
 
@@ -160,8 +167,13 @@ public class TestScriptService
         summary = "GET for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
         description = "GET for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        responses = {
-            @ApiResponse(description = "default response", content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        responses = {@ApiResponse(description = "default response",
+            content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_JSON), @Content(
+                mediaType = OslcMediaType.TEXT_TURTLE), @Content(
+                mediaType = MediaType.TEXT_HTML), @Content(
+                mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
         }
     )
     public void getTestScriptAsHtml(
@@ -171,7 +183,7 @@ public class TestScriptService
         // Start of user code getTestScriptAsHtml_init
         // End of user code
 
-        final TestScript aTestScript = TestingToolManager.getTestScript(httpServletRequest, testScriptId);
+        final TestScript aTestScript = delegate.getTestScript(httpServletRequest, testScriptId);
 
         if (aTestScript != null) {
             httpServletRequest.setAttribute("aTestScript", aTestScript);
@@ -193,8 +205,13 @@ public class TestScriptService
         summary = "GET for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
         description = "GET for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        responses = {
-            @ApiResponse(description = "default response", content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        responses = {@ApiResponse(description = "default response",
+            content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_JSON), @Content(
+                mediaType = OslcMediaType.TEXT_TURTLE), @Content(
+                mediaType = MediaType.TEXT_HTML), @Content(
+                mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
         }
     )
     public Compact getTestScriptCompact(
@@ -211,7 +228,7 @@ public class TestScriptService
         //TODO: adjust the preview height & width values from the default values provided above.
         // End of user code
 
-        final TestScript aTestScript = TestingToolManager.getTestScript(httpServletRequest, testScriptId);
+        final TestScript aTestScript = delegate.getTestScript(httpServletRequest, testScriptId);
 
         if (aTestScript != null) {
             final Compact compact = new Compact();
@@ -234,7 +251,7 @@ public class TestScriptService
             largePreview.setDocument(UriBuilder.fromUri(aTestScript.getAbout()).path("largePreview").build());
             compact.setLargePreview(largePreview);
 
-            httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
+            httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);
             return compact;
         }
@@ -251,7 +268,7 @@ public class TestScriptService
         // Start of user code getTestScriptAsHtmlSmallPreview_init
         // End of user code
 
-        final TestScript aTestScript = TestingToolManager.getTestScript(httpServletRequest, testScriptId);
+        final TestScript aTestScript = delegate.getTestScript(httpServletRequest, testScriptId);
 
         if (aTestScript != null) {
             httpServletRequest.setAttribute("aTestScript", aTestScript);
@@ -259,7 +276,7 @@ public class TestScriptService
             // End of user code
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/testscriptsmallpreview.jsp");
-            httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
+            httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
             return;
@@ -278,7 +295,7 @@ public class TestScriptService
         // Start of user code getTestScriptAsHtmlLargePreview_init
         // End of user code
 
-        final TestScript aTestScript = TestingToolManager.getTestScript(httpServletRequest, testScriptId);
+        final TestScript aTestScript = delegate.getTestScript(httpServletRequest, testScriptId);
 
         if (aTestScript != null) {
             httpServletRequest.setAttribute("aTestScript", aTestScript);
@@ -286,7 +303,7 @@ public class TestScriptService
             // End of user code
 
             RequestDispatcher rd = httpServletRequest.getRequestDispatcher("/com/sample/testing/testscriptlargepreview.jsp");
-            httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2);
+            httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2);
             addCORSHeaders(httpServletResponse);
             rd.forward(httpServletRequest, httpServletResponse);
             return;
@@ -300,8 +317,13 @@ public class TestScriptService
         summary = "DELETE for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
         description = "DELETE for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        responses = {
-            @ApiResponse(description = "default response", content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        responses = {@ApiResponse(description = "default response",
+            content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_JSON), @Content(
+                mediaType = OslcMediaType.TEXT_TURTLE), @Content(
+                mediaType = MediaType.TEXT_HTML), @Content(
+                mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
         }
     )
     public Response deleteTestScript(
@@ -310,14 +332,14 @@ public class TestScriptService
     {
         // Start of user code deleteTestScript_init
         // End of user code
-        final TestScript aResource = TestingToolManager.getTestScript(httpServletRequest, testScriptId);
+        final TestScript aResource = delegate.getTestScript(httpServletRequest, testScriptId);
 
         if (aResource != null) {
             // Start of user code deleteTestScript
             // End of user code
-            boolean deleted = TestingToolManager.deleteTestScript(httpServletRequest, testScriptId);
+            boolean deleted = delegate.deleteTestScript(httpServletRequest, testScriptId);
             if (deleted)
-                return Response.ok().header(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2).build();
+                return Response.ok().header(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2).build();
             else
                 throw new WebApplicationException(Status.INTERNAL_SERVER_ERROR);
         }
@@ -331,8 +353,13 @@ public class TestScriptService
         summary = "PUT for resources of type {'" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "'}",
         description = "PUT for resources of type {'" + "<a href=\"" + Oslc_qmDomainConstants.TESTSCRIPT_TYPE + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}" +
             ", with respective resource shapes {'" + "<a href=\"" + "../services/" + OslcConstants.PATH_RESOURCE_SHAPES + "/" + Oslc_qmDomainConstants.TESTSCRIPT_PATH + "\">" + Oslc_qmDomainConstants.TESTSCRIPT_LOCALNAME + "</a>" + "'}",
-        responses = {
-            @ApiResponse(description = "default response", content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(mediaType = OslcMediaType.APPLICATION_XML), @Content(mediaType = OslcMediaType.APPLICATION_JSON), @Content(mediaType = OslcMediaType.TEXT_TURTLE), @Content(mediaType = MediaType.TEXT_HTML), @Content(mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
+        responses = {@ApiResponse(description = "default response",
+            content = {@Content(mediaType = OslcMediaType.APPLICATION_RDF_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_XML), @Content(
+                mediaType = OslcMediaType.APPLICATION_JSON), @Content(
+                mediaType = OslcMediaType.TEXT_TURTLE), @Content(
+                mediaType = MediaType.TEXT_HTML), @Content(
+                mediaType = OslcMediaType.APPLICATION_X_OSLC_COMPACT_XML)})
         }
     )
     public Response updateTestScript(
@@ -343,17 +370,17 @@ public class TestScriptService
     {
         // Start of user code updateTestScript_init
         // End of user code
-        final TestScript originalResource = TestingToolManager.getTestScript(httpServletRequest, testScriptId);
+        final TestScript originalResource = delegate.getTestScript(httpServletRequest, testScriptId);
 
         if (originalResource != null) {
-            final String originalETag = TestingToolManager.getETagFromTestScript(originalResource);
+            final String originalETag = delegate.getETagFromTestScript(originalResource);
 
             if ((eTagHeader == null) || (originalETag.equals(eTagHeader))) {
                 // Start of user code updateTestScript
                 // End of user code
-                final TestScript updatedResource = TestingToolManager.updateTestScript(httpServletRequest, aResource, testScriptId);
-                httpServletResponse.setHeader("ETag", TestingToolManager.getETagFromTestScript(updatedResource));
-                return Response.ok().header(TestingToolConstants.HDR_OSLC_VERSION, TestingToolConstants.OSLC_VERSION_V2).build();
+                final TestScript updatedResource = delegate.updateTestScript(httpServletRequest, aResource, testScriptId);
+                httpServletResponse.setHeader("ETag", delegate.getETagFromTestScript(updatedResource));
+                return Response.ok().header(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2).build();
             }
             else {
                 throw new WebApplicationException(Status.PRECONDITION_FAILED);

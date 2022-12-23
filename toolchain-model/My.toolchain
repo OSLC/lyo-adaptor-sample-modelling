@@ -14,7 +14,7 @@
     <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://localhost:8083/adaptor-rm/services/catalog/singleton" name="RequirementsAdaptor" servicedResources="_e8j9oJa4EeqoX6mSFj9log"/>
     <configuration xsi:type="oslc4j_ai:MavenServerConfiguration" rootServerBaseUrl="http://localhost:8082/" applicationContextPath="/adaptor-testing" servletUrlPattern="/services/*" doNotRegenerateJspFiles="true" jettyPort="8082">
       <generalConfiguration filesBasePath="../adaptor-testing-webapp/" javaBasePackageName="com.sample.testing"/>
-      <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="5.0.0-SNAPSHOT" groupId="com.sample.testing" artifactId="testing-tool" version="0.0.1-SNAPSHOT"/>
+      <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="5.0.1-SNAPSHOT" groupId="com.sample.testing" artifactId="testing-tool" version="0.0.1-SNAPSHOT"/>
     </configuration>
   </adaptorInterfaces>
   <adaptorInterfaces name="RM Tool" backendCodeTemplate_getServiceProviders="" backendCodeTemplate_getResource="">
@@ -34,7 +34,7 @@
     <requiredAdaptors xsi:type="oslc4j_ai:GenericRequiredAdaptor" serviceProviderCatalogURI="http://your.host/adaptor/services/catalog/singleton" name="GenericRequiredAdaptor"/>
     <configuration xsi:type="oslc4j_ai:MavenServerConfiguration" rootServerBaseUrl="http://localhost:8083/" applicationContextPath="/adaptor-rm" servletUrlPattern="/services/*" generateJspFilesForOslcUI="true" jettyPort="8083">
       <generalConfiguration filesBasePath="../adaptor-rm-webapp/" javaBasePackageName="com.sample.rm"/>
-      <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="5.0.0-SNAPSHOT" groupId="com.sample.rm" artifactId="rm-tool" version="0.0.1-SNAPSHOT"/>
+      <projectConfiguration xsi:type="oslc4j_ai:MavenProjectConfiguration" lyoVersion="5.0.1-SNAPSHOT" groupId="com.sample.rm" artifactId="rm-tool" version="0.0.1-SNAPSHOT"/>
     </configuration>
   </adaptorInterfaces>
   <adaptorInterfaces name="ClientOnlyApplication">

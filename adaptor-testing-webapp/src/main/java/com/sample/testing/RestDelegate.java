@@ -24,6 +24,8 @@
 
 package com.sample.testing;
 
+
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.ServletContextEvent;
 import java.util.List;
@@ -32,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 import com.sample.testing.servlet.ServiceProviderCatalogSingleton;
 import com.sample.testing.ServiceProviderInfo;
@@ -41,88 +44,33 @@ import com.sample.testing.resources.TestScript;
 
 
 // Start of user code imports
-import java.util.concurrent.ThreadLocalRandom;
-import java.net.URI;
-import java.net.URISyntaxException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.eclipse.lyo.oslc4j.core.model.Link;
-import java.util.ArrayList;
-
-import com.sample.testing.clients.RequirementsAdaptorClient;
 // End of user code
 
 // Start of user code pre_class_code
 // End of user code
 
-public class TestingToolManager {
+public class RestDelegate {
 
-    private static final Logger log = LoggerFactory.getLogger(TestingToolManager.class);
+    private static final Logger log = LoggerFactory.getLogger(RestDelegate.class);
 
     
+    
+    @Inject ResourcesFactory resourcesFactory;
     // Start of user code class_attributes
+    @Inject Backend backend;
     // End of user code
+    
+    public RestDelegate() {
+        log.trace("Delegate is initialized");
+    }
     
     
     // Start of user code class_methods
-	private static int randomNumber(int origin, int bound) {
-		return ThreadLocalRandom.current().nextInt(origin, bound);
-	}
-
-	private static Link queryForRandomRequirementLink() throws URISyntaxException {
-		try {
-			String[] requirements = RequirementsAdaptorClient.queryRequirements();
-			int index = randomNumber(0, requirements.length);
-			return new Link (new URI (requirements[index]));
-		} catch (Exception e) {
-            log.error("Failed to query resources", e);
-            return null;
-		}
-	}
-
-	private static TestScript createRandomTestScript(String id) {
-		TestScript r = null;
-		try {
-			r = TestingToolResourcesFactory.createTestScript(id);
-			r.setTitle("A sample TestScript with id:" + id);
-			r.setDescription("A sample TestScript with id:" + id);
-			int size = randomNumber(1, 3);
-			for (int i = 0; i < size; i++) {
-				r.addValidatesRequirement(queryForRandomRequirementLink());
-			}
-		} catch (URISyntaxException e) {
-            log.error("Failed to create resource", e);
-		}
-		return r;
-	}
-
-	private static List<TestScript> createRandomTestScripts(String serviceProviderId, int min, int max, int minId, int maxId)
-    {
-		int size = randomNumber(min, max);
-		List<TestScript> resources = new ArrayList<TestScript>(size);
-		for (int i = 0; i < size; i++) {
-	    	resources.add(createRandomTestScript(Integer.toString(randomNumber(minId, maxId))));
-		}
-        return resources;
-    }
     // End of user code
 
-    public static void contextInitializeServletListener(final ServletContextEvent servletContextEvent)
-    {
-        
-        // Start of user code contextInitializeServletListener
-        // TODO Implement code to establish connection to data backbone etc ...
-        // End of user code
-        
-    }
-
-    public static void contextDestroyServletListener(ServletContextEvent servletContextEvent) 
-    {
-        
-        // Start of user code contextDestroyed
-        // TODO Implement code to shutdown connections to data backbone etc...
-        // End of user code
-    }
+    //The methods contextInitializeServletListener() and contextDestroyServletListener() no longer exits
+    //Migrate any user-specific code blocks to the class com.sample.testing.servlet.ServletListener
+    //Any user-specific code should be found in *.lost files.
 
     public static ServiceProviderInfo[] getServiceProviderInfos(HttpServletRequest httpServletRequest)
     {
@@ -144,24 +92,24 @@ public class TestingToolManager {
         return serviceProviderInfos;
     }
 
-    public static List<TestScript> queryTestScripts(HttpServletRequest httpServletRequest, final String serviceProviderId, String where, String prefix, boolean paging, int page, int limit)
+    public List<TestScript> queryTestScripts(HttpServletRequest httpServletRequest, final String serviceProviderId, String where, String prefix, boolean paging, int page, int limit)
     {
         List<TestScript> resources = null;
         
         
         // Start of user code queryTestScripts
-        resources = createRandomTestScripts(serviceProviderId, 0, 50, 1, 5000);
+        resources = backend.createRandomTestScripts(serviceProviderId, 0, 50, 1, 5000);
         // End of user code
         return resources;
     }
-    public static TestScript createTestScript(HttpServletRequest httpServletRequest, final TestScript aResource, final String serviceProviderId)
+    public TestScript createTestScript(HttpServletRequest httpServletRequest, final TestScript aResource, final String serviceProviderId)
     {
         TestScript newResource = null;
         
         
         // Start of user code createTestScript
-		int id = randomNumber(1, 500);
-		newResource = TestingToolResourcesFactory.createTestScript(Integer.toString(id));
+		int id = backend.randomNumber(1, 500);
+		newResource = resourcesFactory.createTestScript(Integer.toString(id));
 		newResource.setTitle("A sample TestScriot with id:" + id);
         // End of user code
         return newResource;
@@ -170,18 +118,18 @@ public class TestingToolManager {
 
 
 
-    public static TestScript getTestScript(HttpServletRequest httpServletRequest, final String testScriptId)
+    public TestScript getTestScript(HttpServletRequest httpServletRequest, final String testScriptId)
     {
         TestScript aResource = null;
         
         
         // Start of user code getTestScript
-        aResource = createRandomTestScript(testScriptId);
+        aResource = backend.createRandomTestScript(testScriptId);
         // End of user code
         return aResource;
     }
 
-    public static Boolean deleteTestScript(HttpServletRequest httpServletRequest, final String testScriptId)
+    public Boolean deleteTestScript(HttpServletRequest httpServletRequest, final String testScriptId)
     {
         Boolean deleted = false;
         
@@ -192,7 +140,7 @@ public class TestingToolManager {
         return deleted;
     }
 
-    public static TestScript updateTestScript(HttpServletRequest httpServletRequest, final TestScript aResource, final String testScriptId) {
+    public TestScript updateTestScript(HttpServletRequest httpServletRequest, final TestScript aResource, final String testScriptId) {
         TestScript updatedResource = null;
         
         // Start of user code updateTestScript
@@ -202,7 +150,7 @@ public class TestingToolManager {
         return updatedResource;
     }
 
-    public static String getETagFromTestScript(final TestScript aResource)
+    public String getETagFromTestScript(final TestScript aResource)
     {
         String eTag = null;
         // Start of user code getETagFromTestScript

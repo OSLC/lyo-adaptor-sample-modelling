@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -81,8 +82,8 @@ import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.model.AbstractResource;
 
-import com.sample.rm.RMToolManager;
-import com.sample.rm.RMToolConstants;
+import com.sample.rm.RestDelegate;
+import com.sample.rm.ServerConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.resources.Oslc_rmDomainConstants;
 import com.sample.rm.servlet.ServiceProviderCatalogSingleton;
@@ -96,13 +97,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 // Start of user code pre_class_code
 // End of user code
-@OslcService(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_DOMAIN)
+@OslcService(Oslc_rmDomainConstants.REQUIREMENTS_MANAGEMENT_NAMSPACE)
 @Path("requirements")
 public class ServiceProviderService1
 {
     @Context private HttpServletRequest httpServletRequest;
     @Context private HttpServletResponse httpServletResponse;
     @Context private UriInfo uriInfo;
+    @Inject  private RestDelegate delegate;
 
     private static final Logger log = LoggerFactory.getLogger(ServiceProviderService1.class);
 
@@ -170,7 +172,7 @@ public class ServiceProviderService1
         // Here additional logic can be implemented that complements main action taken in RMToolManager
         // End of user code
 
-        List<Requirement> resources = RMToolManager.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
+        List<Requirement> resources = delegate.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
         UriBuilder uriBuilder = UriBuilder.fromUri(uriInfo.getAbsolutePath())
             .queryParam("oslc.paging", "true")
             .queryParam("oslc.pageSize", pageSize)
@@ -182,7 +184,8 @@ public class ServiceProviderService1
             uriBuilder.queryParam("oslc.prefix", prefix);
         }
         httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
-        if (resources.size() > pageSize) {
+        if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize) 
+            || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
             resources = resources.subList(0, pageSize);
             uriBuilder.replaceQueryParam("page", page + 1);
             httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
@@ -225,7 +228,7 @@ public class ServiceProviderService1
         // Start of user code queryRequirementsAsHtml
         // End of user code
 
-        List<Requirement> resources = RMToolManager.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
+        List<Requirement> resources = delegate.queryRequirements(httpServletRequest, where, prefix, paging, page, pageSize);
 
         if (resources!= null) {
             // Start of user code queryRequirementsAsHtml_setAttributes
@@ -242,9 +245,10 @@ public class ServiceProviderService1
                 uriBuilder.queryParam("oslc.prefix", prefix);
             }
             httpServletRequest.setAttribute("queryUri", uriBuilder.build().toString());
-            if (resources.size() > pageSize) {
-                resources = resources.subList(0, pageSize);
 
+        if ((OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() >= pageSize) 
+            || (!OSLC4JUtils.hasLyoStorePagingPreciseLimit() && resources.size() > pageSize)) {
+                resources = resources.subList(0, pageSize);
                 uriBuilder.replaceQueryParam("page", page + 1);
                 httpServletRequest.setAttribute(OSLC4JConstants.OSLC4J_NEXT_PAGE, uriBuilder.build().toString());
             }
@@ -283,7 +287,7 @@ public class ServiceProviderService1
 
         if (terms != null ) {
             httpServletRequest.setAttribute("terms", terms);
-            final List<Requirement> resources = RMToolManager.RequirementSelector(httpServletRequest, terms);
+            final List<Requirement> resources = delegate.RequirementSelector(httpServletRequest, terms);
             if (resources!= null) {
                 JSONArray resourceArray = new JSONArray();
                 for (Requirement resource : resources) {
@@ -345,9 +349,9 @@ public class ServiceProviderService1
             final Requirement aResource
         ) throws IOException, ServletException
     {
-        Requirement newResource = RMToolManager.createRequirement(httpServletRequest, aResource);
-        httpServletResponse.setHeader("ETag", RMToolManager.getETagFromRequirement(newResource));
-        return Response.created(newResource.getAbout()).entity(newResource).header(RMToolConstants.HDR_OSLC_VERSION, RMToolConstants.OSLC_VERSION_V2).build();
+        Requirement newResource = delegate.createRequirement(httpServletRequest, aResource);
+        httpServletResponse.setHeader("ETag", delegate.getETagFromRequirement(newResource));
+        return Response.created(newResource.getAbout()).entity(newResource).header(ServerConstants.HDR_OSLC_VERSION, ServerConstants.OSLC_VERSION_V2).build();
     }
 
     /**
@@ -428,7 +432,7 @@ public class ServiceProviderService1
 
         }
 
-        newResource = RMToolManager.createRequirementFromDialog(httpServletRequest, aResource);
+        newResource = delegate.createRequirementFromDialog(httpServletRequest, aResource);
 
         if (newResource != null) {
             httpServletRequest.setAttribute("newResource", newResource);

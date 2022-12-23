@@ -49,7 +49,7 @@ import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
 import org.eclipse.lyo.oslc4j.core.model.Service;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProvider;
 
-import com.sample.testing.TestingToolManager;
+import com.sample.testing.RestDelegate;
 import com.sample.testing.servlet.ServiceProviderCatalogSingleton;
 
 // Start of user code imports

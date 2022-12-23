@@ -52,8 +52,8 @@ import org.eclipse.lyo.oslc4j.core.model.OslcConstants;
 import org.eclipse.lyo.oslc4j.core.model.OslcMediaType;
 import org.eclipse.lyo.oslc4j.core.model.ServiceProviderCatalog;
 
-import com.sample.testing.TestingToolConstants;
-import com.sample.testing.TestingToolManager;
+import com.sample.testing.ServerConstants;
+import com.sample.testing.RestDelegate;
 import com.sample.testing.servlet.ServiceProviderCatalogSingleton;
 
 // Start of user code imports
@@ -116,7 +116,7 @@ public class ServiceProviderCatalogService
         ServiceProviderCatalog catalog =  ServiceProviderCatalogSingleton.getServiceProviderCatalog(httpServletRequest);
 
         if (catalog != null) {
-            httpServletResponse.addHeader(TestingToolConstants.HDR_OSLC_VERSION,"2.0");
+            httpServletResponse.addHeader(ServerConstants.HDR_OSLC_VERSION,"2.0");
             return catalog;
         }
 

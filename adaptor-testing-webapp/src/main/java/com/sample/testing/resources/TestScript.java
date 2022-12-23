@@ -69,11 +69,9 @@ import org.eclipse.lyo.oslc4j.core.model.ResourceShapeFactory;
 
 import com.sample.testing.resources.Oslc_qmDomainConstants;
 
-
 import com.sample.testing.resources.DctermsDomainConstants;
 import com.sample.testing.resources.Oslc_qmDomainConstants;
 import com.sample.testing.resources.Oslc_rmDomainConstants;
-
 import com.sample.testing.resources.Requirement;
 // Start of user code imports
 // End of user code
@@ -173,7 +171,7 @@ public class TestScript
         // End of user code
         return title;
     }
-    
+
     // Start of user code getterAnnotation:validatesRequirement
     // End of user code
     @OslcName("validatesRequirement")
@@ -188,7 +186,7 @@ public class TestScript
         // End of user code
         return validatesRequirement;
     }
-    
+
     // Start of user code getterAnnotation:description
     // End of user code
     @OslcName("description")
@@ -202,8 +200,7 @@ public class TestScript
         // End of user code
         return description;
     }
-    
-    
+
     // Start of user code setterAnnotation:title
     // End of user code
     public void setTitle(final String title )
@@ -211,11 +208,10 @@ public class TestScript
         // Start of user code setterInit:title
         // End of user code
         this.title = title;
-    
         // Start of user code setterFinalize:title
         // End of user code
     }
-    
+
     // Start of user code setterAnnotation:validatesRequirement
     // End of user code
     public void setValidatesRequirement(final Set<Link> validatesRequirement )
@@ -227,11 +223,10 @@ public class TestScript
         {
             this.validatesRequirement.addAll(validatesRequirement);
         }
-    
         // Start of user code setterFinalize:validatesRequirement
         // End of user code
     }
-    
+
     // Start of user code setterAnnotation:description
     // End of user code
     public void setDescription(final String description )
@@ -239,10 +234,8 @@ public class TestScript
         // Start of user code setterInit:description
         // End of user code
         this.description = description;
-    
         // Start of user code setterFinalize:description
         // End of user code
     }
-    
-    
+
 }

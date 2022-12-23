@@ -17,7 +17,8 @@
  *******************************************************************************/
 // End of user code
 
-package com.sample.rm;
+package com.sample.testing;
+
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -27,7 +28,8 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.eclipse.lyo.oslc4j.core.model.Link;
 import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
-import com.sample.rm.resources.Requirement;
+import com.sample.testing.resources.Requirement;
+import com.sample.testing.resources.TestScript;
 
 // Start of user code imports
 // End of user code
@@ -35,40 +37,41 @@ import com.sample.rm.resources.Requirement;
 // Start of user code pre_class_code
 // End of user code
 
-public class RMToolResourcesFactory {
+public class ResourcesFactory {
+
+    private String basePath;
 
     // Start of user code class_attributes
     // End of user code
-    
+
+    public ResourcesFactory(String basePath) {
+        this.basePath = basePath;
+    }
+
     // Start of user code class_methods
     // End of user code
 
-    //methods for Requirement resource
+    //methods for TestScript resource
     
-    public static Requirement createRequirement(final String requirementId)
-    {
-        return new Requirement(constructURIForRequirement(requirementId));
+    public TestScript createTestScript(final String testScriptId) {
+        return new TestScript(constructURIForTestScript(testScriptId));
     }
     
-    public static URI constructURIForRequirement(final String requirementId)
-    {
-        String basePath = OSLC4JUtils.getServletURI();
+    public URI constructURIForTestScript(final String testScriptId) {
         Map<String, Object> pathParameters = new HashMap<String, Object>();
-        pathParameters.put("requirementId", requirementId);
-        String instanceURI = "requirements/{requirementId}";
+        pathParameters.put("testScriptId", testScriptId);
+        String instanceURI = "testScripts/{testScriptId}";
     
-        final UriBuilder builder = UriBuilder.fromUri(basePath);
+        final UriBuilder builder = UriBuilder.fromUri(this.basePath);
         return builder.path(instanceURI).buildFromMap(pathParameters);
     }
     
-    public static Link constructLinkForRequirement(final String requirementId , final String label)
-    {
-        return new Link(constructURIForRequirement(requirementId), label);
+    public Link constructLinkForTestScript(final String testScriptId , final String label) {
+        return new Link(constructURIForTestScript(testScriptId), label);
     }
     
-    public static Link constructLinkForRequirement(final String requirementId)
-    {
-        return new Link(constructURIForRequirement(requirementId));
+    public Link constructLinkForTestScript(final String testScriptId) {
+        return new Link(constructURIForTestScript(testScriptId));
     }
     
 

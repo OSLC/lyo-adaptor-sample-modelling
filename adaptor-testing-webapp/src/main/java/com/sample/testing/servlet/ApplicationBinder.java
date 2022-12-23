@@ -22,8 +22,14 @@ import org.slf4j.LoggerFactory;
 import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 
+import javax.inject.Singleton;
 
+import com.sample.testing.RestDelegate;
+import com.sample.testing.ResourcesFactory;
+
+import org.eclipse.lyo.oslc4j.core.OSLC4JUtils;
 // Start of user code imports
+import com.sample.testing.Backend;
 // End of user code
 
 // Start of user code pre_class_code
@@ -48,7 +54,27 @@ public class ApplicationBinder extends AbstractBinder {
     protected void configure() {
         log.info("HK2 contract binding start");
     
+        // Start of user code ConfigureInitialise
+        bindAsContract(Backend.class).in(Singleton.class);
+        // End of user code
+        bindAsContract(RestDelegate.class).in(Singleton.class);
+        bindFactory(ResourcesFactoryFactory.class).to(ResourcesFactory.class).in(Singleton.class);
+    
+    
+    
+        // Start of user code ConfigureFinalize
+        // End of user code
     }
-
+    static class ResourcesFactoryFactory implements Factory<ResourcesFactory> {
+        @Override
+        public ResourcesFactory provide() {
+            return new ResourcesFactory(OSLC4JUtils.getServletURI());
+        }
+    
+        @Override
+        public void dispose(ResourcesFactory instance) {
+        }
+    }
+    
     
 }
