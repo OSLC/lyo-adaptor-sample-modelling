@@ -4,6 +4,9 @@
 [![CI](https://github.com/OSLC/lyo-adaptor-sample-modelling/actions/workflows/maven.yml/badge.svg)](https://github.com/OSLC/lyo-adaptor-sample-modelling/actions/workflows/maven.yml)
 ![Discourse users](https://img.shields.io/discourse/users?color=28bd84&server=https%3A%2F%2Fforum.open-services.net%2F)
 
+> [!NOTE]
+> This repository is no longer actively developed. To see Eclipse Lyo in action, refer to https://github.com/oslc-op/refimpl
+
 This is the repository with the sources of the finished [Lyo Toolchain Modelling and Code Generation Workshop](https://wiki.eclipse.org/Lyo/ToolchainModellingAndCodeGenerationWorkshop).
 
 **Note**: If you want to work with the latest version of the Lyo SDK and Lyo Designer (that is, 4.0.0-SNAPSHOT, which uses JAX-RS2.0, instead of Wink), then please refer to the [4.0.0-snapshot branch](https://github.com/OSLC/lyo-adaptor-sample-modelling/tree/4.0.0-snapshot)
