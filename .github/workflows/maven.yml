@@ -19,14 +19,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        jdk: ['8', '11', '17', '21']
+        jdk: ['11', '17', '21']
         distribution: ['temurin']
         experimental: [false]
         include:
-          - jdk: '23'
+          - jdk: '24'
             distribution: 'zulu'
             experimental: true
-          - jdk: '24-ea'
+          - jdk: '25-ea'
             distribution: 'zulu'
             experimental: true
     continue-on-error: ${{ matrix.experimental }}
